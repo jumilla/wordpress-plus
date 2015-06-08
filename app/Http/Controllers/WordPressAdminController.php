@@ -8,7 +8,9 @@ class WordPressAdminController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('wordpress.admin_environment_setup');
+		$this->middleware('wordpress.admin_environment_setup', [
+			'except' => ['setupConfig', 'setupInstall'],
+		]);
 	}
 
 	public function dashboard()
@@ -36,12 +38,13 @@ class WordPressAdminController extends Controller
 
 	public function setupConfig()
 	{
-		$this->requireAdminScriptWithMenu('setup-config.php');
+		$this->requireAdminScript('setup-config.php');
 	}
 
 	public function setupInstall()
 	{
-		$this->requireAdminScriptWithMenu('install.php');
+		info('setupInstall');
+		$this->requireAdminScript('install.php');
 	}
 
 
@@ -156,16 +159,12 @@ class WordPressAdminController extends Controller
 
 	public function postNew()
 	{
-		$this->requireAdminScriptWithMenu('post-new.php', [
-			'is_IE',
-		]);
+		$this->requireAdminScriptWithMenu('post-new.php');
 	}
 
 	public function postEdit()
 	{
-		$this->requireAdminScriptWithMenu('post.php', [
-			'is_IE', 'action',
-		]);
+		$this->requireAdminScriptWithMenu('post.php', ['is_IE', 'action']);	// app('wordpress.globals')
 	}
 
 	public function tagList()
@@ -178,7 +177,7 @@ class WordPressAdminController extends Controller
 	public function commentList()
 	{
 		$this->requireAdminScriptWithMenu('edit-comments.php', [
-			'post_id', 'comment', 'comment_status',
+			'post_id', 'comment', 'comment_status'
 		]);
 	}
 
