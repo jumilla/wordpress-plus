@@ -259,31 +259,6 @@ $filename = 'options-permalink.php';
 
 
 
-	public function download(\Illuminate\Http\Request $request)
-	{
-		info('Download: ' . $request->path());
-
-		$path = base_path('wordpress/' . $request->path());
-		$extension = pathinfo($path, PATHINFO_EXTENSION);
-		$headers = [];
-		$headers['Content-Type'] = $this->getMimeType($extension);
-		return response()->download($path, null, $headers);
-	}
-
-	private function getMimeType($extension)
-	{
-		switch ($extension) {
-		case 'css':
-			return 'text/css';
-		case 'js':
-			return 'application/javascript';
-		case 'svg':
-			return 'image/svg+xml';
-		}
-	}
-
-
-
 	private function requireScript($filename)
 	{
 		require_once base_path("wordpress/wp-admin/{$filename}");

@@ -96,41 +96,31 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 
 	$app->get('admin.php', 'WordPressAdminController@admin');
 
-	$app->get('{f1}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', 'WordPressAdminController@download');
-
+	add_download_routes($app);
 });
 
 $app->group(['prefix' => 'wp-includes', 'namespace' => 'App\Http\Controllers'], function($app) {
-	$app->get('{f1}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', 'WordPressAdminController@download');
+	add_download_routes($app);
 });
 
 $app->group(['prefix' => 'wp-content', 'namespace' => 'App\Http\Controllers'], function($app) {
-	$app->get('{f1}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', 'WordPressAdminController@download');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', 'WordPressAdminController@download');
+	add_download_routes($app);
 });
+
+function add_download_routes($app)
+{
+	$action = 'FileProvideController@download';
+
+	$app->get('{f1}', $action);
+	$app->get('{f1}/{f2}', $action);
+	$app->get('{f1}/{f2}/{f3}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
+}
 
 $app->get('wp-cron.php', function() {
 	require base_path('wordpress/wp-cron.php');
