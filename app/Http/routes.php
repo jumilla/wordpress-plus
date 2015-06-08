@@ -23,8 +23,10 @@ $app->post('wp-login.php', function() {
 });
 
 $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], function($app) {
-	$app->get('', 'WordPressAdminController@dashboard');
-	$app->get('index.php', 'WordPressAdminController@dashboard');
+	$app->get('', ['as' => 'admin.dashboard', 'uses' => 'WordPressAdminController@dashboard']);
+	$app->get('index.php', function () {
+		return redirect()->route('admin.dashboard');
+	});
 
 	//--- Setup ---//
 

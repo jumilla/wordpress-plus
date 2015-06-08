@@ -156,12 +156,16 @@ class WordPressAdminController extends Controller
 
 	public function postNew()
 	{
-		$this->requireAdminScriptWithMenu('post-new.php');
+		$this->requireAdminScriptWithMenu('post-new.php', [
+			'is_IE',
+		]);
 	}
 
 	public function postEdit()
 	{
-		$this->requireAdminScriptWithMenu('post.php', ['is_IE', 'action']);	// app('wordpress.globals')
+		$this->requireAdminScriptWithMenu('post.php', [
+			'is_IE', 'action',
+		]);
 	}
 
 	public function tagList()
@@ -174,7 +178,7 @@ class WordPressAdminController extends Controller
 	public function commentList()
 	{
 		$this->requireAdminScriptWithMenu('edit-comments.php', [
-			'post_id', 'comment', 'comment_status'
+			'post_id', 'comment', 'comment_status',
 		]);
 	}
 
