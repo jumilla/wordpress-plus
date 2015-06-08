@@ -41,7 +41,9 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('customize.php', 'WordPressAdminController@themeCustomize');
 	$app->get('widgets.php', 'WordPressAdminController@themeWidgetList');
 	$app->get('nav-menus.php', 'WordPressAdminController@themeNavMenus');
+	$app->post('nav-menus.php', 'WordPressAdminController@themeNavMenus');
 	$app->get('theme-editor.php', 'WordPressAdminController@themeFileList');
+	$app->post('theme-editor.php', 'WordPressAdminController@themeFileList');
 
 	//--- Plugins ---//
 
@@ -60,6 +62,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->post('profile.php', 'WordPressAdminController@userProfile');
 
 	//--- Posts ---//
+
 	$app->get('edit.php', 'WordPressAdminController@postList');
 	$app->get('post-new.php', 'WordPressAdminController@postNew');
 	$app->post('post-new.php', 'WordPressAdminController@postNew');
@@ -72,17 +75,20 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->post('comment.php', 'WordPressAdminController@commentEdit');
 
 	//--- Media ---//
+
 	$app->get('upload.php', 'WordPressAdminController@mediaUpload');
 	$app->post('async-upload.php', 'WordPressAdminController@mediaAsyncUpload');
 	$app->get('media-new.php', 'WordPressAdminController@mediaNew');
 
 	//--- Tools ---//
+
 	$app->get('tools.php', 'WordPressAdminController@tools');
 	$app->get('press-this.php', 'WordPressAdminController@toolPressThis');
 	$app->get('import.php', 'WordPressAdminController@import');
 	$app->get('export.php', 'WordPressAdminController@export');
 
 	//--- Settings ---//
+
 	$app->get('options-general.php', 'WordPressAdminController@optionsGeneral');
 	$app->get('options-writing.php', 'WordPressAdminController@optionsWriting');
 	$app->get('options-reading.php', 'WordPressAdminController@optionsReading');
@@ -93,6 +99,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->post('options.php', 'WordPressAdminController@optionsEdit');
 
 	$app->get('admin.php', 'WordPressAdminController@admin');
+	$app->get('about.php', 'WordPressAdminController@about');
 
 	add_file_download_routes($app);
 });

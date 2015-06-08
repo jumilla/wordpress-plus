@@ -267,6 +267,11 @@ $filename = 'options-permalink.php';
 		$this->requireScriptWithAdmin('admin.php');
 	}
 
+	public function about()
+	{
+		$this->requireScriptWithAdmin('about.php');
+	}
+
 
 
 	private function requireScript($filename)
