@@ -27,13 +27,17 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('index.php', 'WordPressAdminController@index');
 	$app->get('load-styles.php', 'WordPressAdminController@loadStyles');
 	$app->get('load-scripts.php', 'WordPressAdminController@loadScripts');
-	$app->get('admin-ajax.php', 'WordPressAdminController@ajax');
-	$app->post('admin-ajax.php', 'WordPressAdminController@ajax');
 
 	//--- Updates ---//
 
 	$app->get('update-core.php', 'WordPressAdminController@updateCore');
 	$app->get('update.php', 'WordPressAdminController@update');
+
+	//--- Admin ---//
+
+	$app->get('admin.php', 'WordPressAdminController@admin');
+	$app->get('admin-ajax.php', 'WordPressAdminController@adminAjax');
+	$app->post('admin-ajax.php', 'WordPressAdminController@adminAjax');
 
 	//--- Themes ---//
 
@@ -84,8 +88,8 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 
 	$app->get('tools.php', 'WordPressAdminController@tools');
 	$app->get('press-this.php', 'WordPressAdminController@toolPressThis');
-	$app->get('import.php', 'WordPressAdminController@import');
-	$app->get('export.php', 'WordPressAdminController@export');
+	$app->get('import.php', 'WordPressAdminController@toolImport');
+	$app->get('export.php', 'WordPressAdminController@toolExport');
 
 	//--- Settings ---//
 
@@ -98,8 +102,11 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->post('options-permalink.php', 'WordPressAdminController@optionsPermaLink');
 	$app->post('options.php', 'WordPressAdminController@optionsEdit');
 
-	$app->get('admin.php', 'WordPressAdminController@admin');
+	//--- About ---//
+
 	$app->get('about.php', 'WordPressAdminController@about');
+	$app->get('credits.php', 'WordPressAdminController@aboutCredits');
+	$app->get('freedoms.php', 'WordPressAdminController@aboutFreedoms');
 
 	add_file_download_routes($app);
 });
@@ -135,6 +142,7 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
 	$action = 'WordPressContentsController@provide';
 
 	$app->get('', $action);
+	$app->post('', $action);
 	$app->get('{f1}', $action);
 	$app->get('{f1}/{f2}', $action);
 	$app->get('{f1}/{f2}/{f3}', $action);

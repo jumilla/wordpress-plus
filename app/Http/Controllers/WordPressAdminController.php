@@ -18,7 +18,14 @@ class WordPressAdminController extends Controller
 		$this->requireScript('load-scripts.php');
 	}
 
-	public function ajax()
+
+
+	public function admin()
+	{
+		$this->requireScriptWithAdmin('admin.php');
+	}
+
+	public function adminAjax()
 	{
 		$this->requireScript('admin-ajax.php');
 	}
@@ -55,60 +62,39 @@ class WordPressAdminController extends Controller
 
 	public function themeNavMenus()
 	{
-		$this->requireScriptWithAdmin('nav-menus.php');
+		$this->requireScriptWithAdmin('nav-menus.php', [
+			'current_user',
+		]);
 	}
 
 	public function themeFileList()
 	{
-		$this->requireScriptWithAdmin('theme-editor.php');
+		$this->requireScriptWithAdmin('theme-editor.php', [
+//			'theme',
+//			'action',
+		]);
 	}
 
 
 
 	public function pluginList()
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-		global $plugins;
-		global $status;
-		global $page;
-
-$filename = 'plugins.php';
-		require_once base_path("wordpress/wp-admin/{$filename}");
-//		$this->requireScriptWithAdmin('plugins.php');
+		$this->requireScriptWithAdmin('plugins.php', [
+			'plugins', 'status', 'page',
+		]);
 	}
 
 	public function pluginInstall()
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-		global $tabs;
-		global $tab;
-		global $paged;
-		global $wp_list_table;
-
-$filename = 'plugin-install.php';
-		require_once base_path("wordpress/wp-admin/{$filename}");
-//		$this->requireScriptWithAdmin('plugin-install.php');
+		$this->requireScriptWithAdmin('plugin-install.php', [
+			'tabs', 'tab', 'paged', 'wp_list_table',
+		]);
 	}
 
 	public function pluginEditor()
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-//		global $file;
-//		global $action;
-
-		// MEMO global宣言を4つ追加。
-$filename = 'plugin-editor.php';
-		require_once base_path("wordpress/wp-admin/{$filename}");
-//		$this->requireScriptWithAdmin('plugin-editor.php');
+		// MEMO 'plugin-editor.php' にglobal宣言を4つ追加。
+		$this->requireScriptWithAdmin('plugin-editor.php');
 	}
 
 
@@ -153,15 +139,9 @@ $filename = 'plugin-editor.php';
 
 	public function tagList()
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-//		global $wpdb;
-		global $taxonomy;
-
-		require_once base_path("wordpress/wp-admin/edit-tags.php");
-//		$this->requireScriptWithDB('edit-tags.php');
+		$this->requireScriptWithDB('edit-tags.php', [
+			'taxonomy',
+		]);
 	}
 
 	public function commentList()
@@ -203,12 +183,12 @@ $filename = 'plugin-editor.php';
 		$this->requireScriptWithAdmin('press-this.php');
 	}
 
-	public function import()
+	public function toolImport()
 	{
 		$this->requireScriptWithAdmin('import.php');
 	}
 
-	public function export()
+	public function toolExport()
 	{
 		$this->requireScriptWithDB('export.php');
 	}
@@ -242,15 +222,9 @@ $filename = 'plugin-editor.php';
 
 	public function optionsPermaLink()
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-		global $wp_rewrite;
-
-$filename = 'options-permalink.php';
-		require_once base_path("wordpress/wp-admin/{$filename}");
-//		$this->requireScriptWithAdmin('options-permalink.php');
+		$this->requireScriptWithAdmin('options-permalink.php', [
+			'wp_rewrite',
+		]);
 	}
 
 	public function optionsEdit()
@@ -262,14 +236,19 @@ $filename = 'options-permalink.php';
 
 
 
-	public function admin()
-	{
-		$this->requireScriptWithAdmin('admin.php');
-	}
-
 	public function about()
 	{
 		$this->requireScriptWithAdmin('about.php');
+	}
+
+	public function aboutCredits()
+	{
+		$this->requireScriptWithAdmin('credits.php');
+	}
+
+	public function aboutFreedoms()
+	{
+		$this->requireScriptWithAdmin('freedoms.php');
 	}
 
 
@@ -279,12 +258,16 @@ $filename = 'options-permalink.php';
 		require_once base_path("wordpress/wp-admin/{$filename}");
 	}
 
-	private function requireScriptWithAdmin($filename)
+	private function requireScriptWithAdmin($filename, array $globals = [])
 	{
 		global $menu;
 		global $submenu;
 		global $_wp_menu_nopriv;
 		global $_wp_submenu_nopriv;
+
+		foreach ($globals as $global) {
+			global ${$global};
+		}
 
 		require_once base_path("wordpress/wp-admin/{$filename}");
 	}

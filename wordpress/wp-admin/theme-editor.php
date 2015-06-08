@@ -44,6 +44,7 @@ get_current_screen()->set_help_sidebar(
 );
 
 wp_reset_vars( array( 'action', 'error', 'file', 'theme' ) );
+global $action, $error, $file, $theme;
 
 if ( $theme )
 	$stylesheet = $theme;
