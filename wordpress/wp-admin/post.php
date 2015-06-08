@@ -15,7 +15,6 @@ $parent_file = 'edit.php';
 $submenu_file = 'edit.php';
 
 wp_reset_vars( array( 'action' ) );
-global $action;
 
 if ( isset( $_GET['post'] ) )
  	$post_id = $post_ID = (int) $_GET['post'];
