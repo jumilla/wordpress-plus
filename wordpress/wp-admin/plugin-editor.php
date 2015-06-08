@@ -21,6 +21,10 @@ $title = __("Edit Plugins");
 $parent_file = 'plugins.php';
 
 wp_reset_vars( array( 'action', 'error', 'file', 'plugin' ) );
+global $action;
+global $error;
+global $file;
+global $plugin;
 
 $plugins = get_plugins();
 

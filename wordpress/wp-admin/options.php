@@ -23,6 +23,8 @@ $this_file = 'options.php';
 $parent_file = 'options-general.php';
 
 wp_reset_vars(array('action', 'option_page'));
+global $action;
+global $option_page;
 
 $capability = 'manage_options';
 

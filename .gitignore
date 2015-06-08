@@ -1,3 +1,5 @@
 /lumen.log
 /vendor
 .env
+.env.production
+/deploy

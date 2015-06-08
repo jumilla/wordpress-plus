@@ -12,6 +12,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // TODO publish wordpress/wp-includes/{css|js|images}
     }
 }
