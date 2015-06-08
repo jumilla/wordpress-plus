@@ -59,6 +59,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	//--- Plugins ---//
 
 	$app->get('plugins.php', 'WordPressAdminController@pluginList');
+	$app->post('plugins.php', 'WordPressAdminController@pluginList');
 	$app->get('plugin-install.php', 'WordPressAdminController@pluginInstall');
 	$app->get('plugin-editor.php', 'WordPressAdminController@pluginEditor');
 

@@ -5,6 +5,24 @@ class WordPressAdminController extends Controller
 
 	public function index()
 	{
+		$request = app('request');
+
+		// foreach ($GLOBALS as $name => $global) {
+		// 	info('$GLOBAL: ' . $name . ':' /*. get_class($global)*/);
+		// }
+
+		// need trail '/'
+		if (! ends_with($request->getPathInfo(), '/')) {
+			// make valid url
+			if (null !== $qs = $request->getQueryString()) {
+				$qs = '?' . $qs;
+			}
+			$url = $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo() . '/' . $qs;
+
+			// redirect to valid url
+			return redirect()->to($url);
+		}
+
 		$this->requireScriptWithAdmin('index.php');
 	}
 
@@ -93,7 +111,7 @@ class WordPressAdminController extends Controller
 	public function pluginList()
 	{
 		$this->requireScriptWithAdmin('plugins.php', [
-			'plugins', 'status', 'page',
+			'plugins', 'status', 'page', 'user_ID',
 		]);
 	}
 
