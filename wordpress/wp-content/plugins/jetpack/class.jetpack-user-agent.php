@@ -100,7 +100,7 @@ class Jetpack_User_Agent_Info {
 	);
 
    //The constructor. Initializes default variables.
-   function __construct()
+   function Jetpack_User_Agent_Info()
    {
    		if ( !empty( $_SERVER['HTTP_USER_AGENT'] ) )
        		$this->useragent = strtolower( $_SERVER['HTTP_USER_AGENT'] );
