@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 /**
- * MEMO wp_reset_vars() を呼び出すと、再設定した変数はglobalの効果がなくなる。wp_reset_vars()の直後にglobal $action;を呼び出す必要がある。
+ *
  */
 class WordPressAdminController extends Controller
 {
@@ -29,7 +29,7 @@ class WordPressAdminController extends Controller
 
 		$this->requireAdminScriptWithMenu('index.php', [
 			'wp_db_version',
-		]);
+		] /*+ app('wordpress.globals')*/);
 	}
 
 
@@ -67,7 +67,7 @@ class WordPressAdminController extends Controller
 
 	public function adminAjax()
 	{
-		$this->requireScript('admin-ajax.php');
+		$this->requireAdminScript('admin-ajax.php');
 	}
 
 
@@ -79,7 +79,9 @@ class WordPressAdminController extends Controller
 
 	public function themeCustomize()
 	{
-		$this->requireAdminScriptWithMenu('customize.php');
+		$this->requireAdminScriptWithMenu('customize.php', [
+			'url', 'return',
+		]/* + app('wordpress.globals')*/);
 	}
 
 	public function themeWidgetList()
@@ -97,8 +99,7 @@ class WordPressAdminController extends Controller
 	public function themeFileList()
 	{
 		$this->requireAdminScriptWithMenu('theme-editor.php', [
-//			'theme',
-//			'action',
+			'action', 'error', 'file', 'theme',
 		]);
 	}
 
@@ -155,30 +156,33 @@ class WordPressAdminController extends Controller
 
 	public function postNew()
 	{
-		$this->requireAdminScriptWithDB('post-new.php');
+		$this->requireAdminScriptWithMenu('post-new.php');
 	}
 
 	public function postEdit()
 	{
-		// MEMO 'post.php' に global $action; を追加した
-		$this->requireAdminScriptWithDB('post.php');
+		$this->requireAdminScriptWithMenu('post.php', ['is_IE', 'action']);	// app('wordpress.globals')
 	}
 
 	public function tagList()
 	{
-		$this->requireAdminScriptWithDB('edit-tags.php', [
+		$this->requireAdminScriptWithMenu('edit-tags.php', [
 			'taxonomy',
 		]);
 	}
 
 	public function commentList()
 	{
-		$this->requireAdminScriptWithComment('edit-comments.php');
+		$this->requireAdminScriptWithMenu('edit-comments.php', [
+			'post_id', 'comment', 'comment_status'
+		]);
 	}
 
 	public function commentEdit()
 	{
-		$this->requireAdminScriptWithComment('comment.php');
+		$this->requireAdminScriptWithMenu('comment.php', [
+			'post_id', 'comment', 'comment_status'
+		]);
 	}
 
 
@@ -217,7 +221,7 @@ class WordPressAdminController extends Controller
 
 	public function toolExport()
 	{
-		$this->requireAdminScriptWithDB('export.php');
+		$this->requireAdminScriptWithMenu('export.php');
 	}
 
 
@@ -239,7 +243,9 @@ class WordPressAdminController extends Controller
 
 	public function optionsDiscussion()
 	{
-		$this->requireAdminScriptWithMenu('options-discussion.php');
+		$this->requireAdminScriptWithMenu('options-discussion.php', [
+			'user_email',
+		]);
 	}
 
 	public function optionsMedia()
@@ -251,14 +257,15 @@ class WordPressAdminController extends Controller
 	{
 		$this->requireAdminScriptWithMenu('options-permalink.php', [
 			'wp_rewrite',
+			'is_nginx',
 		]);
 	}
 
 	public function optionsEdit()
 	{
-		// MEMO 'options.php' に global $action; を追加した
-		// MEMO 'options.php' に global $option_page; を追加した
-		$this->requireAdminScriptWithMenu('options.php');
+		$this->requireAdminScriptWithMenu('options.php', [
+			'action', 'option_page',
+		]);
 	}
 
 
@@ -285,11 +292,10 @@ class WordPressAdminController extends Controller
 		// from wp-settings.php
 		$globals = array_merge($globals, ['wp_version', 'wp_db_version', 'tinymce_version', 'required_php_version', 'required_mysql_version']);
 
-		foreach ($globals as $global) {
-			global ${$global};
-		}
+		// additional
+		$globals = array_merge($globals, ['wp_db']);
 
-		require base_path("wordpress/wp-admin/{$filename}");
+		$this->requireScript('wp-admin/' . $filename, $globals);
 	}
 
 	private function requireAdminScriptWithMenu($filename, array $globals = [])
@@ -297,16 +303,6 @@ class WordPressAdminController extends Controller
 		$globals = array_merge($globals, ['menu', 'submenu', '_wp_menu_nopriv', '_wp_submenu_nopriv']);
 
 		$this->requireAdminScript($filename, $globals);
-	}
-
-	private function requireAdminScriptWithDB($filename)
-	{
-		$this->requireAdminScriptWithMenu($filename, ['wpdb']);
-	}
-
-	private function requireAdminScriptWithComment($filename)
-	{
-		$this->requireAdminScriptWithMenu($filename, ['post_id', 'comment', 'comment_status']);
 	}
 
 }

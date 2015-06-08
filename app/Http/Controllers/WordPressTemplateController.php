@@ -1,7 +1,12 @@
 <?php namespace App\Http\Controllers;
 
-class WordPressContentsController extends Controller
+class WordPressTemplateController extends Controller
 {
+
+	public function __construct()
+	{
+		$this->middleware('wordpress.template_environment_setup');
+	}
 
 	public function provide()
 	{
@@ -12,8 +17,8 @@ class WordPressContentsController extends Controller
 		 */
 		define('WP_USE_THEMES', true);
 
-		/** Loads the WordPress Environment */
-		require base_path('wordpress/wp-load.php');
+//		/** Loads the WordPress Environment */
+//		require base_path('wordpress/wp-load.php');
 
 		wp();
 

@@ -2,7 +2,7 @@
 
 use Closure;
 
-class WordPressAdminEnvironmentSetupMiddleware {
+class WordPressTemplateEnvironmentSetupMiddleware {
 
     /**
      * Handle an incoming request.
@@ -26,35 +26,12 @@ class WordPressAdminEnvironmentSetupMiddleware {
         app()->instance('wordpress.globals', $wordpress_globals);
 //        info(print_r(app('wordpress.globals'), true));
 
-//        // replace wp_reset_vars()
-//        require_once __DIR__ . '/wp_reset_vars.php';
-
         return $next($request);
     }
 
     private function bootstrap()
     {
-        /**
-         * In WordPress Administration Screens
-         *
-         * @since 2.3.2
-         */
-        if ( ! defined( 'WP_ADMIN' ) ) {
-            define( 'WP_ADMIN', true );
-        }
-
-        if ( ! defined('WP_NETWORK_ADMIN') )
-            define('WP_NETWORK_ADMIN', false);
-
-        if ( ! defined('WP_USER_ADMIN') )
-            define('WP_USER_ADMIN', false);
-
-//        if ( ! WP_NETWORK_ADMIN && ! WP_USER_ADMIN ) {
-//            define('WP_BLOG_ADMIN', true);
-//        }
-
-        require_once base_path('wordpress/wp-load.php');
-        require_once base_path('wordpress/wp-admin/includes/admin.php');
+        require_once(base_path('wordpress/wp-load.php'));
     }
 
     private function detectNewGlobals(array $globals_before_keys)

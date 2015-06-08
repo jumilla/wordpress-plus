@@ -122,6 +122,8 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 });
 
 $app->group(['prefix' => 'wp-includes', 'namespace' => 'App\Http\Controllers'], function($app) {
+	$app->get('js/tinymce/wp-mce-help.php', function() { require base_path('wordpress/' . app('request')->path()); });
+	$app->get('js/tinymce/wp-tinymce.php', function() { require base_path('wordpress/' . app('request')->path()); });
 	add_file_download_routes($app);
 });
 
@@ -144,12 +146,40 @@ function add_file_download_routes($app)
 	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
 }
 
+$app->get('wp-activate.php', function() {
+	require base_path('wordpress/wp-activate.php');
+});
+
+$app->post('wp-comments-post.php', function() {
+	require base_path('wordpress/wp-comments-post.php');
+});
+
 $app->get('wp-cron.php', function() {
 	require base_path('wordpress/wp-cron.php');
 });
 
+$app->get('wp-link-opml.php', function() {
+	require base_path('wordpress/wp-link-opml.php');
+});
+
+$app->get('wp-mail.php', function() {
+	require base_path('wordpress/wp-mail.php');
+});
+
+$app->get('wp-signup.php', function() {
+	require base_path('wordpress/wp-signup.php');
+});
+
+$app->get('wp-trackback.php', function() {
+	require base_path('wordpress/wp-trackback.php');
+});
+
+$app->get('xmlrpc.php', function() {
+	require base_path('wordpress/xmlrpc.php');
+});
+
 $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
-	$action = 'WordPressContentsController@provide';
+	$action = 'WordPressTemplateController@provide';
 
 	$app->get('', $action);
 	$app->post('', $action);

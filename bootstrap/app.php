@@ -65,6 +65,7 @@ $app->singleton(
 
 $app->routeMiddleware([
 	'wordpress.admin_environment_setup' => 'App\Http\Middleware\WordPressAdminEnvironmentSetupMiddleware',
+	'wordpress.template_environment_setup' => 'App\Http\Middleware\WordPressTemplateEnvironmentSetupMiddleware',
 ]);
 
 /*
