@@ -1,5 +1,7 @@
 /lumen.log
+/node_modules
 /vendor
-.env
-.env.production
+/.env
+/.env.production
 /deploy
+/wordpress/wp-content/debug.log
