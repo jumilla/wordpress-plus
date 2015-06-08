@@ -33,4 +33,18 @@ class FileProvideController extends Controller
 		}
 	}
 
+	public function loadStyles(Request $request)
+	{
+		info('Load styles: ' . $request->getQueryString());
+
+		$this->requireScript('wp-admin/load-styles.php');
+	}
+
+	public function loadScripts(Request $request)
+	{
+		info('Load script: ' . $request->getQueryString());
+
+		$this->requireScript('wp-admin/load-scripts.php');
+	}
+
 }

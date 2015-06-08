@@ -1,15 +1,19 @@
 <?php namespace App\Http\Controllers;
 
+/**
+ * MEMO wp_reset_vars() を呼び出すと、再設定した変数はglobalの効果がなくなる。wp_reset_vars()の直後にglobal $action;を呼び出す必要がある。
+ */
 class WordPressAdminController extends Controller
 {
 
-	public function index()
+	public function __construct()
+	{
+		$this->middleware('wordpress.admin_environment_setup');
+	}
+
+	public function dashboard()
 	{
 		$request = app('request');
-
-		// foreach ($GLOBALS as $name => $global) {
-		// 	info('$GLOBAL: ' . $name . ':' /*. get_class($global)*/);
-		// }
 
 		// need trail '/'
 		if (! ends_with($request->getPathInfo(), '/')) {
@@ -23,29 +27,21 @@ class WordPressAdminController extends Controller
 			return redirect()->to($url);
 		}
 
-		$this->requireScriptWithAdmin('index.php');
-	}
-
-	public function loadStyles()
-	{
-		$this->requireScript('load-styles.php');
-	}
-
-	public function loadScripts()
-	{
-		$this->requireScript('load-scripts.php');
+		$this->requireAdminScriptWithMenu('index.php', [
+			'wp_db_version',
+		]);
 	}
 
 
 
 	public function setupConfig()
 	{
-		$this->requireScriptWithAdmin('setup-config.php');
+		$this->requireAdminScriptWithMenu('setup-config.php');
 	}
 
 	public function setupInstall()
 	{
-		$this->requireScriptWithAdmin('install.php');
+		$this->requireAdminScriptWithMenu('install.php');
 	}
 
 
@@ -53,12 +49,12 @@ class WordPressAdminController extends Controller
 
 	public function updateCore()
 	{
-		$this->requireScriptWithAdmin('update-core.php');
+		$this->requireAdminScriptWithMenu('update-core.php');
 	}
 
 	public function update()
 	{
-		$this->requireScriptWithAdmin('update.php');
+		$this->requireAdminScriptWithMenu('update.php');
 	}
 
 
@@ -66,7 +62,7 @@ class WordPressAdminController extends Controller
 
 	public function admin()
 	{
-		$this->requireScriptWithAdmin('admin.php');
+		$this->requireAdminScriptWithMenu('admin.php');
 	}
 
 	public function adminAjax()
@@ -78,29 +74,29 @@ class WordPressAdminController extends Controller
 
 	public function themeList()
 	{
-		$this->requireScriptWithAdmin('themes.php');
+		$this->requireAdminScriptWithMenu('themes.php');
 	}
 
 	public function themeCustomize()
 	{
-		$this->requireScriptWithAdmin('customize.php');
+		$this->requireAdminScriptWithMenu('customize.php');
 	}
 
 	public function themeWidgetList()
 	{
-		$this->requireScriptWithAdmin('widgets.php');
+		$this->requireAdminScriptWithMenu('widgets.php');
 	}
 
 	public function themeNavMenus()
 	{
-		$this->requireScriptWithAdmin('nav-menus.php', [
+		$this->requireAdminScriptWithMenu('nav-menus.php', [
 			'current_user',
 		]);
 	}
 
 	public function themeFileList()
 	{
-		$this->requireScriptWithAdmin('theme-editor.php', [
+		$this->requireAdminScriptWithMenu('theme-editor.php', [
 //			'theme',
 //			'action',
 		]);
@@ -110,14 +106,14 @@ class WordPressAdminController extends Controller
 
 	public function pluginList()
 	{
-		$this->requireScriptWithAdmin('plugins.php', [
+		$this->requireAdminScriptWithMenu('plugins.php', [
 			'plugins', 'status', 'page', 'user_ID',
 		]);
 	}
 
 	public function pluginInstall()
 	{
-		$this->requireScriptWithAdmin('plugin-install.php', [
+		$this->requireAdminScriptWithMenu('plugin-install.php', [
 			'tabs', 'tab', 'paged', 'wp_list_table',
 		]);
 	}
@@ -125,135 +121,135 @@ class WordPressAdminController extends Controller
 	public function pluginEditor()
 	{
 		// MEMO 'plugin-editor.php' にglobal宣言を4つ追加。
-		$this->requireScriptWithAdmin('plugin-editor.php');
+		$this->requireAdminScriptWithMenu('plugin-editor.php');
 	}
 
 
 
 	public function userList()
 	{
-		$this->requireScriptWithAdmin('users.php');
+		$this->requireAdminScriptWithMenu('users.php');
 	}
 
 	public function userNew()
 	{
-		$this->requireScriptWithAdmin('user-new.php');
+		$this->requireAdminScriptWithMenu('user-new.php');
 	}
 
 	public function userEdit()
 	{
-		$this->requireScriptWithAdmin('user-edit.php');
+		$this->requireAdminScriptWithMenu('user-edit.php');
 	}
 
 	public function userProfile()
 	{
-		$this->requireScriptWithAdmin('profile.php');
+		$this->requireAdminScriptWithMenu('profile.php');
 	}
 
 
 
 	public function postList()
 	{
-		$this->requireScriptWithAdmin('edit.php');
+		$this->requireAdminScriptWithMenu('edit.php');
 	}
 
 	public function postNew()
 	{
-		$this->requireScriptWithDB('post-new.php');
+		$this->requireAdminScriptWithDB('post-new.php');
 	}
 
 	public function postEdit()
 	{
 		// MEMO 'post.php' に global $action; を追加した
-		$this->requireScriptWithDB('post.php');
+		$this->requireAdminScriptWithDB('post.php');
 	}
 
 	public function tagList()
 	{
-		$this->requireScriptWithDB('edit-tags.php', [
+		$this->requireAdminScriptWithDB('edit-tags.php', [
 			'taxonomy',
 		]);
 	}
 
 	public function commentList()
 	{
-		$this->requireScriptWithComment('edit-comments.php');
+		$this->requireAdminScriptWithComment('edit-comments.php');
 	}
 
 	public function commentEdit()
 	{
-		$this->requireScriptWithComment('comment.php');
+		$this->requireAdminScriptWithComment('comment.php');
 	}
 
 
 
 	public function mediaUpload()
 	{
-		$this->requireScriptWithAdmin('upload.php');
+		$this->requireAdminScriptWithMenu('upload.php');
 	}
 
 	public function mediaAsyncUpload()
 	{
-		$this->requireScriptWithAdmin('async-upload.php');
+		$this->requireAdminScriptWithMenu('async-upload.php');
 	}
 
 	public function mediaNew()
 	{
-		$this->requireScriptWithAdmin('media-new.php');
+		$this->requireAdminScriptWithMenu('media-new.php');
 	}
 
 
 
 	public function tools()
 	{
-		$this->requireScriptWithAdmin('tools.php');
+		$this->requireAdminScriptWithMenu('tools.php');
 	}
 
 	public function toolPressThis()
 	{
-		$this->requireScriptWithAdmin('press-this.php');
+		$this->requireAdminScriptWithMenu('press-this.php');
 	}
 
 	public function toolImport()
 	{
-		$this->requireScriptWithAdmin('import.php');
+		$this->requireAdminScriptWithMenu('import.php');
 	}
 
 	public function toolExport()
 	{
-		$this->requireScriptWithDB('export.php');
+		$this->requireAdminScriptWithDB('export.php');
 	}
 
 
 
 	public function optionsGeneral()
 	{
-		$this->requireScriptWithAdmin('options-general.php');
+		$this->requireAdminScriptWithMenu('options-general.php');
 	}
 
 	public function optionsWriting()
 	{
-		$this->requireScriptWithAdmin('options-writing.php');
+		$this->requireAdminScriptWithMenu('options-writing.php');
 	}
 
 	public function optionsReading()
 	{
-		$this->requireScriptWithAdmin('options-reading.php');
+		$this->requireAdminScriptWithMenu('options-reading.php');
 	}
 
 	public function optionsDiscussion()
 	{
-		$this->requireScriptWithAdmin('options-discussion.php');
+		$this->requireAdminScriptWithMenu('options-discussion.php');
 	}
 
 	public function optionsMedia()
 	{
-		$this->requireScriptWithAdmin('options-media.php');
+		$this->requireAdminScriptWithMenu('options-media.php');
 	}
 
 	public function optionsPermaLink()
 	{
-		$this->requireScriptWithAdmin('options-permalink.php', [
+		$this->requireAdminScriptWithMenu('options-permalink.php', [
 			'wp_rewrite',
 		]);
 	}
@@ -262,72 +258,55 @@ class WordPressAdminController extends Controller
 	{
 		// MEMO 'options.php' に global $action; を追加した
 		// MEMO 'options.php' に global $option_page; を追加した
-		$this->requireScriptWithAdmin('options.php');
+		$this->requireAdminScriptWithMenu('options.php');
 	}
 
 
 
 	public function about()
 	{
-		$this->requireScriptWithAdmin('about.php');
+		$this->requireAdminScriptWithMenu('about.php');
 	}
 
 	public function aboutCredits()
 	{
-		$this->requireScriptWithAdmin('credits.php');
+		$this->requireAdminScriptWithMenu('credits.php');
 	}
 
 	public function aboutFreedoms()
 	{
-		$this->requireScriptWithAdmin('freedoms.php');
+		$this->requireAdminScriptWithMenu('freedoms.php');
 	}
 
 
 
-	private function requireScript($filename)
+	private function requireAdminScript($filename, array $globals = [])
 	{
-		require_once base_path("wordpress/wp-admin/{$filename}");
-	}
-
-	private function requireScriptWithAdmin($filename, array $globals = [])
-	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
+		// from wp-settings.php
+		$globals = array_merge($globals, ['wp_version', 'wp_db_version', 'tinymce_version', 'required_php_version', 'required_mysql_version']);
 
 		foreach ($globals as $global) {
 			global ${$global};
 		}
 
-		require_once base_path("wordpress/wp-admin/{$filename}");
+		require base_path("wordpress/wp-admin/{$filename}");
 	}
 
-	private function requireScriptWithDB($filename)
+	private function requireAdminScriptWithMenu($filename, array $globals = [])
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-		global $wpdb;
-//		global $action;
-		// MEMO wp_reset_vars() を呼び出すと、再設定した変数はglobalの効果がなくなる。wp_reset_vars()の直後にglobal $action;を呼び出す必要がある。
+		$globals = array_merge($globals, ['menu', 'submenu', '_wp_menu_nopriv', '_wp_submenu_nopriv']);
 
-		require_once base_path("wordpress/wp-admin/{$filename}");
+		$this->requireAdminScript($filename, $globals);
 	}
 
-	private function requireScriptWithComment($filename)
+	private function requireAdminScriptWithDB($filename)
 	{
-		global $menu;
-		global $submenu;
-		global $_wp_menu_nopriv;
-		global $_wp_submenu_nopriv;
-//		global $wpdb;
-		global $post_id;
-		global $comment;
-		global $comment_status;
+		$this->requireAdminScriptWithMenu($filename, ['wpdb']);
+	}
 
-		require_once base_path("wordpress/wp-admin/{$filename}");
+	private function requireAdminScriptWithComment($filename)
+	{
+		$this->requireAdminScriptWithMenu($filename, ['post_id', 'comment', 'comment_status']);
 	}
 
 }

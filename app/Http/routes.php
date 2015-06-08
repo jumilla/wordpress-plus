@@ -23,10 +23,8 @@ $app->post('wp-login.php', function() {
 });
 
 $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], function($app) {
-	$app->get('', 'WordPressAdminController@index');
-	$app->get('index.php', 'WordPressAdminController@index');
-	$app->get('load-styles.php', 'WordPressAdminController@loadStyles');
-	$app->get('load-scripts.php', 'WordPressAdminController@loadScripts');
+	$app->get('', 'WordPressAdminController@dashboard');
+	$app->get('index.php', 'WordPressAdminController@dashboard');
 
 	//--- Setup ---//
 
@@ -116,6 +114,10 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('credits.php', 'WordPressAdminController@aboutCredits');
 	$app->get('freedoms.php', 'WordPressAdminController@aboutFreedoms');
 
+	//--- File Content Provider ---//
+
+	$app->get('load-styles.php', 'FileProvideController@loadStyles');
+	$app->get('load-scripts.php', 'FileProvideController@loadScripts');
 	add_file_download_routes($app);
 });
 

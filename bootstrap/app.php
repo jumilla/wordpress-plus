@@ -63,9 +63,9 @@ $app->singleton(
 //     // 'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
 // ]);
 
-// $app->routeMiddleware([
-
-// ]);
+$app->routeMiddleware([
+	'wordpress.admin_environment_setup' => 'App\Http\Middleware\WordPressAdminEnvironmentSetupMiddleware',
+]);
 
 /*
 |--------------------------------------------------------------------------
