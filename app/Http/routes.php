@@ -11,11 +11,14 @@
 |
 */
 
-$app->get('/', function() use ($app) {
-    return $app->welcome();
-});
-
 $app->get('wp-login.php', function() {
+	global $user_login;
+	global $error;
+	require base_path('wordpress/wp-login.php');
+});
+$app->post('wp-login.php', function() {
+	global $user_login;
+	global $error;
 	require base_path('wordpress/wp-login.php');
 });
 
@@ -88,6 +91,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('options-discussion.php', 'WordPressAdminController@optionsDiscussion');
 	$app->get('options-media.php', 'WordPressAdminController@optionsMedia');
 	$app->get('options-permalink.php', 'WordPressAdminController@optionsPermaLink');
+	$app->post('options-permalink.php', 'WordPressAdminController@optionsPermaLink');
 	$app->post('options.php', 'WordPressAdminController@optionsEdit');
 
 	$app->get('admin.php', 'WordPressAdminController@admin');
@@ -128,16 +132,19 @@ $app->group(['prefix' => 'wp-content', 'namespace' => 'App\Http\Controllers'], f
 	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', 'WordPressAdminController@download');
 });
 
-$app->get('wp-login.php', function() {
-	global $user_login;
-	global $error;
-	require base_path('wordpress/wp-login.php');
-});
-$app->post('wp-login.php', function() {
-	global $user_login;
-	require base_path('wordpress/wp-login.php');
-});
-
 $app->get('wp-cron.php', function() {
 	require base_path('wordpress/wp-cron.php');
+});
+
+$app->group(['namespace' => 'App\Http\Controllers'], function($app) {
+	$app->get('', 'WordPressContentsController@provide');
+	$app->get('{f1}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}/{f4}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', 'WordPressContentsController@provide');
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', 'WordPressContentsController@provide');
 });

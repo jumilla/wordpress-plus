@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-
 class WordPressAdminController extends Controller
 {
 
@@ -233,7 +232,15 @@ $filename = 'plugin-editor.php';
 
 	public function optionsPermaLink()
 	{
-		$this->requireScriptWithAdmin('options-permalink.php');
+		global $menu;
+		global $submenu;
+		global $_wp_menu_nopriv;
+		global $_wp_submenu_nopriv;
+		global $wp_rewrite;
+
+$filename = 'options-permalink.php';
+		require_once base_path("wordpress/wp-admin/{$filename}");
+//		$this->requireScriptWithAdmin('options-permalink.php');
 	}
 
 	public function optionsEdit()
