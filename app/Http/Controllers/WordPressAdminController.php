@@ -159,12 +159,16 @@ class WordPressAdminController extends Controller
 
 	public function postNew()
 	{
-		$this->requireAdminScriptWithMenu('post-new.php');
+		$this->requireAdminScriptWithMenu('post-new.php', [
+			'is_IE',
+		]);
 	}
 
 	public function postEdit()
 	{
-		$this->requireAdminScriptWithMenu('post.php', ['is_IE', 'action']);	// app('wordpress.globals')
+		$this->requireAdminScriptWithMenu('post.php', [
+			'is_IE', 'action',
+		]);	// app('wordpress.globals')
 	}
 
 	public function tagList()
