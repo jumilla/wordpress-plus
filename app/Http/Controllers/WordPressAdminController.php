@@ -20,15 +20,16 @@ class WordPressAdminController extends Controller
 
 
 
-	public function admin()
+	public function setupConfig()
 	{
-		$this->requireScriptWithAdmin('admin.php');
+		$this->requireScriptWithAdmin('setup-config.php');
 	}
 
-	public function adminAjax()
+	public function setupInstall()
 	{
-		$this->requireScript('admin-ajax.php');
+		$this->requireScriptWithAdmin('install.php');
 	}
+
 
 
 
@@ -42,6 +43,18 @@ class WordPressAdminController extends Controller
 		$this->requireScriptWithAdmin('update.php');
 	}
 
+
+
+
+	public function admin()
+	{
+		$this->requireScriptWithAdmin('admin.php');
+	}
+
+	public function adminAjax()
+	{
+		$this->requireScript('admin-ajax.php');
+	}
 
 
 

@@ -28,6 +28,13 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('load-styles.php', 'WordPressAdminController@loadStyles');
 	$app->get('load-scripts.php', 'WordPressAdminController@loadScripts');
 
+	//--- Setup ---//
+
+	$app->get('setup-config.php', 'WordPressAdminController@setupConfig');
+	$app->post('setup-config.php', 'WordPressAdminController@setupConfig');
+	$app->get('install.php', 'WordPressAdminController@setupInstall');
+	$app->post('install.php', 'WordPressAdminController@setupInstall');
+
 	//--- Updates ---//
 
 	$app->get('update-core.php', 'WordPressAdminController@updateCore');
