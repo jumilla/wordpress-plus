@@ -53,6 +53,16 @@ class WordPressAdminController extends Controller
 		$this->requireScriptWithAdmin('widgets.php');
 	}
 
+	public function themeNavMenus()
+	{
+		$this->requireScriptWithAdmin('nav-menus.php');
+	}
+
+	public function themeFileList()
+	{
+		$this->requireScriptWithAdmin('theme-editor.php');
+	}
+
 
 
 	public function pluginList()

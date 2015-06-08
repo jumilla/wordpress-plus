@@ -30,7 +30,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('admin-ajax.php', 'WordPressAdminController@ajax');
 	$app->post('admin-ajax.php', 'WordPressAdminController@ajax');
 
-	//--- Core ---//
+	//--- Updates ---//
 
 	$app->get('update-core.php', 'WordPressAdminController@updateCore');
 	$app->get('update.php', 'WordPressAdminController@update');
@@ -40,9 +40,8 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('themes.php', 'WordPressAdminController@themeList');
 	$app->get('customize.php', 'WordPressAdminController@themeCustomize');
 	$app->get('widgets.php', 'WordPressAdminController@themeWidgetList');
-//	$app->get('themes.php', 'WordPressAdminController@themeList');
-//	$app->get('themes.php', 'WordPressAdminController@themeList');
-//	$app->get('themes.php', 'WordPressAdminController@themeList');
+	$app->get('nav-menus.php', 'WordPressAdminController@themeNavMenus');
+	$app->get('theme-editor.php', 'WordPressAdminController@themeFileList');
 
 	//--- Plugins ---//
 
@@ -62,7 +61,6 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 
 	//--- Posts ---//
 	$app->get('edit.php', 'WordPressAdminController@postList');
-//	$app->post('edit.php', 'WordPressAdminController@postList');
 	$app->get('post-new.php', 'WordPressAdminController@postNew');
 	$app->post('post-new.php', 'WordPressAdminController@postNew');
 	$app->get('post.php', 'WordPressAdminController@postEdit');
@@ -96,18 +94,18 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 
 	$app->get('admin.php', 'WordPressAdminController@admin');
 
-	add_download_routes($app);
+	add_file_download_routes($app);
 });
 
 $app->group(['prefix' => 'wp-includes', 'namespace' => 'App\Http\Controllers'], function($app) {
-	add_download_routes($app);
+	add_file_download_routes($app);
 });
 
 $app->group(['prefix' => 'wp-content', 'namespace' => 'App\Http\Controllers'], function($app) {
-	add_download_routes($app);
+	add_file_download_routes($app);
 });
 
-function add_download_routes($app)
+function add_file_download_routes($app)
 {
 	$action = 'FileProvideController@download';
 
@@ -127,14 +125,16 @@ $app->get('wp-cron.php', function() {
 });
 
 $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
-	$app->get('', 'WordPressContentsController@provide');
-	$app->get('{f1}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}/{f4}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', 'WordPressContentsController@provide');
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', 'WordPressContentsController@provide');
+	$action = 'WordPressContentsController@provide';
+
+	$app->get('', $action);
+	$app->get('{f1}', $action);
+	$app->get('{f1}/{f2}', $action);
+	$app->get('{f1}/{f2}/{f3}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
+	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
 });
