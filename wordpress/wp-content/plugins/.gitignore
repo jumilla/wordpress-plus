@@ -1,1 +1,6 @@
-jetpack
+*
+!.gitignore
+!index.php
+!hello.php
+!akismet
+!wp-multibyte-patch
