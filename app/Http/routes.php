@@ -40,6 +40,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('update-core.php', 'WordPressAdminController@updateCore');
 	$app->post('update-core.php', 'WordPressAdminController@updateCore');
 	$app->get('update.php', 'WordPressAdminController@update');
+	$app->post('update.php', 'WordPressAdminController@update');
 
 	//--- Admin ---//
 
@@ -51,7 +52,6 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 
 	$app->get('themes.php', 'WordPressAdminController@themeList');
 	$app->get('theme-install.php', 'WordPressAdminController@themeInstall');
-	$app->post('theme-install.php', 'WordPressAdminController@themeInstall');
 	$app->get('customize.php', 'WordPressAdminController@themeCustomize');
 	$app->get('widgets.php', 'WordPressAdminController@themeWidgetList');
 	$app->get('nav-menus.php', 'WordPressAdminController@themeNavMenus');
@@ -151,36 +151,38 @@ function add_file_download_routes($app)
 	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
 }
 
-$app->get('wp-activate.php', function() {
-	require base_path('wordpress/wp-activate.php');
-});
+$app->group(['namespace' => 'App\Http\Controllers'], function($app) {
+	$app->get('wp-activate.php', function() {
+		require base_path('wordpress/wp-activate.php');
+	});
 
-$app->post('wp-comments-post.php', function() {
-	require base_path('wordpress/wp-comments-post.php');
-});
+	$app->post('wp-comments-post.php', function() {
+		require base_path('wordpress/wp-comments-post.php');
+	});
 
-$app->get('wp-cron.php', function() {
-	require base_path('wordpress/wp-cron.php');
-});
+	$app->get('wp-cron.php', function() {
+		require base_path('wordpress/wp-cron.php');
+	});
 
-$app->get('wp-link-opml.php', function() {
-	require base_path('wordpress/wp-link-opml.php');
-});
+	$app->get('wp-link-opml.php', function() {
+		require base_path('wordpress/wp-link-opml.php');
+	});
 
-$app->get('wp-mail.php', function() {
-	require base_path('wordpress/wp-mail.php');
-});
+	$app->get('wp-mail.php', function() {
+		require base_path('wordpress/wp-mail.php');
+	});
 
-$app->get('wp-signup.php', function() {
-	require base_path('wordpress/wp-signup.php');
-});
+	$app->get('wp-signup.php', function() {
+		require base_path('wordpress/wp-signup.php');
+	});
 
-$app->get('wp-trackback.php', function() {
-	require base_path('wordpress/wp-trackback.php');
-});
-
-$app->get('xmlrpc.php', function() {
-	require base_path('wordpress/xmlrpc.php');
+	$app->get('wp-trackback.php', 'WordPressCollaborationController@trackback');
+	$app->get('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
+	$app->post('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
+	$app->put('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
+	$app->delete('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
+	$app->patch('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
+	$app->options('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
 });
 
 $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
