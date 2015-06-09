@@ -12,5 +12,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+    	// Clear Lumen's error handler
+    	// MEMO Need for PHP7
+    	set_error_handler(function () {});
     }
 }
