@@ -165,6 +165,18 @@ class WP_Widget {
 	}
 
 	/**
+	 * PHP4 constructor
+	 *
+	 * @param string $id_base
+	 * @param string $name
+	 * @param array  $widget_options
+	 * @param array  $control_options
+	 */
+	public function WP_Widget( $id_base, $name, $widget_options = array(), $control_options = array() ) {
+		WP_Widget::__construct( $id_base, $name, $widget_options, $control_options );
+	}
+
+	/**
 	 * Constructs name attributes for use in form() fields
 	 *
 	 * This function should be used in form() methods to create name attributes for fields to be saved by update()
@@ -532,7 +544,7 @@ class WP_Widget {
 class WP_Widget_Factory {
 	public $widgets = array();
 
-	public function __construct() {
+	public function WP_Widget_Factory() {
 		add_action( 'widgets_init', array( $this, '_register_widgets' ), 100 );
 	}
 

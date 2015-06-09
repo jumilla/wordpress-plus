@@ -124,8 +124,9 @@ class WordPressAdminController extends Controller
 
 	public function pluginEditor()
 	{
-		// MEMO 'plugin-editor.php' にglobal宣言を4つ追加。
-		$this->requireAdminScriptWithMenu('plugin-editor.php');
+		$this->requireAdminScriptWithMenu('plugin-editor.php', [
+			'action', 'error', 'file', 'plugin',
+		]);
 	}
 
 

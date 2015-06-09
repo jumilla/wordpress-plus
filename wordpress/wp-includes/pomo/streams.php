@@ -14,7 +14,7 @@ class POMO_Reader {
 	var $endian = 'little';
 	var $_post = '';
 
-	function __construct() {
+	function POMO_Reader() {
 		$this->is_overloaded = ((ini_get("mbstring.func_overload") & 2) != 0) && function_exists('mb_substr');
 		$this->_pos = 0;
 	}
@@ -122,8 +122,8 @@ class POMO_FileReader extends POMO_Reader {
 	/**
 	 * @param string $filename
 	 */
-	function __construct($filename) {
-		parent::__construct();
+	function POMO_FileReader($filename) {
+		parent::POMO_Reader();
 		$this->_f = fopen($filename, 'rb');
 	}
 
@@ -176,7 +176,7 @@ class POMO_StringReader extends POMO_Reader {
 
 	var $_str = '';
 
-	function __construct($str = '') {
+	function POMO_StringReader($str = '') {
 		parent::POMO_Reader();
 		$this->_str = $str;
 		$this->_pos = 0;
@@ -219,8 +219,8 @@ if ( !class_exists( 'POMO_CachedFileReader' ) ):
  * Reads the contents of the file in the beginning.
  */
 class POMO_CachedFileReader extends POMO_StringReader {
-	function __construct($filename) {
-		parent::__construct();
+	function POMO_CachedFileReader($filename) {
+		parent::POMO_StringReader();
 		$this->_str = file_get_contents($filename);
 		if (false === $this->_str)
 			return false;
@@ -234,8 +234,8 @@ if ( !class_exists( 'POMO_CachedIntFileReader' ) ):
  * Reads the contents of the file in the beginning.
  */
 class POMO_CachedIntFileReader extends POMO_CachedFileReader {
-	function __construct($filename) {
-		parent::__construct($filename);
+	function POMO_CachedIntFileReader($filename) {
+		parent::POMO_CachedFileReader($filename);
 	}
 }
 endif;

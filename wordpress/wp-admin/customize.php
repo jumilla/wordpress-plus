@@ -17,7 +17,6 @@ if ( ! current_user_can( 'customize' ) ) {
 }
 
 wp_reset_vars( array( 'url', 'return' ) );
-
 $url = wp_unslash( $url );
 $url = wp_validate_redirect( $url, home_url( '/' ) );
 if ( $return ) {
