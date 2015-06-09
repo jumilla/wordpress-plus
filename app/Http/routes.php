@@ -45,6 +45,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	//--- Admin ---//
 
 	$app->get('admin.php', 'WordPressAdminController@admin');
+	$app->post('admin.php', 'WordPressAdminController@admin');
 	$app->get('admin-ajax.php', 'WordPressAdminController@adminAjax');
 	$app->post('admin-ajax.php', 'WordPressAdminController@adminAjax');
 
