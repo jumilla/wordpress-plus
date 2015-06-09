@@ -38,6 +38,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 	//--- Updates ---//
 
 	$app->get('update-core.php', 'WordPressAdminController@updateCore');
+	$app->post('update-core.php', 'WordPressAdminController@updateCore');
 	$app->get('update.php', 'WordPressAdminController@update');
 
 	//--- Admin ---//
