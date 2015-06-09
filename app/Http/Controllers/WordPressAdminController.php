@@ -154,7 +154,9 @@ class WordPressAdminController extends Controller
 
 	public function postList()
 	{
-		$this->requireAdminScriptWithMenu('edit.php');
+		$this->requireAdminScriptWithMenu('edit.php', [
+//			'typenow',
+		]);
 	}
 
 	public function postNew()

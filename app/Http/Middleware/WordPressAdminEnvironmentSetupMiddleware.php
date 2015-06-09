@@ -13,6 +13,9 @@ class WordPressAdminEnvironmentSetupMiddleware {
      */
     public function handle($request, Closure $next)
     {
+        // set script name for 'wordpress/wp-includes/vars.php'
+        $_SERVER['PHP_SELF'] = $_SERVER['PATH_INFO'];
+
         // save keys for $GLOBALS
         $globals_before_keys = array_keys($GLOBALS);
 
