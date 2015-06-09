@@ -1,8 +1,8 @@
-<?php namespace App\Http\Middleware;
+<?php namespace App\Http\Middleware\WordPress;
 
 use Closure;
 
-class WordPressTemplateEnvironmentSetupMiddleware {
+class TemplateBootstrapMiddleware {
 
     /**
      * Handle an incoming request.

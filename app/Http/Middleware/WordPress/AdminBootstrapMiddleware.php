@@ -1,8 +1,8 @@
-<?php namespace App\Http\Middleware;
+<?php namespace App\Http\Middleware\WordPress;
 
 use Closure;
 
-class WordPressAdminEnvironmentSetupMiddleware {
+class AdminBootstrapMiddleware {
 
     /**
      * Handle an incoming request.
@@ -70,7 +70,7 @@ class WordPressAdminEnvironmentSetupMiddleware {
         require_once wordpress_path('wp-load.php');
         require_once wordpress_path('wp-admin/includes/admin.php');
 
-        if (env('WP_LINK_MANAGER_ENABLED', true)) {
+        if (env('WP_LINK_MANAGER_ENABLED', false)) {
             add_filter('pre_option_link_manager_enabled', '__return_true');
         }
     }
