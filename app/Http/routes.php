@@ -179,10 +179,6 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
 	$app->get('wp-trackback.php', 'WordPressCollaborationController@trackback');
 	$app->get('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
 	$app->post('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
-	$app->put('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
-	$app->delete('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
-	$app->patch('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
-	$app->options('xmlrpc.php', 'WordPressCollaborationController@xmlrpc');
 });
 
 $app->group(['namespace' => 'App\Http\Controllers'], function($app) {
