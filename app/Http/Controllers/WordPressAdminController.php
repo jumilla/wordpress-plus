@@ -162,7 +162,7 @@ class WordPressAdminController extends Controller
 	public function postNew()
 	{
 		$this->requireAdminScriptWithMenu('post-new.php', [
-			'is_IE',
+			'is_IE', 'title',
 		]);
 	}
 
@@ -176,14 +176,14 @@ class WordPressAdminController extends Controller
 	public function tagList()
 	{
 		$this->requireAdminScriptWithMenu('edit-tags.php', [
-			'taxonomy',
+			'title', 'taxonomy',
 		]);
 	}
 
 	public function commentList()
 	{
 		$this->requireAdminScriptWithMenu('edit-comments.php', [
-			'post_id', 'comment', 'comment_status'
+			'title', 'post_id', 'comment', 'comment_status'
 		]);
 	}
 
