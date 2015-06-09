@@ -1,6 +1,9 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\WordPress;
 
-class WordPressTemplateController extends Controller
+/**
+ *
+ */
+class TemplateController extends Controller
 {
 
 	public function __construct()
@@ -18,12 +21,12 @@ class WordPressTemplateController extends Controller
 		define('WP_USE_THEMES', true);
 
 //		/** Loads the WordPress Environment */
-//		require base_path('wordpress/wp-load.php');
+//		require wordpress_path('wp-load.php');
 
 		wp();
 
 		/** Loads the WordPress Template */
-		require base_path('wordpress/wp-includes/template-loader.php');
+		require wordpress_path('wp-includes/template-loader.php');
 	}
 
 }

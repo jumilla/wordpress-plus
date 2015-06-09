@@ -1,15 +1,28 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\WordPress;
 
-class WordPressCollaborationController extends Controller
+/**
+ *
+ */
+class CollaborationController extends Controller
 {
 
 	public function __construct()
 	{
 	}
 
+	public function opml()
+	{
+		$this->runScript('wp-links-opml.php');
+	}
+
+	public function mail()
+	{
+		$this->runScript('wp-mail.php');
+	}
+
 	public function trackback()
 	{
-		require base_path('wordpress/wp-trackback.php');
+		$this->runScript('wp-trackback.php');
 	}
 
 	public function xmlrpc()
@@ -19,11 +32,16 @@ class WordPressCollaborationController extends Controller
 		define('XMLRPC_REQUEST', true);
 
 		// MEMO PHP7で、apply_filters() がないと言われる対策。
-		require_once( base_path('wordpress/wp-config.php') );
+		require_once wordpress_path('wp-config.php');
 //		info (function_exists('apply_filters'));
 
 		// TODO xmlrpc.phpは書き直した方がいい
-		require base_path('wordpress/xmlrpc.php');
+		require wordpress_path('xmlrpc.php');
+	}
+
+	public function cron()
+	{
+		$this->runScript('wp-cron.php');
 	}
 
 }

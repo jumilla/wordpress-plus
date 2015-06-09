@@ -31,7 +31,7 @@ class WordPressTemplateEnvironmentSetupMiddleware {
 
     private function bootstrap()
     {
-        require_once(base_path('wordpress/wp-load.php'));
+        require_once(wordpress_path('wp-load.php'));
     }
 
     private function detectNewGlobals(array $globals_before_keys)

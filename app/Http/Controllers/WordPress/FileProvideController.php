@@ -1,7 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\WordPress;
 
 use Illuminate\Http\Request;
 
+/**
+ *
+ */
 class FileProvideController extends Controller
 {
 
@@ -9,7 +12,7 @@ class FileProvideController extends Controller
 	{
 		info('Download: ' . $request->path());
 
-		$path = base_path('wordpress/' . $request->path());
+		$path = wordpress_path($request->path());
 		$extension = pathinfo($path, PATHINFO_EXTENSION);
 
 		if ($extension == 'php') {
@@ -37,14 +40,14 @@ class FileProvideController extends Controller
 	{
 		info('Load styles: ' . $request->getQueryString());
 
-		$this->requireScript('wp-admin/load-styles.php');
+		$this->runScript('wp-admin/load-styles.php');
 	}
 
 	public function loadScripts(Request $request)
 	{
 		info('Load script: ' . $request->getQueryString());
 
-		$this->requireScript('wp-admin/load-scripts.php');
+		$this->runScript('wp-admin/load-scripts.php');
 	}
 
 }

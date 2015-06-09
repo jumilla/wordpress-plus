@@ -1,9 +1,9 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\WordPress;
 
 /**
  *
  */
-class WordPressAdminController extends Controller
+class AdminController extends Controller
 {
 
 	public function __construct()
@@ -29,7 +29,7 @@ class WordPressAdminController extends Controller
 			return redirect()->to($url);
 		}
 
-		$this->requireAdminScriptWithMenu('index.php', [
+		$this->runAdminScriptWithMenu('index.php', [
 			'wp_db_version',
 		] /*+ app('wordpress.globals')*/);
 	}
@@ -38,13 +38,13 @@ class WordPressAdminController extends Controller
 
 	public function setupConfig()
 	{
-		$this->requireAdminScript('setup-config.php');
+		$this->runAdminScript('setup-config.php');
 	}
 
 	public function setupInstall()
 	{
 		info('setupInstall');
-		$this->requireAdminScript('install.php');
+		$this->runAdminScript('install.php');
 	}
 
 
@@ -52,12 +52,12 @@ class WordPressAdminController extends Controller
 
 	public function updateCore()
 	{
-		$this->requireAdminScriptWithMenu('update-core.php');
+		$this->runAdminScriptWithMenu('update-core.php');
 	}
 
 	public function update()
 	{
-		$this->requireAdminScriptWithMenu('update.php');
+		$this->runAdminScriptWithMenu('update.php');
 	}
 
 
@@ -65,48 +65,48 @@ class WordPressAdminController extends Controller
 
 	public function admin()
 	{
-		$this->requireAdminScriptWithMenu('admin.php');
+		$this->runAdminScriptWithMenu('admin.php');
 	}
 
 	public function adminAjax()
 	{
-		$this->requireAdminScript('admin-ajax.php');
+		$this->runAdminScript('admin-ajax.php');
 	}
 
 
 
 	public function themeList()
 	{
-		$this->requireAdminScriptWithMenu('themes.php');
+		$this->runAdminScriptWithMenu('themes.php');
 	}
 
 	public function themeInstall()
 	{
-		$this->requireAdminScriptWithMenu('theme-install.php');
+		$this->runAdminScriptWithMenu('theme-install.php');
 	}
 
 	public function themeCustomize()
 	{
-		$this->requireAdminScriptWithMenu('customize.php', [
+		$this->runAdminScriptWithMenu('customize.php', [
 			'url', 'return',
 		]/* + app('wordpress.globals')*/);
 	}
 
 	public function themeWidgetList()
 	{
-		$this->requireAdminScriptWithMenu('widgets.php');
+		$this->runAdminScriptWithMenu('widgets.php');
 	}
 
 	public function themeNavMenus()
 	{
-		$this->requireAdminScriptWithMenu('nav-menus.php', [
+		$this->runAdminScriptWithMenu('nav-menus.php', [
 			'current_user',
 		]);
 	}
 
 	public function themeFileList()
 	{
-		$this->requireAdminScriptWithMenu('theme-editor.php', [
+		$this->runAdminScriptWithMenu('theme-editor.php', [
 			'action', 'error', 'file', 'theme',
 		]);
 	}
@@ -115,21 +115,21 @@ class WordPressAdminController extends Controller
 
 	public function pluginList()
 	{
-		$this->requireAdminScriptWithMenu('plugins.php', [
+		$this->runAdminScriptWithMenu('plugins.php', [
 			'plugins', 'status', 'page', 'user_ID',
 		]);
 	}
 
 	public function pluginInstall()
 	{
-		$this->requireAdminScriptWithMenu('plugin-install.php', [
+		$this->runAdminScriptWithMenu('plugin-install.php', [
 			'tabs', 'tab', 'paged', 'wp_list_table',
 		]);
 	}
 
 	public function pluginEditor()
 	{
-		$this->requireAdminScriptWithMenu('plugin-editor.php', [
+		$this->runAdminScriptWithMenu('plugin-editor.php', [
 			'action', 'error', 'file', 'plugin',
 		]);
 	}
@@ -138,64 +138,64 @@ class WordPressAdminController extends Controller
 
 	public function userList()
 	{
-		$this->requireAdminScriptWithMenu('users.php');
+		$this->runAdminScriptWithMenu('users.php');
 	}
 
 	public function userNew()
 	{
-		$this->requireAdminScriptWithMenu('user-new.php');
+		$this->runAdminScriptWithMenu('user-new.php');
 	}
 
 	public function userEdit()
 	{
-		$this->requireAdminScriptWithMenu('user-edit.php');
+		$this->runAdminScriptWithMenu('user-edit.php');
 	}
 
 	public function userProfile()
 	{
-		$this->requireAdminScriptWithMenu('profile.php');
+		$this->runAdminScriptWithMenu('profile.php');
 	}
 
 
 
 	public function postList()
 	{
-		$this->requireAdminScriptWithMenu('edit.php', [
+		$this->runAdminScriptWithMenu('edit.php', [
 //			'typenow',
 		]);
 	}
 
 	public function postNew()
 	{
-		$this->requireAdminScriptWithMenu('post-new.php', [
+		$this->runAdminScriptWithMenu('post-new.php', [
 			'is_IE', 'title',
 		]);
 	}
 
 	public function postEdit()
 	{
-		$this->requireAdminScriptWithMenu('post.php', [
+		$this->runAdminScriptWithMenu('post.php', [
 			'is_IE', 'action',
 		]);	// app('wordpress.globals')
 	}
 
 	public function tagList()
 	{
-		$this->requireAdminScriptWithMenu('edit-tags.php', [
+		$this->runAdminScriptWithMenu('edit-tags.php', [
 			'title', 'taxonomy',
 		]);
 	}
 
 	public function commentList()
 	{
-		$this->requireAdminScriptWithMenu('edit-comments.php', [
+		$this->runAdminScriptWithMenu('edit-comments.php', [
 			'title', 'post_id', 'comment', 'comment_status'
 		]);
 	}
 
 	public function commentEdit()
 	{
-		$this->requireAdminScriptWithMenu('comment.php', [
+		$this->runAdminScriptWithMenu('comment.php', [
 			'post_id', 'comment', 'comment_status'
 		]);
 	}
@@ -204,73 +204,73 @@ class WordPressAdminController extends Controller
 
 	public function mediaUpload()
 	{
-		$this->requireAdminScriptWithMenu('upload.php');
+		$this->runAdminScriptWithMenu('upload.php');
 	}
 
 	public function mediaAsyncUpload()
 	{
-		$this->requireAdminScriptWithMenu('async-upload.php');
+		$this->runAdminScriptWithMenu('async-upload.php');
 	}
 
 	public function mediaNew()
 	{
-		$this->requireAdminScriptWithMenu('media-new.php');
+		$this->runAdminScriptWithMenu('media-new.php');
 	}
 
 
 
 	public function tools()
 	{
-		$this->requireAdminScriptWithMenu('tools.php');
+		$this->runAdminScriptWithMenu('tools.php');
 	}
 
 	public function toolPressThis()
 	{
-		$this->requireAdminScriptWithMenu('press-this.php');
+		$this->runAdminScriptWithMenu('press-this.php');
 	}
 
 	public function toolImport()
 	{
-		$this->requireAdminScriptWithMenu('import.php');
+		$this->runAdminScriptWithMenu('import.php');
 	}
 
 	public function toolExport()
 	{
-		$this->requireAdminScriptWithMenu('export.php');
+		$this->runAdminScriptWithMenu('export.php');
 	}
 
 
 
 	public function optionsGeneral()
 	{
-		$this->requireAdminScriptWithMenu('options-general.php');
+		$this->runAdminScriptWithMenu('options-general.php');
 	}
 
 	public function optionsWriting()
 	{
-		$this->requireAdminScriptWithMenu('options-writing.php');
+		$this->runAdminScriptWithMenu('options-writing.php');
 	}
 
 	public function optionsReading()
 	{
-		$this->requireAdminScriptWithMenu('options-reading.php');
+		$this->runAdminScriptWithMenu('options-reading.php');
 	}
 
 	public function optionsDiscussion()
 	{
-		$this->requireAdminScriptWithMenu('options-discussion.php', [
+		$this->runAdminScriptWithMenu('options-discussion.php', [
 			'user_email',
 		]);
 	}
 
 	public function optionsMedia()
 	{
-		$this->requireAdminScriptWithMenu('options-media.php');
+		$this->runAdminScriptWithMenu('options-media.php');
 	}
 
 	public function optionsPermaLink()
 	{
-		$this->requireAdminScriptWithMenu('options-permalink.php', [
+		$this->runAdminScriptWithMenu('options-permalink.php', [
 			'wp_rewrite',
 			'is_nginx',
 		]);
@@ -278,8 +278,29 @@ class WordPressAdminController extends Controller
 
 	public function optionsEdit()
 	{
-		$this->requireAdminScriptWithMenu('options.php', [
+		$this->runAdminScriptWithMenu('options.php', [
 			'action', 'option_page',
+		]);
+	}
+
+
+
+	public function linkList()
+	{
+		$this->runAdminScriptWithMenu('link-manager.php', [
+		]);
+	}
+
+	public function linkAdd()
+	{
+		$this->runAdminScriptWithMenu('link-add.php', [
+		]);
+	}
+
+	public function linkEdit()
+	{
+		$this->runAdminScriptWithMenu('link.php', [
+			'action', 'cat_id', 'link_id',
 		]);
 	}
 
@@ -287,22 +308,22 @@ class WordPressAdminController extends Controller
 
 	public function about()
 	{
-		$this->requireAdminScriptWithMenu('about.php');
+		$this->runAdminScriptWithMenu('about.php');
 	}
 
 	public function aboutCredits()
 	{
-		$this->requireAdminScriptWithMenu('credits.php');
+		$this->runAdminScriptWithMenu('credits.php');
 	}
 
 	public function aboutFreedoms()
 	{
-		$this->requireAdminScriptWithMenu('freedoms.php');
+		$this->runAdminScriptWithMenu('freedoms.php');
 	}
 
 
 
-	private function requireAdminScript($filename, array $globals = [])
+	private function runAdminScript($filename, array $globals = [])
 	{
 		// from wp-settings.php
 		$globals = array_merge($globals, ['wp_version', 'wp_db_version', 'tinymce_version', 'required_php_version', 'required_mysql_version']);
@@ -310,14 +331,14 @@ class WordPressAdminController extends Controller
 		// additional
 		$globals = array_merge($globals, ['wp_db']);
 
-		$this->requireScript('wp-admin/' . $filename, $globals);
+		$this->runScript('wp-admin/' . $filename, $globals);
 	}
 
-	private function requireAdminScriptWithMenu($filename, array $globals = [])
+	private function runAdminScriptWithMenu($filename, array $globals = [])
 	{
 		$globals = array_merge($globals, ['menu', 'submenu', '_wp_menu_nopriv', '_wp_submenu_nopriv']);
 
-		$this->requireAdminScript($filename, $globals);
+		$this->runAdminScript($filename, $globals);
 	}
 
 }

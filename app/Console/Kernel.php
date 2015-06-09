@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
         // 5分ごとに wp-cron.php を実行する
         $schedule->call(function () {
             info('Schedule run: wp-cron.php');
-            require base_path('wordpress/wp-cron.php');
+            require wordpress_path('wp-cron.php');
         })->everyFiveMinutes();
     }
 }

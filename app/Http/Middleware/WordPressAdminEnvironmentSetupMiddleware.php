@@ -67,8 +67,12 @@ class WordPressAdminEnvironmentSetupMiddleware {
 //            define('WP_BLOG_ADMIN', true);
 //        }
 
-        require_once base_path('wordpress/wp-load.php');
-        require_once base_path('wordpress/wp-admin/includes/admin.php');
+        require_once wordpress_path('wp-load.php');
+        require_once wordpress_path('wp-admin/includes/admin.php');
+
+        if (env('WP_LINK_MANAGER_ENABLED', true)) {
+            add_filter('pre_option_link_manager_enabled', '__return_true');
+        }
     }
 
     private function detectNewGlobals(array $globals_before_keys)
