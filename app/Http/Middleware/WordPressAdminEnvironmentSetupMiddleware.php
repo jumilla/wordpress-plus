@@ -13,11 +13,7 @@ class WordPressAdminEnvironmentSetupMiddleware {
      */
     public function handle($request, Closure $next)
     {
-        // set script name for 'wordpress/wp-includes/vars.php'
-        // for NGINX
-        if (isset($_SERVER['PATH_INFO'])) {
-            $_SERVER['PHP_SELF'] = $_SERVER['PATH_INFO'];
-        }
+        $this->adjustServerVariables();
 
         // save keys for $GLOBALS
         $globals_before_keys = array_keys($GLOBALS);
@@ -36,6 +32,18 @@ class WordPressAdminEnvironmentSetupMiddleware {
 //        require_once __DIR__ . '/wp_reset_vars.php';
 
         return $next($request);
+    }
+
+    private function adjustServerVariables()
+    {
+        // set script name for 'wordpress/wp-includes/vars.php'
+        // for NGINX
+        if (isset($_SERVER['PATH_INFO'])) {
+            $_SERVER['PHP_SELF'] = $_SERVER['PATH_INFO'];
+        }
+        else if (isset($_SERVER['REQUEST_URI'])) {
+            $_SERVER['PHP_SELF'] = preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']);
+        }
     }
 
     private function bootstrap()
