@@ -51,6 +51,7 @@ $app->group(['prefix' => 'wp-admin', 'namespace' => 'App\Http\Controllers'], fun
 
 	$app->get('themes.php', 'WordPressAdminController@themeList');
 	$app->get('theme-install.php', 'WordPressAdminController@themeInstall');
+	$app->post('theme-install.php', 'WordPressAdminController@themeInstall');
 	$app->get('customize.php', 'WordPressAdminController@themeCustomize');
 	$app->get('widgets.php', 'WordPressAdminController@themeWidgetList');
 	$app->get('nav-menus.php', 'WordPressAdminController@themeNavMenus');
