@@ -80,6 +80,11 @@ class WordPressAdminController extends Controller
 		$this->requireAdminScriptWithMenu('themes.php');
 	}
 
+	public function themeInstall()
+	{
+		$this->requireAdminScriptWithMenu('theme-install.php');
+	}
+
 	public function themeCustomize()
 	{
 		$this->requireAdminScriptWithMenu('customize.php', [
