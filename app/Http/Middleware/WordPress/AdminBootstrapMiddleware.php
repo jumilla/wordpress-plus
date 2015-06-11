@@ -67,6 +67,9 @@ class AdminBootstrapMiddleware {
 //            define('WP_BLOG_ADMIN', true);
 //        }
 
+        // for 'wp-admin/includes/file.php'
+        global $wp_file_descriptions;
+
         require_once wordpress_path('wp-load.php');
         require_once wordpress_path('wp-admin/includes/admin.php');
 

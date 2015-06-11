@@ -8,6 +8,7 @@ $wp_namespace = 'App\Http\Controllers\WordPress';
 
 // Login Gate
 $app->group(['prefix' => $wp_prefix, 'namespace' => $wp_namespace], function ($app) {
+	// ?action = ['postpass', 'logout', logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'register']
 	$app->get('wp-login.php', 'GateController@login');
 	$app->post('wp-login.php', 'GateController@login');
 });
