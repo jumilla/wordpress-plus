@@ -67,15 +67,20 @@ class AdminBootstrapMiddleware {
 //            define('WP_BLOG_ADMIN', true);
 //        }
 
+        $this->runBootstrapScript();
+
+        if (env('WP_LINK_MANAGER_ENABLED', false)) {
+            add_filter('pre_option_link_manager_enabled', '__return_true');
+        }
+    }
+
+    private function runBootstrapScript()
+    {
         // for 'wp-admin/includes/file.php'
         global $wp_file_descriptions;
 
         require_once wordpress_path('wp-load.php');
         require_once wordpress_path('wp-admin/includes/admin.php');
-
-        if (env('WP_LINK_MANAGER_ENABLED', false)) {
-            add_filter('pre_option_link_manager_enabled', '__return_true');
-        }
     }
 
     private function detectNewGlobals(array $globals_before_keys)
