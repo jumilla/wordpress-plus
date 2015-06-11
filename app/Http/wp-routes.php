@@ -6,6 +6,25 @@ $wp_namespace = 'App\Http\Controllers\WordPress';
 
 
 
+if (! function_exists('add_file_download_routes')) {
+	function add_file_download_routes($app)
+	{
+		$action = 'FileProvideController@download';
+
+		$app->get('{f1}', $action);
+		$app->get('{f1}/{f2}', $action);
+		$app->get('{f1}/{f2}/{f3}', $action);
+		$app->get('{f1}/{f2}/{f3}/{f4}', $action);
+		$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
+		$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
+		$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
+		$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
+		$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
+	}
+}
+
+
+
 // Login Gate
 $app->group(['prefix' => $wp_prefix, 'namespace' => $wp_namespace], function ($app) {
 	// ?action = ['postpass', 'logout', logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'register']
@@ -184,20 +203,3 @@ $app->group(['prefix' => $wp_prefix, 'namespace' => $wp_namespace], function ($a
 	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
 });
 
-
-
-
-function add_file_download_routes($app)
-{
-	$action = 'FileProvideController@download';
-
-	$app->get('{f1}', $action);
-	$app->get('{f1}/{f2}', $action);
-	$app->get('{f1}/{f2}/{f3}', $action);
-	$app->get('{f1}/{f2}/{f3}/{f4}', $action);
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
-	$app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
-}
