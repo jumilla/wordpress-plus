@@ -338,6 +338,12 @@ class AdminController extends Controller
 	{
 		$globals = array_merge($globals, ['menu', 'submenu', '_wp_menu_nopriv', '_wp_submenu_nopriv']);
 
+		// for sort_menu() in wp-admin/includes/menu.php
+		$globals = array_merge($globals, ['menu_order', 'default_menu_order']);
+
+		// for wp-admin/includes/plugin.php
+		$globals = array_merge($globals, ['_wp_last_object_menu', '_wp_last_utility_menu']);
+
 		$this->runAdminScript($filename, $globals);
 	}
 
