@@ -344,6 +344,8 @@ class AdminController extends Controller
 		// for wp-admin/includes/plugin.php
 		$globals = array_merge($globals, ['_wp_last_object_menu', '_wp_last_utility_menu']);
 
+$globals = array_merge($globals, ['_registered_pages']);
+
 		$this->runAdminScript($filename, $globals);
 	}
 

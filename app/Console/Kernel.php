@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\WordPress\ThemeMakeCommand::class,
+        Commands\WordPress\PluginMakeCommand::class,
     ];
 
     /**

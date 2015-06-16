@@ -210,6 +210,7 @@ function apply_filters( $tag, $value ) {
 		foreach( (array) current($wp_filter[$tag]) as $the_ )
 			if ( !is_null($the_['function']) ){
 				$args[1] = $value;
+//debug_log('function', $the_['function']);
 				$value = call_user_func_array($the_['function'], array_slice($args, 1, (int) $the_['accepted_args']));
 			}
 
