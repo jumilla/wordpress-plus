@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "laravel-plus/wordpress",
+    "description": "Wordpress meets Laravel 5.",
+    "keywords": ["framework", "laravel", "lumen", "wordpress"],
     "license": "MIT",
     "type": "project",
     "require": {
