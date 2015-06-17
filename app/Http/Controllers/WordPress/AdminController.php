@@ -20,10 +20,12 @@ class AdminController extends Controller
 		// need trail '/'
 		if (! ends_with($request->getPathInfo(), '/')) {
 			// make valid url
-			if (null !== $qs = $request->getQueryString()) {
-				$qs = '?' . $qs;
+			$url = $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo() . '/';
+
+			$qs = $request->getQueryString();
+			if ($qs !== null) {
+				$url .= '?' . $qs;
 			}
-			$url = $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo() . '/' . $qs;
 
 			// redirect to valid url
 			return redirect()->to($url);
