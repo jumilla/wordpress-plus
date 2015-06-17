@@ -77,10 +77,10 @@ class TemplateController extends Controller
 			{ $this->prepareTemplate('search'); }
 		else if (is_home())
 			{ $this->prepareTemplate('home'); }
-		else if (is_post_type_archive())
-			{ $this->prepareTemplate('archive'); }
 		else if (is_front_page())
 			{ $this->prepareTemplate('front_page'); }
+		else if (is_post_type_archive())
+			{ $this->prepareTemplate('archive'); }
 		else if (is_tax())
 			{ $this->prepareTemplate('taxonomy'); }
 		else if (is_attachment())
@@ -120,7 +120,7 @@ class TemplateController extends Controller
 //
 //				// コンパイルしたPHPスクリプトを出力する
 				$content = app('view')->file($blade_path, $data)->render();
-				file_put_contents($php_path.'.compiled', $content);
+				file_put_contents($php_path.'.html', $content);
 
 				touch($php_path);
 			}

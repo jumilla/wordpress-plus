@@ -20,6 +20,9 @@ class PluginMakeCommand extends Command {
      */
     protected $description = 'Make wordpress plugin.';
 
+    /**
+     * @var \App\Console\Commands\WordPress\Storage
+     */
     protected $storage;
 
     /**

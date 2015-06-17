@@ -22,6 +22,9 @@ class ThemeMakeCommand extends Command {
      */
     protected $description = 'Make wordpress theme.';
 
+    /**
+     * @var \App\Console\Commands\WordPress\Storage
+     */
     protected $storage;
 
     /**
@@ -47,6 +50,7 @@ class ThemeMakeCommand extends Command {
 
         //
         $this->storage->directory($theme_name, function ($storage) {
+            $storage->file('layout.blade.php')->template('theme-stubs/layout.blade.php');
             $storage->file('index.blade.php')->template('theme-stubs/index.blade.php');
             $storage->file('style.css')->template('theme-stubs/style.css', [
                 'theme_name' => 'New Theme',

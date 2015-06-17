@@ -1675,7 +1675,6 @@ function user_can_access_admin_page() {
 			return false;
 
 		$hookname = get_plugin_page_hookname($plugin_page, $parent);
-dd($_registered_pages);
 
 		if ( !isset($_registered_pages[$hookname]) )
 			return false;
