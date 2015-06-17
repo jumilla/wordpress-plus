@@ -1,21 +1,34 @@
-## Lumen PHP Framework
+## WordPress+とは
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://laravel.com/lumen) で[WordP
+ress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## 機能的な特徴
 
-## Official Documentation
+- 世界中で公開されているWordPressプラグインやテーマといった既存資産が利用可能
+- WordPress本体の更新が可能（もちろんプラグインも）
+- URLゲート（ブラウザからのHTTPアクセスをフィルタリングする層）搭載
+- Bladeテンプレートエンジンで、HTMLテンプレートのコーディングスピードがあがる
+- Laravelのスキーマビルダー・クエリービルダーを活用することで、一般的なMySQL利用ができる
+- 既存システムや外部Webサービスとの連携が作りやすい
+- WordPressの管理画面をベースにした独自の管理画面が作りやすい（管理画面製作のコストを下げられる）
+- モバイル連携（スマートフォンへの通知など）もチョイチョイ
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+## 開発サイドのうれしさ
 
-## Security Vulnerabilities
+- PHPビルトインサーバーで実行可能（Apacheに依存しない運用も可能）
+- Composerを使ったPHPパッケージ管理が可能
+- Laravel 5のもつ各種Web職人用ツールが使える（O-Auth認証、コマンドスケジューラー、Redis、クラウドストレージ統合などなど）
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## インストール方法
 
-### License
+ComposerまたはソースコードのZipダウンロードからインストールできます。
+
+```shell
+$> `composer create-project laravel-plus/laravel-wordpress` `ディレクトリ名`
+```
+
+## ライセンス
 
 The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+WordPress のライセンス [– GNU General Public License –](https://ja.wordpress.org/gpl/)
