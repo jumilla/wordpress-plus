@@ -1,7 +1,6 @@
 ## WordPress+とは
 
-WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://laravel.com/lumen) で[WordP
-ress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
+WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://lumen.laravel.com) で[WordPress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
 
 ## 機能的な特徴
 
@@ -25,10 +24,13 @@ ress](https://ja.wordpress.org)をラップしたもので、次のような特�
 ComposerまたはソースコードのZipダウンロードからインストールできます。
 
 ```shell
-$> `composer create-project laravel-plus/laravel-wordpress` `ディレクトリ名`
+$> composer create-project laravel-plus/wordpress <ディレクトリ名>
 ```
 
 ## ライセンス
-
+WordPress+ is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 WordPress のライセンス [– GNU General Public License –](https://ja.wordpress.org/gpl/)
+
+## 著作権
+2015 Fumio Furukawa, All rights reserved.
