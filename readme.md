@@ -37,7 +37,7 @@ Composerまたはソースコードダウンロードからインストールで
 
 ```shell
 $ cd <インストールしたいディレクトリ>
-$ composer create-project laravel-plus/laravel-wordpress <ディレクトリ名>
+$ composer create-project laravel-plus/wordpress <ディレクトリ名>
 ```
 
 ### ソースコードをダウンロードしてインストール
