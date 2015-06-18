@@ -7,7 +7,7 @@
     "require": {
         "laravel/lumen-framework": "5.1.*",
         "vlucas/phpdotenv": "~1.0",
-        "league/flysystem": "^1.0"
+        "league/flysystem": "~1.0"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "~1.8",
