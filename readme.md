@@ -36,8 +36,8 @@ Composerまたはソースコードダウンロードからインストールで
 コマンドプロンプトを開き、次のコマンドを実行してください。
 
 ```shell
-$> cd <インストールしたいディレクトリ>
-$> composer create-project laravel-plus/laravel-wordpress <ディレクトリ名>
+$ cd <インストールしたいディレクトリ>
+$ composer create-project laravel-plus/laravel-wordpress <ディレクトリ名>
 ```
 
 ### ソースコードをダウンロードしてインストール
@@ -49,8 +49,8 @@ GitHubの当リポジトリの[「Download ZIP」](https://github.com/jumilla/wo
 コマンドプロンプトを開き、次のコマンドを実行してください。
 
 ```shell
-$> cd <インストールしたディレクトリ>
-$> php composer update
+$ cd <インストールしたディレクトリ>
+$ php composer update
 ```
 
 ### 起動方法
@@ -60,8 +60,8 @@ PHPビルトインサーバーで起動できます。
 コマンドプロンプトを開き、次のコマンドを実行してください。
 
 ```shell
-$> cd <インストールしたディレクトリ>
-$> php artisan serve
+$ cd <インストールしたディレクトリ>
+$ php artisan serve
 ```
 
 Webブラウザで `http://localhost:8000` を開くとアクセスできます。
@@ -71,9 +71,9 @@ Webブラウザで `http://localhost:8000` を開くとアクセスできます�
 
 
 ## ライセンス
-[WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-[Lumen framework](http://lumen.laravel.com) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-[WordPress](https://ja.wordpress.org) is open-sourced software licensed under the [– GNU General Public License –](https://ja.wordpress.org/gpl/)
+[WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
+[Lumen framework](http://lumen.laravel.com) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
+[WordPress](https://ja.wordpress.org) is open-sourced software licensed under the [– GNU General Public License –](https://ja.wordpress.org/gpl/)  
 
 ## 著作権
 2015 [Fumio Furukawa](http://jumilla.me), All rights reserved.
