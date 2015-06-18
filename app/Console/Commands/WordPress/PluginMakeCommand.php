@@ -4,8 +4,8 @@ namespace App\Console\Commands\WordPress;
 
 use Illuminate\Console\Command;
 
-class PluginMakeCommand extends Command {
-
+class PluginMakeCommand extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -46,5 +46,4 @@ class PluginMakeCommand extends Command {
     {
         //
     }
-
 }

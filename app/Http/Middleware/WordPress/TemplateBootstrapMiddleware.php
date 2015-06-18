@@ -1,9 +1,11 @@
-<?php namespace App\Http\Middleware\WordPress;
+<?php
+
+namespace App\Http\Middleware\WordPress;
 
 use Closure;
 
-class TemplateBootstrapMiddleware {
-
+class TemplateBootstrapMiddleware
+{
     /**
      * Handle an incoming request.
      *
@@ -31,7 +33,7 @@ class TemplateBootstrapMiddleware {
 
     private function bootstrap()
     {
-        require_once(wordpress_path('wp-load.php'));
+        require_once wordpress_path('wp-load.php');
     }
 
     private function detectNewGlobals(array $globals_before_keys)
@@ -44,8 +46,8 @@ class TemplateBootstrapMiddleware {
 
         // enumerate keys
         foreach ($globals_keys as $key) {
-            if (! in_array($key, $globals_before_keys)) {
-//                info('New GLOBAL: ' . $key);
+            if (!in_array($key, $globals_before_keys)) {
+                //                info('New GLOBAL: ' . $key);
                 $new_globals[] = $key;
             }
 //            else
@@ -54,5 +56,4 @@ class TemplateBootstrapMiddleware {
 
         return $new_globals;
     }
-
 }

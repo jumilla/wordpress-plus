@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class ThemeMakeCommand extends Command {
-
+class ThemeMakeCommand extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -69,5 +69,4 @@ class ThemeMakeCommand extends Command {
             ['name', InputArgument::REQUIRED, 'Theme name'],
         ];
     }
-
 }

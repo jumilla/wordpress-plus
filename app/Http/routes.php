@@ -11,5 +11,4 @@
 |
 */
 
-require __DIR__ . '/wp-routes.php';
-
+require __DIR__.'/wp-routes.php';

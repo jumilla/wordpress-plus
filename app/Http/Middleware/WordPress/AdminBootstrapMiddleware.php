@@ -1,9 +1,11 @@
-<?php namespace App\Http\Middleware\WordPress;
+<?php
+
+namespace App\Http\Middleware\WordPress;
 
 use Closure;
 
-class AdminBootstrapMiddleware {
-
+class AdminBootstrapMiddleware
+{
     /**
      * Handle an incoming request.
      *
@@ -40,28 +42,29 @@ class AdminBootstrapMiddleware {
         // for NGINX
         if (isset($_SERVER['PATH_INFO'])) {
             $_SERVER['PHP_SELF'] = $_SERVER['PATH_INFO'];
-        }
-        else if (isset($_SERVER['REQUEST_URI'])) {
+        } elseif (isset($_SERVER['REQUEST_URI'])) {
             $_SERVER['PHP_SELF'] = preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']);
         }
     }
 
     private function bootstrap()
     {
-        /**
+        /*
          * In WordPress Administration Screens
          *
          * @since 2.3.2
          */
-        if ( ! defined( 'WP_ADMIN' ) ) {
-            define( 'WP_ADMIN', true );
+        if (!defined('WP_ADMIN')) {
+            define('WP_ADMIN', true);
         }
 
-        if ( ! defined('WP_NETWORK_ADMIN') )
+        if (!defined('WP_NETWORK_ADMIN')) {
             define('WP_NETWORK_ADMIN', false);
+        }
 
-        if ( ! defined('WP_USER_ADMIN') )
+        if (!defined('WP_USER_ADMIN')) {
             define('WP_USER_ADMIN', false);
+        }
 
 //        if ( ! WP_NETWORK_ADMIN && ! WP_USER_ADMIN ) {
 //            define('WP_BLOG_ADMIN', true);
@@ -93,8 +96,8 @@ class AdminBootstrapMiddleware {
 
         // enumerate keys
         foreach ($globals_keys as $key) {
-            if (! in_array($key, $globals_before_keys)) {
-//                info('New GLOBAL: ' . $key);
+            if (!in_array($key, $globals_before_keys)) {
+                //                info('New GLOBAL: ' . $key);
                 $new_globals[] = $key;
             }
 //            else
@@ -103,5 +106,4 @@ class AdminBootstrapMiddleware {
 
         return $new_globals;
     }
-
 }

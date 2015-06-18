@@ -1,4 +1,6 @@
-<?php namespace App\Providers;
+<?php
+
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    	// Clear Lumen's error handler
-    	// MEMO Need for PHP7
-    	set_error_handler(function () {});
+        // Clear Lumen's error handler
+        // MEMO Need for PHP7
+        set_error_handler(function () {});
 
         $this->frameworkUncaughtExceptionHandler = set_exception_handler(function ($e) {
             if ($e instanceof \Exception) {
@@ -27,8 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
                 if (app()->runningInConsole()) {
                     (new SymfonyConsoleApplication)->renderException($e, new SymfonyConsoleOutput);
-                }
-                else {
+                } else {
                     (new SymfonyExceptionHandler(env('APP_DEBUG', false)))->createResponse($e)->send();
                 }
             }

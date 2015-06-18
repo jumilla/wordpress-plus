@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\WordPress;
+<?php
+
+namespace App\Http\Controllers\WordPress;
 
 use Illuminate\Http\Request;
 
@@ -7,47 +9,46 @@ use Illuminate\Http\Request;
  */
 class FileProvideController extends Controller
 {
+    public function download(Request $request)
+    {
+        info('Download: '.$request->path());
 
-	public function download(Request $request)
-	{
-		info('Download: ' . $request->path());
+        $path = wordpress_path($request->path());
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-		$path = wordpress_path($request->path());
-		$extension = pathinfo($path, PATHINFO_EXTENSION);
+        if ($extension == 'php') {
+            abort(404);
+        }
 
-		if ($extension == 'php') {
-			abort(404);
-		}
+        $headers = [];
+        $headers['Content-Type'] = $this->getMimeType($extension);
 
-		$headers = [];
-		$headers['Content-Type'] = $this->getMimeType($extension);
-		return response()->download($path, null, $headers);
-	}
+        return response()->download($path, null, $headers);
+    }
 
-	private function getMimeType($extension)
-	{
-		switch ($extension) {
-		case 'css':
-			return 'text/css';
-		case 'js':
-			return 'application/javascript';
-		case 'svg':
-			return 'image/svg+xml';
-		}
-	}
+    private function getMimeType($extension)
+    {
+        switch ($extension) {
+        case 'css':
+            return 'text/css';
+        case 'js':
+            return 'application/javascript';
+        case 'svg':
+            return 'image/svg+xml';
+        }
+    }
 
-	public function loadStyles(Request $request)
-	{
-		info('Load styles: ' . $request->getQueryString());
+    public function loadStyles(Request $request)
+    {
+        info('Load styles: '.$request->getQueryString());
 
-		$this->runScript('wp-admin/load-styles.php');
-	}
+        $this->runScript('wp-admin/load-styles.php');
+    }
 
-	public function loadScripts(Request $request)
-	{
-		info('Load script: ' . $request->getQueryString());
+    public function loadScripts(Request $request)
+    {
+        info('Load script: '.$request->getQueryString());
 
-		$this->runScript('wp-admin/load-scripts.php');
-	}
-
+        $this->runScript('wp-admin/load-scripts.php');
+    }
 }
