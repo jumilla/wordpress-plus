@@ -11,7 +11,7 @@ class Handler extends ExceptionHandler {
      * @var array
      */
     protected $dontReport = [
-        'Symfony\Component\HttpKernel\Exception\HttpException'
+        Symfony\Component\HttpKernel\Exception\HttpException::class,
     ];
 
     /**
@@ -24,8 +24,6 @@ class Handler extends ExceptionHandler {
      */
     public function report(Exception $e)
     {
-        // TODO post error report
-
         return parent::report($e);
     }
 
@@ -38,8 +36,6 @@ class Handler extends ExceptionHandler {
      */
     public function render($request, Exception $e)
     {
-        // TODO post error report
-
         return parent::render($request, $e);
     }
 

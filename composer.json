@@ -6,9 +6,13 @@
     "type": "project",
     "require": {
         "laravel/lumen-framework": "5.1.*",
-        "vlucas/phpdotenv": "~1.0"
+        "vlucas/phpdotenv": "~1.0",
+        "league/flysystem": "^1.0"
     },
     "require-dev": {
+        "fabpot/php-cs-fixer": "~1.8",
+        "fzaninotto/faker": "~1.0",
+        "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
@@ -29,7 +33,5 @@
     },
     "config": {
         "preferred-install": "dist"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

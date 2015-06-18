@@ -1,13 +1,9 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Console\Application as SymfonyConsoleApplication;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
-use Symfony\Component\Console\Output\ConsoleOutput as SymfonyConsoleOutput;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     /**
      * Register any application services.
      *

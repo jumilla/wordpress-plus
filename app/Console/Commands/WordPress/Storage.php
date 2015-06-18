@@ -52,7 +52,7 @@ class Storage {
 		$stub_path = __DIR__ . '/' . $stub_path;
 		$content = file_get_contents($stub_path);
 
-		if ($template_string === false) {
+		if ($content === false) {
 			throw new InvalidArgumentException("File '$stub_path' is not found.");
 		}
 

@@ -35,13 +35,13 @@ $app = new Laravel\Lumen\Application(
 */
 
 $app->singleton(
-    'Illuminate\Contracts\Debug\ExceptionHandler',
-    'App\Exceptions\Handler'
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    App\Exceptions\Handler::class
 );
 
 $app->singleton(
-    'Illuminate\Contracts\Console\Kernel',
-    'App\Console\Kernel'
+    Illuminate\Contracts\Console\Kernel::class,
+    App\Console\Kernel::class
 );
 
 /*
@@ -56,16 +56,16 @@ $app->singleton(
 */
 
 // $app->middleware([
-//     // 'Illuminate\Cookie\Middleware\EncryptCookies',
-//     // 'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-//     // 'Illuminate\Session\Middleware\StartSession',
-//     // 'Illuminate\View\Middleware\ShareErrorsFromSession',
-//     // 'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
+//     // Illuminate\Cookie\Middleware\EncryptCookies::class,
+//     // Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+//     // Illuminate\Session\Middleware\StartSession::class,
+//     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
+//     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
 // ]);
 
 $app->routeMiddleware([
-	'wordpress.admin_environment_setup' => 'App\Http\Middleware\WordPress\AdminBootstrapMiddleware',
-	'wordpress.template_environment_setup' => 'App\Http\Middleware\WordPress\TemplateBootstrapMiddleware',
+    'wordpress.admin_environment_setup' => App\Http\Middleware\WordPress\AdminBootstrapMiddleware::class,
+    'wordpress.template_environment_setup' => App\Http\Middleware\WordPress\TemplateBootstrapMiddleware::class,
 ]);
 
 /*
@@ -79,7 +79,8 @@ $app->routeMiddleware([
 |
 */
 
-$app->register('App\Providers\AppServiceProvider');
+$app->register(App\Providers\AppServiceProvider::class);
+// $app->register(App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
