@@ -2,6 +2,8 @@
 
 WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://lumen.laravel.com) で[WordPress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
 
+***まだα版レベルの開発中です。フィードバック大好物な時期ですので、お気軽にメッセージください！***
+
 ## 機能的な特徴
 
 - 世界中で公開されているWordPressプラグインやテーマといった既存資産が利用可能
@@ -19,18 +21,59 @@ WordPress+は、2015年4月にリリースされたばかりの高速マイク�
 - Composerを使ったPHPパッケージ管理が可能
 - Laravel 5のもつ各種Web職人用ツールが使える（O-Auth認証、コマンドスケジューラー、Redis、クラウドストレージ統合などなど）
 
+## WordPress+（プラス）の動作要件
+
+- PHP 5.5.9 以上
+- PHP拡張: [必須] openssl, mbstring, pdo, pdo-mysql
+- Composer: [推奨] パスの通ったディレクトリ(例えば`/usr/bin`)にインストールしておくこと
+
 ## インストール方法
 
-ComposerまたはソースコードのZipダウンロードからインストールできます。
+Composerまたはソースコードダウンロードからインストールできます。
+
+### Composerを使ったインストール
+
+コマンドプロンプトを開き、次のコマンドを実行してください。
 
 ```shell
-$> composer create-project laravel-plus/wordpress <ディレクトリ名>
+$> cd <インストールしたいディレクトリ>
+$> composer create-project laravel-plus/laravel-wordpress <ディレクトリ名>
 ```
 
+### ソースコードをダウンロードしてインストール
+
+GitHubの当リポジトリの[「Download ZIP」](https://github.com/jumilla/wordpress-plus/archive/master.zip)ボタンを押し、ソースコードをダウンロードします。
+
+そして、ローカルマシンの任意のディレクトリにZIPを展開します。
+
+コマンドプロンプトを開き、次のコマンドを実行してください。
+
+```shell
+$> cd <インストールしたディレクトリ>
+$> php composer update
+```
+
+### 起動方法
+
+PHPビルトインサーバーで起動できます。
+
+コマンドプロンプトを開き、次のコマンドを実行してください。
+
+```shell
+$> cd <インストールしたディレクトリ>
+$> php artisan serve
+```
+
+Webブラウザで `http://localhost:8000` を開くとアクセスできます。
+
+管理画面は `http://localhost:8000/wp-admin/` です。
+
+
+
 ## ライセンス
-WordPress+ is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-WordPress のライセンス [– GNU General Public License –](https://ja.wordpress.org/gpl/)
+[WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+[Lumen framework](http://lumen.laravel.com) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+[WordPress](https://ja.wordpress.org) is open-sourced software licensed under the [– GNU General Public License –](https://ja.wordpress.org/gpl/)
 
 ## 著作権
-2015 Fumio Furukawa, All rights reserved.
+2015 [Fumio Furukawa](http://jumilla.me), All rights reserved.
