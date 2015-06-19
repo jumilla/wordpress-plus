@@ -13,6 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->setupErrorHandlers();
+    }
+
+    protected function setupErrorHandlers()
+    {
         // Clear Lumen's error handler
         // MEMO Need for PHP7
         set_error_handler(function () {});
@@ -33,6 +38,29 @@ class AppServiceProvider extends ServiceProvider
                     (new SymfonyExceptionHandler(env('APP_DEBUG', false)))->createResponse($e)->send();
                 }
             }
+        });
+    }
+
+    public function boot()
+    {
+       $this->setupBladeEnvironment();
+    }
+
+    protected function blade()
+    {
+        return app('view')->getEngineResolver()->resolve('blade')->getCompiler();
+    }
+
+    protected function setupBladeEnvironment()
+    {
+        $blade = $this->blade();
+
+        $blade->directive('filter', function ($expression) {
+            return "<?php echo apply_filters{$expression}; ?>";
+        });
+
+        $blade->directive('action', function ($expression) {
+            return "<?php do_action{$expression}; ?>";
         });
     }
 }

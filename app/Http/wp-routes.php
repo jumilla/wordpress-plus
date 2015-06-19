@@ -180,6 +180,7 @@ $app->group(['prefix' => $wp_prefix, 'namespace' => $wp_namespace], function ($a
     $app->get('xmlrpc.php', 'CollaborationController@xmlrpc');
     $app->post('xmlrpc.php', 'CollaborationController@xmlrpc');
     $app->get('wp-cron.php', 'CollaborationController@cron');
+    $app->post('wp-cron.php', 'CollaborationController@cron');
 });
 
 // Templates

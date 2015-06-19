@@ -54,9 +54,11 @@ class TemplateController extends Controller
 //		/** Loads the WordPress Environment */
 //		require wordpress_path('wp-load.php');
 
+debug_log('wordpress+', 'wp()');
         wp();
 
         /** Loads the WordPress Template */
+debug_log('wordpress+', 'render');
         require wordpress_path('wp-includes/template-loader.php');
     }
 
@@ -111,6 +113,8 @@ class TemplateController extends Controller
 
     public function prepareTemplate($type, array $data = [])
     {
+debug_log('wordpress+', 'prepareTemplate:' . $type);
+
         $theme_root = get_template_directory();
         $patterns = static::TEMPLATE_TYPES[$type];
 
@@ -121,8 +125,13 @@ class TemplateController extends Controller
 //				// TODO ファイル更新日時によるチェック
 //
 //				// コンパイルしたPHPスクリプトを出力する
-                $content = app('view')->file($blade_path, $data)->render();
-                file_put_contents($php_path.'.html', $content);
+                try {
+                	$view = app('view')->file($blade_path, $data);
+	                file_put_contents($php_path.'.html', $view->render());
+	            }
+	            catch (\Exception $ex) {
+					continue;
+				}
 
                 touch($php_path);
             }
@@ -131,7 +140,7 @@ class TemplateController extends Controller
 
     public function evaluateTemplate($php_path)
     {
-        debug_log('filter:template_include', $php_path);
+debug_log('filter:template_include', $php_path);
 
         $dirname = dirname($php_path);
         $filename = basename($php_path, '.php');

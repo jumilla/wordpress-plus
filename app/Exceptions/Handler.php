@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -26,6 +27,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        if ($e instanceof MethodNotAllowedHttpException) {
+            $request = app('request');
+            debug_log(get_class($e), $request->method() . ' ' . $request->fullUrl());
+        }
+
         return parent::report($e);
     }
 

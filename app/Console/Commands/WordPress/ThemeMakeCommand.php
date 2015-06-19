@@ -50,12 +50,14 @@ class ThemeMakeCommand extends Command
 
         //
         $this->storage->directory($theme_name, function ($storage) {
-            $storage->file('layout.blade.php')->template('theme-stubs/layout.blade.php');
-            $storage->file('index.blade.php')->template('theme-stubs/index.blade.php');
+            $storage->file('index.php')->string('<?php');
             $storage->file('style.css')->template('theme-stubs/style.css', [
                 'theme_name' => 'New Theme',
             ]);
             $storage->file('screenshot.png')->string();
+
+            $storage->file('layout.blade.php')->template('theme-stubs/layout.blade.php');
+            $storage->file('index.blade.php')->template('theme-stubs/index.blade.php');
         });
         $this->info('success');
     }
