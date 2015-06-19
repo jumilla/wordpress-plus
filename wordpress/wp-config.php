@@ -74,6 +74,7 @@ $table_prefix  = env('WP_TABLE_PREFIX', 'wp_');
  * この値を true にすると、開発中に注意 (notice) を表示します。
  * テーマおよびプラグインの開発者には、その開発環境においてこの WP_DEBUG を使用することを強く推奨します。
  */
+/*
 define('WP_DEBUG', env('APP_DEBUG', false));
 
 if ( WP_DEBUG ) {
@@ -82,6 +83,7 @@ if ( WP_DEBUG ) {
     // ブラウザ上に表示しない
     define('WP_DEBUG_DISPLAY', false);
 }
+*/
 
 /* 編集が必要なのはここまでです ! WordPress でブログをお楽しみください。 */
 
