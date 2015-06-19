@@ -48,14 +48,25 @@ class ThemeMakeCommand extends Command
     {
         $theme_name = $this->argument('name');
 
-        //
-        $this->storage->directory($theme_name, function ($storage) {
+        // TODO ディレクトリ存在チェック
+
+        $metadata = [];
+        $metadata['theme_name'] = trim($this->ask('Theme Name', $theme_name));
+        $metadata['theme_uri'] = trim($this->ask('Theme URI', ' '));
+        $metadata['author'] = trim($this->ask('Author Name', ' '));
+        $metadata['author_uri'] = trim($this->ask('Author URI', ' '));
+        $metadata['description'] = trim($this->ask('Description', ' '));
+        $metadata['version'] = trim($this->ask('Version', '1.0'));
+        $metadata['license'] = trim($this->ask('License', ' '));
+        $metadata['license_uri'] = trim($this->ask('License URI', ' '));
+        $metadata['tags'] = implode(', ', array_map(function ($value) { return trim($value); }, explode(',', $this->ask('Tags', ' '))));
+
+        $this->storage->directory($theme_name, function ($storage) use ($metadata) {
             $storage->file('index.php')->string('<?php');
-            $storage->file('style.css')->template('theme-stubs/style.css', [
-                'theme_name' => 'New Theme',
-            ]);
+            $storage->file('style.css')->template('theme-stubs/style.css', $metadata);
             $storage->file('screenshot.png')->string();
 
+            $storage->file('functions.php')->template('theme-stubs/functions.php');
             $storage->file('layout.blade.php')->template('theme-stubs/layout.blade.php');
             $storage->file('index.blade.php')->template('theme-stubs/index.blade.php');
         });
