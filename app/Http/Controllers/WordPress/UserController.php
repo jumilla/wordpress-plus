@@ -13,7 +13,9 @@ class UserController extends Controller
 
     public function signup()
     {
-        $this->runScript('wp-signup.php', []);
+        $this->runScript('wp-signup.php', [
+            'wpdb',
+        ]);
     }
 
     public function activate()

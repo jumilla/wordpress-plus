@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Console\Application as SymfonyConsoleApplication;
+use Symfony\Component\Console\Output\ConsoleOutput as SymfonyConsoleOutput;
+use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 
 class AppServiceProvider extends ServiceProvider
 {

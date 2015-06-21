@@ -72,7 +72,7 @@ class AdminBootstrapMiddleware
 
         $this->runBootstrapScript();
 
-        if (env('WP_LINK_MANAGER_ENABLED', false)) {
+        if (env('WP_LINK_MANAGER', false)) {
             add_filter('pre_option_link_manager_enabled', '__return_true');
         }
     }
@@ -81,6 +81,13 @@ class AdminBootstrapMiddleware
     {
         // for 'wp-admin/includes/file.php'
         global $wp_file_descriptions;
+
+        // for ???
+        global $wpdb;
+
+        // for 'wp-includes/ms-functions.php'
+        global $current_site;
+        global $current_blog;
 
         require_once wordpress_path('wp-load.php');
         require_once wordpress_path('wp-admin/includes/admin.php');

@@ -28,6 +28,42 @@ $app->group(['prefix' => $wp_prefix, 'namespace' => $wp_namespace], function ($a
     $app->post('wp-login.php', 'GateController@login');
 });
 
+// /wp-admin/network
+$app->group(['prefix' => $wp_prefix.'wp-admin/network', 'namespace' => $wp_namespace], function ($app) {
+    $app->get('', 'MultisiteAdminController@multisiteDashboard');
+    $scripts = [
+        'about.php',
+        'admin.php',
+        'credits.php',
+        'edit.php',
+        'freedoms.php',
+        'index.php',
+        'plugins.php',
+        'profile.php',
+        'settings.php',
+        'setup.php',
+        'site-info.php',
+        'site-new.php',
+        'site-settings.php',
+        'site-themes.php',
+        'site-users.php',
+        'sites.php',
+        'theme-editor.php',
+        'theme-install.php',
+        'themes.php',
+        'update-core.php',
+        'update.php',
+        'upgrade.php',
+        'user-edit.php',
+        'user-new.php',
+        'users.php',
+    ];
+    foreach ($scripts as $script) {
+        $app->get($script, 'MultisiteAdminController@multisitePage');
+        $app->post($script, 'MultisiteAdminController@multisitePage');
+    }
+});
+
 // /wp-admin
 $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], function ($app) {
     //--- Dashboard ---//
@@ -111,6 +147,8 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     $app->get('press-this.php', 'AdminController@toolPressThis');
     $app->get('import.php', 'AdminController@toolImport');
     $app->get('export.php', 'AdminController@toolExport');
+    $app->get('network.php', 'AdminController@toolNetwork');
+    $app->post('network.php', 'AdminController@toolNetwork');
 
     //--- Links ---//
 
@@ -134,6 +172,10 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     $app->get('about.php', 'AdminController@about');
     $app->get('credits.php', 'AdminController@aboutCredits');
     $app->get('freedoms.php', 'AdminController@aboutFreedoms');
+
+    //--- Multisite ---//
+
+    $app->get('my-sites.php', 'AdminController@multisiteList');
 
     //--- File Content Provider ---//
 

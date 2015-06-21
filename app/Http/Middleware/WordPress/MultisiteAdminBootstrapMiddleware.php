@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Middleware\WordPress;
+
+use Closure;
+
+class MultisiteAdminBootstrapMiddleware extends AdminBootstrapMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        define('WP_NETWORK_ADMIN', true);
+
+        return parent::handle($request, $next);
+    }
+
+}

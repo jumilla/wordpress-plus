@@ -66,24 +66,31 @@ define('NONCE_SALT',       env('WP_NONCE_SALT', 'put your unique phrase here'));
  * それぞれにユニーク (一意) な接頭辞を与えることで一つのデータベースに複数の WordPress を
  * インストールすることができます。半角英数字と下線のみを使用してください。
  */
+global $table_prefix;
 $table_prefix  = env('WP_TABLE_PREFIX', 'wp_');
 
 /**
- * 開発者へ: WordPress デバッグモード
+ * WordPress デバッグモード
  *
- * この値を true にすると、開発中に注意 (notice) を表示します。
- * テーマおよびプラグインの開発者には、その開発環境においてこの WP_DEBUG を使用することを強く推奨します。
+ * PHPデバッグ機能はLumen Frameworkが制御するため、常にfalseを指定してください。
  */
-/*
-define('WP_DEBUG', env('APP_DEBUG', false));
+define('WP_DEBUG', false);
 
-if ( WP_DEBUG ) {
-    // debug.log ファイルに記録
-    define('WP_DEBUG_LOG', true);
-    // ブラウザ上に表示しない
-    define('WP_DEBUG_DISPLAY', false);
+/** WordPress マルチサイト機能 */
+if (env('WP_MULTISITE', false)) {
+    if (defined('WP_INSTALLING_NETWORK') || wordpress_multisite_installed()) {
+	    define('WP_ALLOW_MULTISITE', true);
+	    define('MULTISITE', true);
+	    define('SUBDOMAIN_INSTALL', true);
+	    define('DOMAIN_CURRENT_SITE', env('WP_SITEURL', 'localhost'));
+	    define('PATH_CURRENT_SITE', '/');
+	    define('SITE_ID_CURRENT_SITE', 1);
+	    define('BLOG_ID_CURRENT_SITE', 1);
+    }
+    else {
+        define('WP_ALLOW_MULTISITE', true);
+    }
 }
-*/
 
 /* 編集が必要なのはここまでです ! WordPress でブログをお楽しみください。 */
 

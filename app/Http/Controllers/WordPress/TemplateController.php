@@ -31,7 +31,7 @@ class TemplateController extends Controller
 
     public function __construct()
     {
-        $this->middleware('wordpress.template_environment_setup');
+        $this->middleware('wordpress.template_bootstrap');
     }
 
     public function provide()

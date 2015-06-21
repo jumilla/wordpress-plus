@@ -33,6 +33,8 @@ class TemplateBootstrapMiddleware
 
     private function bootstrap()
     {
+        global $wpdb;
+
         require_once wordpress_path('wp-load.php');
     }
 

@@ -27,6 +27,12 @@ WordPress+は、2015年4月にリリースされたばかりの高速マイク�
 - PHP拡張: [必須] openssl, mbstring, pdo, pdo-mysql
 - Composer: [推奨] パスの通ったディレクトリ(例えば`/usr/bin`)にインストールしておくこと
 
+## WordPress+（プラス）のサポートしている機能
+
+- [Bladeテンプレートエンジン](http://laravel.com/docs/5.1/blade)を使ったテーマ作成
+- マルチサイト（オプション: 有効にするには、環境変数 `WP_MULTISITE=true` を指定してください。）
+- リンクマネージャー（オプション: 有効にするには、環境変数 `WP_LINK_MANAGER=true` を指定してください。）
+
 ## インストール方法
 
 Composerまたはソースコードダウンロードからインストールできます。
@@ -51,9 +57,15 @@ GitHubの当リポジトリの[「Download ZIP」](https://github.com/jumilla/wo
 ```shell
 $ cd <インストールしたディレクトリ>
 $ php composer update
+$ cp .env.example .env
 ```
 
-### 起動方法
+### 環境変数
+
+データベース等の設定は、プロジェクト固有の環境変数設定ファイル `.env` に記述します。
+設定例は [.env.example](.env.example)を参照してください。
+
+### サーバー起動方法
 
 PHPビルトインサーバーで起動できます。
 
@@ -68,7 +80,10 @@ Webブラウザで `http://localhost:8000` を開くとアクセスできます�
 
 管理画面は `http://localhost:8000/wp-admin/` です。
 
+### artisan（アルチザン）コマンド
 
+- make:theme テーマ作成
+- make:plugin プラグイン作成（予定）
 
 ## ライセンス
 [WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  

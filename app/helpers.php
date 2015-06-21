@@ -7,6 +7,25 @@ if (!function_exists('wordpress_path')) {
     }
 }
 
+if (!function_exists('wordpress_table')) {
+    function wordpress_table($table)
+    {
+        return env('WP_TABLE_PREFIX', 'wp_') . $table;
+    }
+}
+
+if (!function_exists('wordpress_multisite_installed')) {
+    function wordpress_multisite_installed()
+    {
+        try {
+            return app('db')->table(wordpress_table('site'))->exists();
+        }
+        catch (Exception $ex) {
+            return false;
+        }
+    }
+}
+
 if (!function_exists('logger')) {
     function logger()
     {

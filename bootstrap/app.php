@@ -64,8 +64,9 @@ $app->singleton(
 // ]);
 
 $app->routeMiddleware([
-    'wordpress.admin_environment_setup' => App\Http\Middleware\WordPress\AdminBootstrapMiddleware::class,
-    'wordpress.template_environment_setup' => App\Http\Middleware\WordPress\TemplateBootstrapMiddleware::class,
+    'wordpress.admin_bootstrap' => App\Http\Middleware\WordPress\AdminBootstrapMiddleware::class,
+    'wordpress.multisite_admin_bootstrap' => App\Http\Middleware\WordPress\MultisiteAdminBootstrapMiddleware::class,
+    'wordpress.template_bootstrap' => App\Http\Middleware\WordPress\TemplateBootstrapMiddleware::class,
 ]);
 
 /*

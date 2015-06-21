@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('wordpress.admin_environment_setup', [
+        $this->middleware('wordpress.admin_bootstrap', [
             'except' => ['setupConfig', 'setupInstall'],
         ]);
     }
@@ -222,6 +222,32 @@ class AdminController extends Controller
         $this->runAdminScriptWithMenu('export.php');
     }
 
+    public function toolNetwork()
+    {
+        $this->runAdminScriptWithMenu('network.php', [
+            'wpdb',
+        ]);
+    }
+
+    public function linkList()
+    {
+        $this->runAdminScriptWithMenu('link-manager.php', [
+        ]);
+    }
+
+    public function linkAdd()
+    {
+        $this->runAdminScriptWithMenu('link-add.php', [
+        ]);
+    }
+
+    public function linkEdit()
+    {
+        $this->runAdminScriptWithMenu('link.php', [
+            'action', 'cat_id', 'link_id',
+        ]);
+    }
+
     public function optionsGeneral()
     {
         $this->runAdminScriptWithMenu('options-general.php');
@@ -264,25 +290,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function linkList()
-    {
-        $this->runAdminScriptWithMenu('link-manager.php', [
-        ]);
-    }
-
-    public function linkAdd()
-    {
-        $this->runAdminScriptWithMenu('link-add.php', [
-        ]);
-    }
-
-    public function linkEdit()
-    {
-        $this->runAdminScriptWithMenu('link.php', [
-            'action', 'cat_id', 'link_id',
-        ]);
-    }
-
     public function about()
     {
         $this->runAdminScriptWithMenu('about.php');
@@ -298,13 +305,18 @@ class AdminController extends Controller
         $this->runAdminScriptWithMenu('freedoms.php');
     }
 
+    public function multisiteList()
+    {
+        $this->runAdminScriptWithMenu('my-sites.php', [
+            'wpdb',
+            'current_site', 'current_blog', 'current_user',
+        ]);
+    }
+
     private function runAdminScript($filename, array $globals = [])
     {
         // from wp-settings.php
         $globals = array_merge($globals, ['wp_version', 'wp_db_version', 'tinymce_version', 'required_php_version', 'required_mysql_version']);
-
-        // additional
-        $globals = array_merge($globals, ['wp_db']);
 
         $this->runScript('wp-admin/'.$filename, $globals);
     }
@@ -318,8 +330,6 @@ class AdminController extends Controller
 
         // for wp-admin/includes/plugin.php
         $globals = array_merge($globals, ['_wp_last_object_menu', '_wp_last_utility_menu']);
-
-        $globals = array_merge($globals, ['_registered_pages']);
 
         $this->runAdminScript($filename, $globals);
     }
