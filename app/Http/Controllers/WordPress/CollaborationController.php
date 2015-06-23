@@ -42,6 +42,6 @@ class CollaborationController extends Controller
 
     public function cron()
     {
-        $this->runScript('wp-cron.php');
+        $this->runScript('wp-cron.php', ['wpdb']);
     }
 }

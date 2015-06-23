@@ -29,7 +29,7 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof MethodNotAllowedHttpException) {
             $request = app('request');
-            debug_log(get_class($e), $request->method() . ' ' . $request->fullUrl());
+            debug_log(get_class($e), $request->method().' '.$request->fullUrl());
         }
 
         return parent::report($e);

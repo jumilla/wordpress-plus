@@ -4,7 +4,7 @@ namespace App\Http\Middleware\WordPress;
 
 use Closure;
 
-class MultisiteAdminBootstrapMiddleware extends AdminBootstrapMiddleware
+class SiteAdminBootstrapMiddleware extends BlogAdminBootstrapMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,5 +19,4 @@ class MultisiteAdminBootstrapMiddleware extends AdminBootstrapMiddleware
 
         return parent::handle($request, $next);
     }
-
 }

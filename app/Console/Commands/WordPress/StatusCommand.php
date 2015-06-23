@@ -43,11 +43,10 @@ class StatusCommand extends Command
 
         require_once wordpress_path('wp-load.php');
 
-        $this->info('Multisite: ' . (is_multisite() ? 'YES' : 'NO'));
+        $this->info('Multisite: '.(is_multisite() ? 'YES' : 'NO'));
         if (is_blog_installed()) {
             $this->info('Blog installed: YES');
-        }
-        else {
+        } else {
             $this->error('Blog installed: NO');
         }
 //        $this->info('Network Domain:', network_domain_check());
@@ -65,11 +64,11 @@ class StatusCommand extends Command
     {
         global $wpdb;
 
-        $sql = $wpdb->prepare( "SHOW TABLES LIKE %s", $wpdb->esc_like( $wpdb->site ) );
-        if ( $wpdb->get_var( $sql ) ) {
-            return $wpdb->get_var( "SELECT domain FROM $wpdb->site ORDER BY id ASC LIMIT 1" );
+        $sql = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($wpdb->site));
+        if ($wpdb->get_var($sql)) {
+            return $wpdb->get_var("SELECT domain FROM $wpdb->site ORDER BY id ASC LIMIT 1");
         }
+
         return false;
     }
-
 }

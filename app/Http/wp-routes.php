@@ -30,37 +30,10 @@ $app->group(['prefix' => $wp_prefix, 'namespace' => $wp_namespace], function ($a
 
 // /wp-admin/network
 $app->group(['prefix' => $wp_prefix.'wp-admin/network', 'namespace' => $wp_namespace], function ($app) {
-    $app->get('', 'MultisiteAdminController@multisiteDashboard');
-    $scripts = [
-        'about.php',
-        'admin.php',
-        'credits.php',
-        'edit.php',
-        'freedoms.php',
-        'index.php',
-        'plugins.php',
-        'profile.php',
-        'settings.php',
-        'setup.php',
-        'site-info.php',
-        'site-new.php',
-        'site-settings.php',
-        'site-themes.php',
-        'site-users.php',
-        'sites.php',
-        'theme-editor.php',
-        'theme-install.php',
-        'themes.php',
-        'update-core.php',
-        'update.php',
-        'upgrade.php',
-        'user-edit.php',
-        'user-new.php',
-        'users.php',
-    ];
-    foreach ($scripts as $script) {
-        $app->get($script, 'MultisiteAdminController@multisitePage');
-        $app->post($script, 'MultisiteAdminController@multisitePage');
+    $app->get('', 'SiteAdminController@siteDashboard');
+    foreach (\App\Services\WordPress::siteAdminScripts() as $script) {
+        $app->get($script, 'SiteAdminController@sitePage');
+        $app->post($script, 'SiteAdminController@sitePage');
     }
 });
 
@@ -68,114 +41,115 @@ $app->group(['prefix' => $wp_prefix.'wp-admin/network', 'namespace' => $wp_names
 $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], function ($app) {
     //--- Dashboard ---//
 
-    $app->get('', ['as' => 'wordpress.admin.dashboard', 'uses' => 'AdminController@dashboard']);
+    $app->get('', ['as' => 'wordpress.admin.dashboard', 'uses' => 'BlogAdminController@dashboard']);
     $app->get('index.php', function () {
         return redirect()->route('wordpress.admin.dashboard');
     });
 
     //--- Setup ---//
 
-    $app->get('setup-config.php', 'AdminController@setupConfig');
-    $app->post('setup-config.php', 'AdminController@setupConfig');
-    $app->get('install.php', 'AdminController@setupInstall');
-    $app->post('install.php', 'AdminController@setupInstall');
+    $app->get('setup-config.php', 'SetupController@setupConfig');
+    $app->post('setup-config.php', 'SetupController@setupConfig');
+    $app->get('install.php', 'SetupController@setupInstall');
+    $app->post('install.php', 'SetupController@setupInstall');
 
     //--- Updates ---//
 
-    $app->get('update-core.php', 'AdminController@updateCore');
-    $app->post('update-core.php', 'AdminController@updateCore');
-    $app->get('update.php', 'AdminController@update');
-    $app->post('update.php', 'AdminController@update');
+    $app->get('update-core.php', 'BlogAdminController@updateCore');
+    $app->post('update-core.php', 'BlogAdminController@updateCore');
+    $app->get('update.php', 'BlogAdminController@update');
+    $app->post('update.php', 'BlogAdminController@update');
 
     //--- Admin ---//
 
-    $app->get('admin.php', 'AdminController@admin');
-    $app->post('admin.php', 'AdminController@admin');
-    $app->get('admin-ajax.php', 'AdminController@adminAjax');
-    $app->post('admin-ajax.php', 'AdminController@adminAjax');
+    $app->get('admin.php', 'BlogAdminController@admin');
+    $app->post('admin.php', 'BlogAdminController@admin');
+    $app->get('admin-ajax.php', 'BlogAdminController@adminAjax');
+    $app->post('admin-ajax.php', 'BlogAdminController@adminAjax');
 
     //--- Themes ---//
 
-    $app->get('themes.php', 'AdminController@themeList');
-    $app->get('theme-install.php', 'AdminController@themeInstall');
-    $app->get('customize.php', 'AdminController@themeCustomize');
-    $app->get('widgets.php', 'AdminController@themeWidgetList');
-    $app->get('nav-menus.php', 'AdminController@themeNavMenus');
-    $app->post('nav-menus.php', 'AdminController@themeNavMenus');
-    $app->get('theme-editor.php', 'AdminController@themeFileList');
-    $app->post('theme-editor.php', 'AdminController@themeFileList');
+    $app->get('themes.php', 'BlogAdminController@themeList');
+    $app->get('theme-install.php', 'BlogAdminController@themeInstall');
+    $app->get('customize.php', 'BlogAdminController@themeCustomize');
+    $app->get('widgets.php', 'BlogAdminController@themeWidgetList');
+    $app->get('nav-menus.php', 'BlogAdminController@themeNavMenus');
+    $app->post('nav-menus.php', 'BlogAdminController@themeNavMenus');
+    $app->get('theme-editor.php', 'BlogAdminController@themeFileList');
+    $app->post('theme-editor.php', 'BlogAdminController@themeFileList');
 
     //--- Plugins ---//
 
-    $app->get('plugins.php', 'AdminController@pluginList');
-    $app->post('plugins.php', 'AdminController@pluginList');
-    $app->get('plugin-install.php', 'AdminController@pluginInstall');
-    $app->get('plugin-editor.php', 'AdminController@pluginEditor');
+    $app->get('plugins.php', 'BlogAdminController@pluginList');
+    $app->post('plugins.php', 'BlogAdminController@pluginList');
+    $app->get('plugin-install.php', 'BlogAdminController@pluginInstall');
+    $app->get('plugin-editor.php', 'BlogAdminController@pluginEditor');
 
     //--- Users ---//
 
-    $app->get('users.php', 'AdminController@userList');
-    $app->get('user-new.php', 'AdminController@userNew');
-    $app->post('user-new.php', 'AdminController@userNew');
-    $app->get('user-edit.php', 'AdminController@userEdit');
-    $app->post('user-edit.php', 'AdminController@userEdit');
-    $app->get('profile.php', 'AdminController@userProfile');
-    $app->post('profile.php', 'AdminController@userProfile');
+    $app->get('users.php', 'BlogAdminController@userList');
+    $app->get('user-new.php', 'BlogAdminController@userNew');
+    $app->post('user-new.php', 'BlogAdminController@userNew');
+    $app->get('user-edit.php', 'BlogAdminController@userEdit');
+    $app->post('user-edit.php', 'BlogAdminController@userEdit');
+    $app->get('profile.php', 'BlogAdminController@userProfile');
+    $app->post('profile.php', 'BlogAdminController@userProfile');
 
     //--- Posts ---//
 
-    $app->get('edit.php', 'AdminController@postList');
-    $app->get('post-new.php', 'AdminController@postNew');
-    $app->post('post-new.php', 'AdminController@postNew');
-    $app->get('post.php', 'AdminController@postEdit');
-    $app->post('post.php', 'AdminController@postEdit');
-    $app->get('edit-tags.php', 'AdminController@tagList');
-    $app->post('edit-tags.php', 'AdminController@tagList');
-    $app->get('edit-comments.php', 'AdminController@commentList');
-    $app->get('comment.php', 'AdminController@commentEdit');
-    $app->post('comment.php', 'AdminController@commentEdit');
+    $app->get('edit.php', 'BlogAdminController@postList');
+    $app->get('post-new.php', 'BlogAdminController@postNew');
+    $app->post('post-new.php', 'BlogAdminController@postNew');
+    $app->get('post.php', 'BlogAdminController@postEdit');
+    $app->post('post.php', 'BlogAdminController@postEdit');
+    $app->get('edit-tags.php', 'BlogAdminController@tagList');
+    $app->post('edit-tags.php', 'BlogAdminController@tagList');
+    $app->get('edit-comments.php', 'BlogAdminController@commentList');
+    $app->get('comment.php', 'BlogAdminController@commentEdit');
+    $app->post('comment.php', 'BlogAdminController@commentEdit');
 
     //--- Media ---//
 
-    $app->get('upload.php', 'AdminController@mediaUpload');
-    $app->post('async-upload.php', 'AdminController@mediaAsyncUpload');
-    $app->get('media-new.php', 'AdminController@mediaNew');
+    $app->get('upload.php', 'BlogAdminController@mediaUpload');
+    $app->post('async-upload.php', 'BlogAdminController@mediaAsyncUpload');
+    $app->get('media-new.php', 'BlogAdminController@mediaNew');
 
     //--- Tools ---//
 
-    $app->get('tools.php', 'AdminController@tools');
-    $app->get('press-this.php', 'AdminController@toolPressThis');
-    $app->get('import.php', 'AdminController@toolImport');
-    $app->get('export.php', 'AdminController@toolExport');
-    $app->get('network.php', 'AdminController@toolNetwork');
-    $app->post('network.php', 'AdminController@toolNetwork');
+    $app->get('tools.php', 'BlogAdminController@tools');
+    $app->get('press-this.php', 'BlogAdminController@toolPressThis');
+    $app->get('import.php', 'BlogAdminController@toolImport');
+    $app->get('export.php', 'BlogAdminController@toolExport');
+    $app->get('network.php', 'BlogAdminController@toolNetwork');
+    $app->post('network.php', 'BlogAdminController@toolNetwork');
 
     //--- Links ---//
 
-    $app->get('link-manager.php', 'AdminController@linkList');
-    $app->get('link-add.php', 'AdminController@linkAdd');
-    $app->post('link.php', 'AdminController@linkEdit');
+    $app->get('link-manager.php', 'BlogAdminController@linkList');
+    $app->get('link-add.php', 'BlogAdminController@linkAdd');
+    $app->post('link.php', 'BlogAdminController@linkEdit');
 
     //--- Settings ---//
 
-    $app->get('options-general.php', 'AdminController@optionsGeneral');
-    $app->get('options-writing.php', 'AdminController@optionsWriting');
-    $app->get('options-reading.php', 'AdminController@optionsReading');
-    $app->get('options-discussion.php', 'AdminController@optionsDiscussion');
-    $app->get('options-media.php', 'AdminController@optionsMedia');
-    $app->get('options-permalink.php', 'AdminController@optionsPermaLink');
-    $app->post('options-permalink.php', 'AdminController@optionsPermaLink');
-    $app->post('options.php', 'AdminController@optionsEdit');
+    $app->get('options-general.php', 'BlogAdminController@optionsGeneral');
+    $app->post('options-general.php', 'BlogAdminController@optionsGeneral');
+    $app->get('options-writing.php', 'BlogAdminController@optionsWriting');
+    $app->get('options-reading.php', 'BlogAdminController@optionsReading');
+    $app->get('options-discussion.php', 'BlogAdminController@optionsDiscussion');
+    $app->get('options-media.php', 'BlogAdminController@optionsMedia');
+    $app->get('options-permalink.php', 'BlogAdminController@optionsPermaLink');
+    $app->post('options-permalink.php', 'BlogAdminController@optionsPermaLink');
+    $app->post('options.php', 'BlogAdminController@optionsEdit');
 
     //--- About ---//
 
-    $app->get('about.php', 'AdminController@about');
-    $app->get('credits.php', 'AdminController@aboutCredits');
-    $app->get('freedoms.php', 'AdminController@aboutFreedoms');
+    $app->get('about.php', 'BlogAdminController@about');
+    $app->get('credits.php', 'BlogAdminController@aboutCredits');
+    $app->get('freedoms.php', 'BlogAdminController@aboutFreedoms');
 
     //--- Multisite ---//
 
-    $app->get('my-sites.php', 'AdminController@multisiteList');
+    $app->get('my-sites.php', 'BlogAdminController@multisiteList');
 
     //--- File Content Provider ---//
 

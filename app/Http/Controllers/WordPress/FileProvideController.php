@@ -35,6 +35,8 @@ class FileProvideController extends Controller
             return 'application/javascript';
         case 'svg':
             return 'image/svg+xml';
+
+        // TODO: and more...
         }
     }
 

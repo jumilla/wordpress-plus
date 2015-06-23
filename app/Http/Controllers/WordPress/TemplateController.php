@@ -36,7 +36,6 @@ class TemplateController extends Controller
 
     public function provide()
     {
-        //		app('view')->addLocation(get_template_directory());
         app('view')->addNamespace('theme', get_template_directory());
 
         // Bladeファイルをコンパイルする
@@ -51,13 +50,10 @@ class TemplateController extends Controller
          */
         define('WP_USE_THEMES', true);
 
-//		/** Loads the WordPress Environment */
-//		require wordpress_path('wp-load.php');
-
 debug_log('wordpress+', 'wp()');
         wp();
 
-        /** Loads the WordPress Template */
+        /* Loads the WordPress Template */
 debug_log('wordpress+', 'render');
         require wordpress_path('wp-includes/template-loader.php');
     }
@@ -113,7 +109,7 @@ debug_log('wordpress+', 'render');
 
     public function prepareTemplate($type, array $data = [])
     {
-debug_log('wordpress+', 'prepareTemplate:' . $type);
+        debug_log('wordpress+', 'prepareTemplate:'.$type);
 
         $theme_root = get_template_directory();
         $patterns = static::TEMPLATE_TYPES[$type];
@@ -126,12 +122,11 @@ debug_log('wordpress+', 'prepareTemplate:' . $type);
 //
 //				// コンパイルしたPHPスクリプトを出力する
                 try {
-                	$view = app('view')->file($blade_path, $data);
-	                file_put_contents($php_path.'.html', $view->render());
-	            }
-	            catch (\Exception $ex) {
-					continue;
-				}
+                    $view = app('view')->file($blade_path, $data);
+                    file_put_contents($php_path.'.html', $view->render());
+                } catch (\Exception $ex) {
+                    continue;
+                }
 
                 touch($php_path);
             }
@@ -140,7 +135,7 @@ debug_log('wordpress+', 'prepareTemplate:' . $type);
 
     public function evaluateTemplate($php_path)
     {
-debug_log('filter:template_include', $php_path);
+        debug_log('filter:template_include', $php_path);
 
         $dirname = dirname($php_path);
         $filename = basename($php_path, '.php');

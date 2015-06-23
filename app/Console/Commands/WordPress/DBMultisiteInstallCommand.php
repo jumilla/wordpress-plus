@@ -39,24 +39,25 @@ class DBMultisiteInstallCommand extends DBMultisiteAbstractCommand
 
         if (wordpress_multisite_installed()) {
             $this->info('Multisite already installed.');
+
             return;
         }
 
         $this->install_multisite();
 
-        $domain            = parse_url(get_option('siteurl'), PHP_URL_HOST);
-        $path              = parse_url(trailingslashit(get_option('home')), PHP_URL_PATH);
+        $domain = parse_url(get_option('siteurl'), PHP_URL_HOST);
+        $path = parse_url(trailingslashit(get_option('home')), PHP_URL_PATH);
         $subdomain_install = true;
-        $sitename          = wp_unslash(get_option('blogname'));
-        $email             = sanitize_email(get_option('admin_email'));
+        $sitename = wp_unslash(get_option('blogname'));
+        $email = sanitize_email(get_option('admin_email'));
 
-        $this->line('domain: ' . $domain);
-        $this->line('path: ' . $path);
-        $this->line('type: ' . ($subdomain_install ? 'subdomain' : 'subdirectory'));
-        $this->line('sitename: ' . $sitename);
-        $this->line('email: ' . $email);
+        $this->line('domain: '.$domain);
+        $this->line('path: '.$path);
+        $this->line('type: '.($subdomain_install ? 'subdomain' : 'subdirectory'));
+        $this->line('sitename: '.$sitename);
+        $this->line('email: '.$email);
 
-        if (! $this->confirm('Site Install?')) {
+        if (!$this->confirm('Site Install?')) {
             return;
         }
 
@@ -67,6 +68,7 @@ class DBMultisiteInstallCommand extends DBMultisiteAbstractCommand
                 foreach ($result->get_error_codes() as $error_code) {
                     $this->error($error_code);
                 }
+
                 return;
             }
 
@@ -89,5 +91,4 @@ class DBMultisiteInstallCommand extends DBMultisiteAbstractCommand
         require_once wordpress_path('wp-admin/includes/upgrade.php');
         install_network();
     }
-
 }

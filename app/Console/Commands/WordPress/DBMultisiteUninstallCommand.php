@@ -43,7 +43,7 @@ class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
 
         // We need to create references to ms global tables to enable Network.
         foreach ($wpdb->tables('ms_global') as $table => $prefixed_table) {
-            $this->line('Dropping table: ' . $prefixed_table);
+            $this->line('Dropping table: '.$prefixed_table);
             Schema::dropIfExists($prefixed_table);
         }
 

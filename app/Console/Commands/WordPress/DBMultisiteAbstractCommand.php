@@ -15,5 +15,4 @@ class DBMultisiteAbstractCommand extends Command
 
         require_once wordpress_path('wp-config.php');
     }
-
 }

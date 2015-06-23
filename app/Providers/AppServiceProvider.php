@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-       $this->setupBladeEnvironment();
+        $this->setupBladeEnvironment();
     }
 
     protected function blade()
