@@ -74,8 +74,6 @@ trait WordPressService
             global $blog_id;
             global $wpdb;
             global $_wp_switched_stack;
-
-// TODO: analize $user_id, $current_user, 'wp-admin/user-edit.php'
         }
         else {
         }

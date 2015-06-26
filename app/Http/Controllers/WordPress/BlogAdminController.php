@@ -163,6 +163,16 @@ class BlogAdminController extends Controller
         $this->runAdminScriptWithMenu('media-new.php');
     }
 
+    public function mediaManagerOld()
+    {
+        $this->runAdminScriptWithMenu('media.php');
+    }
+
+    public function mediaUploadOld()
+    {
+        $this->runAdminScriptWithMenu('media-upload.php');
+    }
+
     public function tools()
     {
         $this->runAdminScriptWithMenu('tools.php');

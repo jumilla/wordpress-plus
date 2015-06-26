@@ -88,6 +88,7 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     //--- Users ---//
 
     $app->get('users.php', 'BlogAdminController@userList');
+    $app->post('users.php', 'BlogAdminController@userList');        // action=remove
     $app->get('user-new.php', 'BlogAdminController@userNew');
     $app->post('user-new.php', 'BlogAdminController@userNew');
     $app->get('user-edit.php', 'BlogAdminController@userEdit');
@@ -98,6 +99,7 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     //--- Posts ---//
 
     $app->get('edit.php', 'BlogAdminController@postList');
+    $app->get('revision.php', 'BlogAdminController@postRevision');
     $app->get('post-new.php', 'BlogAdminController@postNew');
     $app->post('post-new.php', 'BlogAdminController@postNew');
     $app->get('post.php', 'BlogAdminController@postEdit');
@@ -113,6 +115,9 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     $app->get('upload.php', 'BlogAdminController@mediaUpload');
     $app->post('async-upload.php', 'BlogAdminController@mediaAsyncUpload');
     $app->get('media-new.php', 'BlogAdminController@mediaNew');
+        $app->get('media.php', 'BlogAdminController@mediaManagerOld');
+        $app->get('media.php', 'BlogAdminController@mediaManagerOld');
+        $app->get('media-upload.php', 'BlogAdminController@mediaUploadOld');
 
     //--- Tools ---//
 
@@ -127,6 +132,7 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
 
     $app->get('link-manager.php', 'BlogAdminController@linkList');
     $app->get('link-add.php', 'BlogAdminController@linkAdd');
+    $app->get('link.php', 'BlogAdminController@linkEdit');
     $app->post('link.php', 'BlogAdminController@linkEdit');
 
     //--- Settings ---//

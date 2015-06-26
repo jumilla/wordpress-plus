@@ -17,10 +17,15 @@ return [
         //--- Themes ---//
 
         'themes.php' => [
+            /* 4.2.2: wp-admin/themes.php(100) */
+            'theme', 'search',
         ],
         'theme-install.php' => [
+            /* 4.2.2: wp-admin/theme-install.php(13) */
+            'tab',
         ],
         'customize.php' => [
+            /* 4.2.2: wp-admin/customize.php(19) */
             'url', 'return',
         ],
         'widgets.php' => [
@@ -29,6 +34,7 @@ return [
             'current_user',
         ],
         'theme-editor.php' => [
+            /* 4.2.2: wp-admin/theme-editor.php(46) */
             'action', 'error', 'file', 'theme',
         ],
 
@@ -41,6 +47,7 @@ return [
             'tabs', 'tab', 'paged', 'wp_list_table',
         ],
         'plugin-editor.php' => [
+            /* 4.2.2: wp-admin/plugin-editor.php(23) */
             'action', 'error', 'file', 'plugin',
         ],
 
@@ -49,8 +56,14 @@ return [
         'users.php' => [
         ],
         'user-new.php' => [
+            /* 4.2.2: wp-admin/user-new.php(131) */
+            'wpdb',
         ],
         'user-edit.php' => [
+            /* 4.2.2: wp-admin/user-edit.php(12) */
+            'action', 'user_id', 'wp_http_referer',
+            /* 4.2.2: wp-admin/user-edit.php(153) */
+            'wpdb',
         ],
         'profile.php' => [
         ],
@@ -60,11 +73,21 @@ return [
         'edit.php' => [
 //			'typenow',
         ],
+        'revision.php' => [
+            /* 4.2.2: wp-admin/revision.php(23) */
+            'revision', 'action', 'from', 'to',
+        ],
         'post-new.php' => [
-            'is_IE', 'title',
+            /* 4.2.2: wp-admin/post-new.php(48) */
+            'title',
+            /* 4.2.2: ??? */
+            'is_IE',
         ],
         'post.php' => [
-            'is_IE', 'action',
+            /* 4.2.2: wp-admin/post.php(17) */
+            'action',
+            /* 4.2.2: ??? */
+            'is_IE',
         ],
         'edit-tags.php' => [
             'title', 'taxonomy',
@@ -104,6 +127,7 @@ return [
         'link-manager.php' => [
         ],
         'link-add.php' => [
+            'action', 'cat_id', 'link_id',
         ],
         'link.php' => [
             'action', 'cat_id', 'link_id',
@@ -125,6 +149,7 @@ return [
             'is_nginx',
         ],
         'options.php' => [
+            /* 4.2.2: wp-admin/options.php(25) */
             'action', 'option_page',
         ],
 
