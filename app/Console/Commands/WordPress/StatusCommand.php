@@ -4,6 +4,11 @@ namespace App\Console\Commands\WordPress;
 
 use Illuminate\Console\Command;
 
+function yesno($boolean)
+{
+    return $boolean ? 'YES' : 'NO';
+}
+
 class StatusCommand extends Command
 {
     /**
@@ -43,15 +48,34 @@ class StatusCommand extends Command
 
         require_once wordpress_path('wp-load.php');
 
-        $this->info('Multisite: '.(is_multisite() ? 'YES' : 'NO'));
-        if (is_blog_installed()) {
-            $this->info('Blog installed: YES');
-        } else {
-            $this->error('Blog installed: NO');
+        foreach ($this->gather() as $result) {
+            $this->{$result['method']}($result['message']);
         }
-//        $this->info('Network Domain:', network_domain_check());
 
         $this->info('Done');
+    }
+
+    protected function gather()
+    {
+        $results = [];
+
+        // Multisite
+        $results[] = ['method' => 'info', 'message' => 'Multisite: '.yesno(is_multisite())];
+
+        // Blog tables
+        if (is_blog_installed()) {
+            $results[] = ['method' => 'info', 'message' => 'Blog installed: '.yesno(true)];
+        } else {
+            $results[] = ['method' => 'error', 'message' => 'Blog installed: '.yesno(false)];
+        }
+
+        if (env('WP_MULTISITE')) {
+            $this->info('Network Domain: ', network_domain_check());
+        }
+        else {
+        }
+
+        return $results;
     }
 
     /**
