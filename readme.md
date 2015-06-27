@@ -92,6 +92,12 @@ Lumen 5/Laravel 5は、Webサーバーの設定でURLの末尾のスラッシュ
 - make:theme テーマ作成
 - make:plugin プラグイン作成（予定）
 
+### Bladeディレクティブ
+
+- @filter('filter-name') フィルタを呼び出す
+- @action('action-name') アクションを呼び出す
+- @shortcode([shortcode-name param1="value1"]) ショートコードを展開する
+
 ## ライセンス
 [WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
 [Lumen framework](http://lumen.laravel.com) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
