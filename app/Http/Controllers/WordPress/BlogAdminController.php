@@ -43,6 +43,11 @@ class BlogAdminController extends Controller
         $this->runAdminScriptWithMenu('update.php');
     }
 
+    public function upgrade()
+    {
+        $this->runAdminScriptWithMenu('upgrade.php');
+    }
+
     public function admin()
     {
         $this->runAdminScriptWithMenu('admin.php');

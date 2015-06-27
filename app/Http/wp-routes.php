@@ -59,6 +59,7 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     $app->post('update-core.php', 'BlogAdminController@updateCore');
     $app->get('update.php', 'BlogAdminController@update');
     $app->post('update.php', 'BlogAdminController@update');
+    $app->get('upgrade.php', 'BlogAdminController@upgrade');
 
     //--- Admin ---//
 

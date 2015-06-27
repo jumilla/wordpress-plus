@@ -38,9 +38,6 @@ class TemplateController extends Controller
     {
         app('view')->addNamespace('theme', get_template_directory());
 
-        // Bladeファイルをコンパイルする
-        $this->prepareTemplates();
-
         add_filter('template_include', [$this, 'evaluateTemplate']);
 
         /*
@@ -50,17 +47,19 @@ class TemplateController extends Controller
          */
         define('WP_USE_THEMES', true);
 
-debug_log('wordpress+', 'wp()');
+        // Process
         wp();
 
+        // Bladeファイルをコンパイルする
+        $this->prepareTemplates();
+
         /* Loads the WordPress Template */
-debug_log('wordpress+', 'render');
         require wordpress_path('wp-includes/template-loader.php');
     }
 
     public function prepareTemplates()
     {
-        /*
+/*
         $theme_root = get_template_directory();
 
         $files = Finder::create()->in($theme_root)->name('*.blade.php')->files();
@@ -74,10 +73,10 @@ debug_log('wordpress+', 'render');
             $this->prepareTemplate('404');
         } elseif (is_search()) {
             $this->prepareTemplate('search');
-        } elseif (is_home()) {
-            $this->prepareTemplate('home');
         } elseif (is_front_page()) {
             $this->prepareTemplate('front_page');
+        } elseif (is_home()) {
+            $this->prepareTemplate('home');
         } elseif (is_post_type_archive()) {
             $this->prepareTemplate('archive');
         } elseif (is_tax()) {
@@ -120,13 +119,13 @@ debug_log('wordpress+', 'render');
 
 //				// TODO ファイル更新日時によるチェック
 //
-//				// コンパイルしたPHPスクリプトを出力する
-                try {
-                    $view = app('view')->file($blade_path, $data);
-                    file_put_contents($php_path.'.html', $view->render());
-                } catch (\Exception $ex) {
-                    continue;
-                }
+//				// TODO コンパイルしたPHPスクリプトを出力する（@extends, @section, @includeを展開する）
+                // try {
+                //     $view = app('view')->file($blade_path, $data);
+                //     file_put_contents($php_path.'.html', $view->render());
+                // } catch (\Exception $ex) {
+                //     continue;
+                // }
 
                 touch($php_path);
             }

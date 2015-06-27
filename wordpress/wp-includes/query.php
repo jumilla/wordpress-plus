@@ -3702,7 +3702,6 @@ class WP_Query {
 	 * @return WP_Post Next post.
 	 */
 	public function next_post() {
-
 		$this->current_post++;
 
 		$this->post = $this->posts[$this->current_post];

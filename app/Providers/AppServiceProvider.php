@@ -65,5 +65,10 @@ class AppServiceProvider extends ServiceProvider
         $blade->directive('action', function ($expression) {
             return "<?php do_action{$expression}; ?>";
         });
+
+        $blade->directive('shortcode', function ($expression) {
+            $expression = substr($expression, 1, strlen($expression) - 2);
+            return "<?php echo do_shortcode('{$expression}'); ?>";
+        });
     }
 }

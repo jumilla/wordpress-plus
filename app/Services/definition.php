@@ -9,6 +9,8 @@ return [
         ],
         'update.php' => [
         ],
+        'upgrade.php' => [
+        ],
         'admin.php' => [
         ],
         'admin-ajax.php' => [
