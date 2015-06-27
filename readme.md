@@ -97,6 +97,8 @@ Lumen 5/Laravel 5は、Webサーバーの設定でURLの末尾のスラッシュ
 - @filter('filter-name') フィルタを呼び出す
 - @action('action-name') アクションを呼び出す
 - @shortcode([shortcode-name param1="value1"]) ショートコードを展開する
+- @postloop($posts) Postデータのループブロックを開始する
+- @endpostloop Postデータのループブロックを終了する
 
 ## ライセンス
 [WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
