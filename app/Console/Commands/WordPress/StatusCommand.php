@@ -52,7 +52,7 @@ class StatusCommand extends Command
             $this->{$result['method']}($result['message']);
         }
 
-        $this->info('Done');
+        $this->line('Done');
     }
 
     protected function gather()
@@ -68,6 +68,10 @@ class StatusCommand extends Command
         } else {
             $results[] = ['method' => 'error', 'message' => 'Blog installed: '.yesno(false)];
         }
+
+        // php.ini
+        $results[] = ['method' => 'info', 'message' => 'post_max_size: '.ini_get('post_max_size')];
+        $results[] = ['method' => 'info', 'message' => 'upload_max_filesize: '.ini_get('upload_max_filesize')];
 
         if (env('WP_MULTISITE')) {
             $this->info('Network Domain: ', network_domain_check());

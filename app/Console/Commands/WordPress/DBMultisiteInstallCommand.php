@@ -9,7 +9,7 @@ class DBMultisiteInstallCommand extends DBMultisiteAbstractCommand
      *
      * @var string
      */
-    protected $name = 'wpdb:multisite:install';
+    protected $name = 'wordpress:multisite:install';
 
     /**
      * The console command description.

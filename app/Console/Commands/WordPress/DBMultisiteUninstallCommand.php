@@ -11,14 +11,14 @@ class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
      *
      * @var string
      */
-    protected $name = 'wpdb:multisite:uninstall';
+    protected $name = 'wordpress:multisite:uninstall';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Setup wordpress database.';
+    protected $description = 'Uninstall wordpress multisite tables.';
 
     /**
      * Create a new command instance.
