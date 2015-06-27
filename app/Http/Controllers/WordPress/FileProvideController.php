@@ -14,8 +14,15 @@ class FileProvideController extends Controller
         info('Download: '.$request->path());
 
         $path = wordpress_path($request->path());
+
+        // ERROR: file not found
+        if (! is_file($path)) {
+            abort(404);
+        }
+
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
+        // ERROR: file extension is .php
         if ($extension == 'php') {
             abort(404);
         }
