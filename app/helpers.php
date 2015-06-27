@@ -7,6 +7,17 @@ if (!function_exists('wordpress_path')) {
     }
 }
 
+if (!function_exists('wordpress')) {
+    function wordpress($global_variable)
+    {
+        if (!array_key_exists($global_variable, app('wordpress.globals'))) {
+            return null;
+        }
+
+        return $GLOBALS[$global_variable];
+    }
+}
+
 if (!function_exists('wordpress_table')) {
     function wordpress_table($table)
     {
