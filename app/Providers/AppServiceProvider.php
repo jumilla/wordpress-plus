@@ -73,7 +73,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $blade->directive('postloop', function ($posts) {
-            return "<?php while (with{$posts}->have_posts()) : with{$posts}->the_post(); ?>";
+            if (empty($posts) || $posts == '()') {
+                $posts = '$GLOBALS[\'wp_query\']';
+            }
+            else {
+                $posts = substr($posts, 1, strlen($posts) - 2);
+            }
+            return "<?php while ({$posts}->have_posts()) : {$posts}->the_post(); ?>";
         });
 
         $blade->directive('endpostloop', function ($expression) {
