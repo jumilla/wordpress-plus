@@ -52,9 +52,7 @@ trait WordPressService
             global $blog_id;
             global $wpdb;
             global $_wp_switched_stack;
-        }
-        else {
-
+        } else {
         }
 
         require_once wordpress_path('wp-load.php');
@@ -74,8 +72,7 @@ trait WordPressService
             global $blog_id;
             global $wpdb;
             global $_wp_switched_stack;
-        }
-        else {
+        } else {
         }
 
         require_once wordpress_path('wp-load.php');

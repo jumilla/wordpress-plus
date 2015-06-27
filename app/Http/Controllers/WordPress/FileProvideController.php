@@ -16,7 +16,7 @@ class FileProvideController extends Controller
         $path = wordpress_path($request->path());
 
         // ERROR: file not found
-        if (! is_file($path)) {
+        if (!is_file($path)) {
             abort(404);
         }
 

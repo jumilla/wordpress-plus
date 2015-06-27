@@ -54,7 +54,7 @@ class BlogAdminBootstrapMiddleware
             define('WP_USER_ADMIN', false);
         }
 
-        if (!WP_NETWORK_ADMIN && !WP_USER_ADMIN ) {
+        if (!WP_NETWORK_ADMIN && !WP_USER_ADMIN) {
             define('WP_BLOG_ADMIN', true);
         }
 

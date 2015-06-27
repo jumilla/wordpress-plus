@@ -68,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
 
         $blade->directive('shortcode', function ($expression) {
             $expression = substr($expression, 1, strlen($expression) - 2);
+
             return "<?php echo do_shortcode('{$expression}'); ?>";
         });
 
@@ -76,8 +77,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $blade->directive('endpostloop', function ($expression) {
-            return "<?php endwhile; wp_reset_query(); ?>";
+            return '<?php endwhile; wp_reset_query(); ?>';
         });
-
     }
 }

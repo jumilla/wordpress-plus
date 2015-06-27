@@ -59,7 +59,7 @@ class TemplateController extends Controller
 
     public function prepareTemplates()
     {
-/*
+        /*
         $theme_root = get_template_directory();
 
         $files = Finder::create()->in($theme_root)->name('*.blade.php')->files();
@@ -71,39 +71,53 @@ class TemplateController extends Controller
 */
         if (is_404()) {
             $this->prepareTemplate('404');
-        } elseif (is_search()) {
-            $this->prepareTemplate('search');
-        } elseif (is_front_page()) {
-            $this->prepareTemplate('front_page');
-        } elseif (is_home()) {
-            $this->prepareTemplate('home');
-        } elseif (is_post_type_archive()) {
-            $this->prepareTemplate('archive');
-        } elseif (is_tax()) {
-            $this->prepareTemplate('taxonomy');
-        } elseif (is_attachment()) {
-            $this->prepareTemplate('attachment');
-        } elseif (is_single()) {
-            $this->prepareTemplate('single');
-        } elseif (is_page()) {
-            $this->prepareTemplate('page');
-        } elseif (is_category()) {
-            $this->prepareTemplate('category');
-        } elseif (is_tag()) {
-            $this->prepareTemplate('tag');
-        } elseif (is_author()) {
-            $this->prepareTemplate('author');
-        } elseif (is_date()) {
-            $this->prepareTemplate('date');
-        } elseif (is_archive()) {
-            $this->prepareTemplate('archive');
-        } elseif (is_comments_popup()) {
-            $this->prepareTemplate('comments_popup');
-        } elseif (is_paged()) {
-            $this->prepareTemplate('paged');
-        } else {
-            $this->prepareTemplate('index');
         }
+        if (is_search()) {
+            $this->prepareTemplate('search');
+        }
+        if (is_front_page()) {
+            $this->prepareTemplate('front_page');
+        }
+        if (is_home()) {
+            $this->prepareTemplate('home');
+        }
+        if (is_post_type_archive()) {
+            $this->prepareTemplate('archive');
+        }
+        if (is_tax()) {
+            $this->prepareTemplate('taxonomy');
+        }
+        if (is_attachment()) {
+            $this->prepareTemplate('attachment');
+        }
+        if (is_single()) {
+            $this->prepareTemplate('single');
+        }
+        if (is_page()) {
+            $this->prepareTemplate('page');
+        }
+        if (is_category()) {
+            $this->prepareTemplate('category');
+        }
+        if (is_tag()) {
+            $this->prepareTemplate('tag');
+        }
+        if (is_author()) {
+            $this->prepareTemplate('author');
+        }
+        if (is_date()) {
+            $this->prepareTemplate('date');
+        }
+        if (is_archive()) {
+            $this->prepareTemplate('archive');
+        }
+        if (is_comments_popup()) {
+            $this->prepareTemplate('comments_popup');
+        }
+        if (is_paged()) {
+            $this->prepareTemplate('paged');
+        }
+        $this->prepareTemplate('index');
     }
 
     public function prepareTemplate($type, array $data = [])
