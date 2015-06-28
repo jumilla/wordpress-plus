@@ -25,12 +25,12 @@ WordPress+は、2015年4月にリリースされたばかりの高速マイク�
 
 - PHP 5.5.9 以上
 - PHP拡張: [必須] openssl, mbstring, pdo, pdo-mysql
-- Composer: [推奨] パスの通ったディレクトリ(例えば`/usr/bin`)にインストールしておくこと
+- [Composer](https://getcomposer.org/): [推奨] パスの通ったディレクトリ(例えば`/usr/bin`)にインストールしておくこと
 
 ## WordPress+（プラス）のサポートしている機能
 
 - [Bladeテンプレートエンジン](http://laravel.com/docs/5.1/blade)を使ったテーマ作成
-- マルチサイト（オプション: 有効にするには、環境変数 `WP_MULTISITE=true` を指定してください。）
+- マルチサイト（オプション: 有効にするには、環境変数 `WP_MULTISITE=true` を指定してください。サブドメイン型のみ対応。）
 - リンクマネージャー（オプション: 有効にするには、環境変数 `WP_LINK_MANAGER=true` を指定してください。）
 
 ## インストール方法
@@ -89,6 +89,11 @@ Lumen 5/Laravel 5は、Webサーバーの設定でURLの末尾のスラッシュ
 
 ### artisan（アルチザン）コマンド
 
+- wordpress:status WordPressの状態表示
+- wordpress:install WordPressテーブルのインストール
+- wordpress:uninstall WordPressテーブルのアンインストール
+- wordpress:multisite:install マルチサイトテーブルのインストール
+- wordpress:multisite:uninstall マルチサイトテーブルのアンインストール
 - make:theme テーマ作成
 - make:plugin プラグイン作成（予定）
 
