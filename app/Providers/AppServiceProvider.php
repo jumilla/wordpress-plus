@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Application as SymfonyConsoleApplication;
 use Symfony\Component\Console\Output\ConsoleOutput as SymfonyConsoleOutput;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use App\Services\BladeExpander;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,7 +47,17 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->setupBladeEnvironment();
+        app()->configure('wordpress');
+
+        $this->setupBladeEnvironment($this->blade());
+
+        app()->singleton('blade.expander', function () {
+            $expander = new BladeExpander(app('view')->getFinder());
+
+            $this->setupBladeEnvironment($expander);
+
+            return $expander;
+        });
     }
 
     protected function blade()
@@ -54,36 +65,46 @@ class AppServiceProvider extends ServiceProvider
         return app('view')->getEngineResolver()->resolve('blade')->getCompiler();
     }
 
-    protected function setupBladeEnvironment()
+    protected function setupBladeEnvironment($compiler)
     {
-        $blade = $this->blade();
-
-        $blade->directive('filter', function ($expression) {
+        $compiler->directive('filter', function ($expression) {
             return "<?php echo apply_filters{$expression}; ?>";
         });
 
-        $blade->directive('action', function ($expression) {
+        $compiler->directive('action', function ($expression) {
             return "<?php do_action{$expression}; ?>";
         });
 
-        $blade->directive('shortcode', function ($expression) {
+        $compiler->directive('shortcode', function ($expression) {
             $expression = substr($expression, 1, strlen($expression) - 2);
 
             return "<?php echo do_shortcode('{$expression}'); ?>";
         });
 
-        $blade->directive('postloop', function ($posts) {
-            if (empty($posts) || $posts == '()') {
-                $posts = '$GLOBALS[\'wp_query\']';
+        $postloop_counter = 0;
+
+        $compiler->directive('postloop', function ($expression) use ($postloop_counter) {
+            if (empty($expression) || $expression == '()') {
+                $query = "\$GLOBALS['wp_query']";
             } else {
-                $posts = substr($posts, 1, strlen($posts) - 2);
+                $expression = substr($expression, 1, strlen($expression) - 2);
+                $query = "new WP_Query({$expression})";
             }
 
-            return "<?php while ({$posts}->have_posts()) : {$posts}->the_post(); ?>";
+            $postquery = sprintf('$__postquery_%d', ++$postloop_counter);
+
+            $script = "<?php {$postquery} = {$query}; ?>\n";
+            $script .= "<?php if ({$postquery}->have_posts()) : ?>\n";
+            $script .= "\t<?php while ({$postquery}->have_posts()) : {$postquery}->the_post(); ?>";
+            return $script;
         });
 
-        $blade->directive('endpostloop', function ($expression) {
-            return '<?php endwhile; wp_reset_query(); ?>';
+        $compiler->directive('postempty', function ($expression) {
+            return "\t<?php endwhile; ?>\n<?php else : ?>";
+        });
+
+        $compiler->directive('endpostloop', function ($expression) {
+            return "<?php endif; ?>";
         });
     }
 }

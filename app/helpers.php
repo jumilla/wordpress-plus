@@ -61,6 +61,10 @@ if (!function_exists('debug_log')) {
      */
     function debug_log()
     {
+        if (!env('APP_DEBUG', false)) {
+            return;
+        }
+
         if (func_num_args() < 1) {
             throw new InvalidArgumentException('Missing argument');
         } elseif (func_num_args() == 1) {

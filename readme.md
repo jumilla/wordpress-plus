@@ -23,7 +23,7 @@ WordPress+は、2015年4月にリリースされたばかりの高速マイク�
 
 ## WordPress+（プラス）の動作要件
 
-- PHP 5.5.9 以上
+- PHP 5.6 以上 (Lumen Framework は5.5.9以上)
 - PHP拡張: [必須] openssl, mbstring, pdo, pdo-mysql
 - [Composer](https://getcomposer.org/): [推奨] パスの通ったディレクトリ(例えば`/usr/bin`)にインストールしておくこと
 
@@ -83,27 +83,37 @@ Webブラウザで `http://localhost:8000` を開くとアクセスできます�
 
 ### Webサーバーの設定
 
-Lumen 5/Laravel 5は、Webサーバーの設定でURLの末尾のスラッシュ`'`を取り除くことを推奨しています。
-しかし、WordPressは末尾のスラッシュ`'`を必要としていますので、設定の際には注意してください。
+Lumen 5 / Laravel 5 は、Webサーバーの設定でURLの末尾のスラッシュ`/`を取り除くことを推奨しています。
+しかし、WordPressは末尾のスラッシュ`/`を必要としていますので、設定の際には注意してください。
 管理画面へのログイン後にリダイレクトループが発生する場合があります。
 
 ### artisan（アルチザン）コマンド
 
-- wordpress:status WordPressの状態表示
-- wordpress:install WordPressテーブルのインストール
-- wordpress:uninstall WordPressテーブルのアンインストール
-- wordpress:multisite:install マルチサイトテーブルのインストール
-- wordpress:multisite:uninstall マルチサイトテーブルのアンインストール
-- make:theme テーマ作成
-- make:plugin プラグイン作成（予定）
+- `wordpress:status` WordPressの状態表示
+- `wordpress:install` WordPressテーブルのインストール
+- `wordpress:uninstall` WordPressテーブルのアンインストール
+- `wordpress:multisite:install` マルチサイトテーブルのインストール
+- `wordpress:multisite:uninstall` マルチサイトテーブルのアンインストール
+- `make:theme` テーマ作成
+- `make:plugin` プラグイン作成（予定）
+
+### テーマ内でのBladeの利用
+
+テーマディレクトリ内に`blade`というディレクトリを作成し、そこにWordPressテンプレートファイル名規約に沿ったファイルを配置します。
+拡張子は`.blade.php`にします。
+
+環境変数`WP_BLADE_PRECOMPILE`を`true`（デフォルト）に設定した場合、WordPress+でページを表示したときにコンパイルされたPHPファイルがテーマディレクトリ直下に出力されます。この時に使われるBladeエンジンはWordPress+独自の実装です。
+
+環境変数`WP_BLADE_PRECOMPILE`を`false`に設定した場合、bladeファイルに対応する空のPHPファイルをテーマディレクトリ直下に出力します。この時に使われるBladeエンジンはLaravel 5の実装です。
 
 ### Bladeディレクティブ
 
-- @filter('filter-name') フィルタを呼び出す
-- @action('action-name') アクションを呼び出す
-- @shortcode([shortcode-name param1="value1"]) ショートコードを展開する
-- @postloop($posts) Postデータのループブロックを開始する
-- @endpostloop Postデータのループブロックを終了する
+- `@filter('filter-name')` フィルタを呼び出す
+- `@action('action-name')` アクションを呼び出す
+- `@shortcode([shortcode-name param1="value1"])` ショートコードを展開する
+- `@postloop` `@postloop($posts)` Postクエリーのループブロックを開始する
+- `@postempty` Postクエリーが0件の場合のブロックを開始する
+- `@endpostloop` Postデータのループブロックを終了する
 
 ## ライセンス
 [WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
