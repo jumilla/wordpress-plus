@@ -73,6 +73,7 @@ trait WordPressService
             global $wpdb;
             global $_wp_switched_stack;
         } else {
+            // no globals
         }
 
         require_once wordpress_path('wp-load.php');
@@ -81,6 +82,7 @@ trait WordPressService
 
     protected function runAdminScriptWithMenu($filename, array $globals = [])
     {
+        // 'wp-admin/menu.php', 'wp-admin/includes/menu.php'
         $globals = array_merge($globals, ['menu', 'submenu', '_wp_menu_nopriv', '_wp_submenu_nopriv']);
 
         // for sort_menu() in wp-admin/includes/menu.php
@@ -96,6 +98,9 @@ trait WordPressService
     {
         // from wp-settings.php
         $globals = array_merge($globals, ['wp_version', 'wp_db_version', 'tinymce_version', 'required_php_version', 'required_mysql_version']);
+
+        // require current directory is '{$WORDPRESS}/wp-admin/' by 'wp-admin/menu-header.php'
+        chdir(wordpress_path('wp-admin'));
 
         $this->runScript('wp-admin/'.$filename, $globals);
     }
