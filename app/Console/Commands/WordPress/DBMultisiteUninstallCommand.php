@@ -3,6 +3,7 @@
 namespace App\Console\Commands\WordPress;
 
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Console\Input\InputOption;
 
 class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
 {
@@ -39,6 +40,15 @@ class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
     {
         $this->prepare();
 
+        if ($this->option('force') === false && !$this->confirm('Are you sure?')) {
+            return;
+        }
+
+        $this->process();
+    }
+
+    protected function process()
+    {
         global $wpdb;
 
         // We need to create references to ms global tables to enable Network.
@@ -47,6 +57,25 @@ class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
             Schema::dropIfExists($prefixed_table);
         }
 
-        $this->info('Done.');
+        $this->line('Done.');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Don\'t confirm for run.'],
+        ];
     }
 }
