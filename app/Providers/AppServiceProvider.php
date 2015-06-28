@@ -75,10 +75,10 @@ class AppServiceProvider extends ServiceProvider
         $blade->directive('postloop', function ($posts) {
             if (empty($posts) || $posts == '()') {
                 $posts = '$GLOBALS[\'wp_query\']';
-            }
-            else {
+            } else {
                 $posts = substr($posts, 1, strlen($posts) - 2);
             }
+
             return "<?php while ({$posts}->have_posts()) : {$posts}->the_post(); ?>";
         });
 

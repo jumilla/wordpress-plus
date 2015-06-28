@@ -11,7 +11,7 @@ if (!function_exists('wordpress')) {
     function wordpress($global_variable)
     {
         if (!array_key_exists($global_variable, app('wordpress.globals'))) {
-            return null;
+            return;
         }
 
         return $GLOBALS[$global_variable];

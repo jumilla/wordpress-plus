@@ -75,8 +75,7 @@ class StatusCommand extends Command
 
         if (env('WP_MULTISITE')) {
             $this->info('Network Domain: ', network_domain_check());
-        }
-        else {
+        } else {
         }
 
         return $results;
