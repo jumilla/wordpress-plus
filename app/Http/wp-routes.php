@@ -146,6 +146,7 @@ $app->group(['prefix' => $wp_prefix.'wp-admin', 'namespace' => $wp_namespace], f
     $app->get('options-media.php', 'BlogAdminController@optionsMedia');
     $app->get('options-permalink.php', 'BlogAdminController@optionsPermaLink');
     $app->post('options-permalink.php', 'BlogAdminController@optionsPermaLink');
+    $app->get('options.php', 'BlogAdminController@optionsEdit');
     $app->post('options.php', 'BlogAdminController@optionsEdit');
 
     //--- About ---//

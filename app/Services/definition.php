@@ -153,6 +153,9 @@ return [
         'options.php' => [
             /* 4.2.2: wp-admin/options.php(25) */
             'action', 'option_page',
+
+            /* 4.2.2: wp-admin/options.php(231) */
+            'wpdb',
         ],
 
         //--- About ---//
