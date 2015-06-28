@@ -2,11 +2,14 @@
 
 namespace App\Console\Commands\WordPress;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
 use Symfony\Component\Console\Input\InputOption;
 
-class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
+class MultisiteUninstallCommand extends Command
 {
+    use EnvironmentTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -38,9 +41,17 @@ class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
      */
     public function handle()
     {
-        $this->prepare();
+        // entrance
+        $this->logo();
 
-        if ($this->option('force') === false && !$this->confirm('Are you sure?')) {
+        // prepare
+        $this->bootstrapForMultisiteSetup();
+
+        // title
+        $this->info('-- WordPress Multisite Uninstall --');
+
+        // confirm
+        if ($this->option('force') === false && $this->confirm('Are you sure?') === false) {
             return;
         }
 
@@ -52,7 +63,7 @@ class DBMultisiteUninstallCommand extends DBMultisiteAbstractCommand
         global $wpdb;
 
         // We need to create references to ms global tables to enable Network.
-        foreach ($wpdb->tables('ms_global') as $table => $prefixed_table) {
+        foreach ($this->multisiteTables() as $table => $prefixed_table) {
             $this->line('Dropping table: '.$prefixed_table);
             Schema::dropIfExists($prefixed_table);
         }

@@ -25,6 +25,17 @@ if (!function_exists('wordpress_table')) {
     }
 }
 
+if (!function_exists('wordpress_installed')) {
+    function wordpress_installed()
+    {
+        try {
+            return app('db')->table(wordpress_table('options'))->exists();
+        } catch (Exception $ex) {
+            return false;
+        }
+    }
+}
+
 if (!function_exists('wordpress_multisite_installed')) {
     function wordpress_multisite_installed()
     {

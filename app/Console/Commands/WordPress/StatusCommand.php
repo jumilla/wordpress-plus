@@ -11,6 +11,8 @@ function yesno($boolean)
 
 class StatusCommand extends Command
 {
+    use EnvironmentTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -42,17 +44,29 @@ class StatusCommand extends Command
      */
     public function handle()
     {
+        // entrance
+        $this->logo();
+
+        // prepare
+        $this->prepare();
+
+        // gather & output
+        foreach ($this->gather() as $result) {
+            $this->{$result['method']}($result['message']);
+        }
+
+        // done
+        $this->line('');
+        $this->line('Done');
+    }
+
+    protected function prepare()
+    {
         // MEMO need for diagnosis
         define('WP_INSTALLING', true);
 //        define('WP_REPAIRING', true);
 
         require_once wordpress_path('wp-load.php');
-
-        foreach ($this->gather() as $result) {
-            $this->{$result['method']}($result['message']);
-        }
-
-        $this->line('Done');
     }
 
     protected function gather()

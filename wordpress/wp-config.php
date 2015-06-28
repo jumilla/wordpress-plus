@@ -82,7 +82,7 @@ if (env('WP_MULTISITE', false)) {
 	    define('WP_ALLOW_MULTISITE', true);
 	    define('MULTISITE', true);
 	    define('SUBDOMAIN_INSTALL', true);
-	    define('DOMAIN_CURRENT_SITE', env('WP_SITEURL', 'localhost'));
+	    define('DOMAIN_CURRENT_SITE', env('WP_MULTISITE_DOMAIN', 'localhost'));
 	    define('PATH_CURRENT_SITE', '/');
 	    define('SITE_ID_CURRENT_SITE', 1);
 	    define('BLOG_ID_CURRENT_SITE', 1);
@@ -90,6 +90,15 @@ if (env('WP_MULTISITE', false)) {
     else {
         define('WP_ALLOW_MULTISITE', true);
     }
+}
+/** シングルサイト */
+else {
+	if (env('WP_BACKENDURL')) {
+		define('WP_SITEURL', env('WP_BACKENDURL'));
+	}
+	if (env('WP_SITEURL')) {
+		define('WP_HOME', env('WP_SITEURL'));
+	}
 }
 
 /* 編集が必要なのはここまでです ! WordPress でブログをお楽しみください。 */

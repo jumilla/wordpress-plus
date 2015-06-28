@@ -14,9 +14,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\WordPress\StatusCommand::class,
-//        Commands\WordPress\DBStatusCommand::class,
-        Commands\WordPress\DBMultisiteInstallCommand::class,
-        Commands\WordPress\DBMultisiteUninstallCommand::class,
+        Commands\WordPress\InstallCommand::class,
+        Commands\WordPress\UninstallCommand::class,
+        Commands\WordPress\MultisiteInstallCommand::class,
+        Commands\WordPress\MultisiteUninstallCommand::class,
         Commands\WordPress\ThemeMakeCommand::class,
         Commands\WordPress\PluginMakeCommand::class,
     ];
