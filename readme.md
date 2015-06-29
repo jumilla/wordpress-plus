@@ -83,27 +83,27 @@ Webブラウザで `http://localhost:8000` を開くとアクセスできます�
 
 ### Webサーバーの設定
 
-Lumen 5/Laravel 5は、Webサーバーの設定でURLの末尾のスラッシュ`/`を取り除くことを推奨しています。
+Lumen 5 / Laravel 5 は、Webサーバーの設定でURLの末尾のスラッシュ`/`を取り除くことを推奨しています。
 しかし、WordPressは末尾のスラッシュ`/`を必要としていますので、設定の際には注意してください。
 管理画面へのログイン後にリダイレクトループが発生する場合があります。
 
 ### artisan（アルチザン）コマンド
 
-- wordpress:status WordPressの状態表示
-- wordpress:install WordPressテーブルのインストール
-- wordpress:uninstall WordPressテーブルのアンインストール
-- wordpress:multisite:install マルチサイトテーブルのインストール
-- wordpress:multisite:uninstall マルチサイトテーブルのアンインストール
-- make:theme テーマ作成
-- make:plugin プラグイン作成（予定）
+- `wordpress:status` WordPressの状態表示
+- `wordpress:install` WordPressテーブルのインストール
+- `wordpress:uninstall` WordPressテーブルのアンインストール
+- `wordpress:multisite:install` マルチサイトテーブルのインストール
+- `wordpress:multisite:uninstall` マルチサイトテーブルのアンインストール
+- `make:theme` テーマ作成
+- `make:plugin` プラグイン作成（予定）
 
 ### Bladeディレクティブ
 
-- @filter('filter-name') フィルタを呼び出す
-- @action('action-name') アクションを呼び出す
-- @shortcode([shortcode-name param1="value1"]) ショートコードを展開する
-- @postloop($posts) Postデータのループブロックを開始する
-- @endpostloop Postデータのループブロックを終了する
+- `@filter('filter-name')` フィルタを呼び出す
+- `@action('action-name')` アクションを呼び出す
+- `@shortcode([shortcode-name param1="value1"])` ショートコードを展開する
+- `@postloop` `@postloop($posts)` Postクエリーのループブロックを開始する
+- `@endpostloop` Postデータのループブロックを終了する
 
 ## ライセンス
 [WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
