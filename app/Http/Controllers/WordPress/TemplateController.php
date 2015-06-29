@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WordPress;
 
 use Symfony\Component\Finder\Finder;
+use App\Services\BladeExpander;
 
 /**
  *
@@ -131,6 +132,10 @@ class TemplateController extends Controller
             foreach (glob($theme_root.'/'.$pattern.'.blade.php') as $blade_path) {
                 $php_path = preg_replace('/\.blade\.php$/', '.php', $blade_path);
 
+                $expander = new BladeExpander(app('files'), storage_path('framework/views'));
+                $php_script_image = $expander->expand($blade_path);
+//debug_log('source', $php_script_image);
+
 //				// TODO ファイル更新日時によるチェック
 //
 //				// TODO コンパイルしたPHPスクリプトを出力する（@extends, @section, @includeを展開する）
@@ -142,13 +147,14 @@ class TemplateController extends Controller
                 // }
 
                 touch($php_path);
+                file_put_contents($php_path, $php_script_image);
             }
         }
     }
 
     public function evaluateTemplate($php_path)
     {
-        debug_log('filter:template_include', $php_path);
+        debug_log('filter:template_include', basename($php_path));
 
         $dirname = dirname($php_path);
         $filename = basename($php_path, '.php');
