@@ -122,3 +122,4 @@ Lumen 5 / Laravel 5 は、Webサーバーの設定でURLの末尾のスラッシ
 
 ## 著作権
 2015 [Fumio Furukawa](http://jumilla.me), All rights reserved.
+
