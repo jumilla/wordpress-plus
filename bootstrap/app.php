@@ -80,6 +80,8 @@ $app->routeMiddleware([
 |
 */
 
+$app->register(App\Providers\PHP7ServiceProvider::class);
+$app->register(App\Providers\WordPressServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
