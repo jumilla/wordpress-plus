@@ -54,9 +54,13 @@ class PluginListCommand extends Command
 
         // process
         $plugins = get_plugins();
+        $active_plugins = get_option('active_plugins');
+        $active_sitewide_plugins = is_multisite() ? get_site_option('active_sitewide_plugins') : [];
 
-        foreach ($plugins as $directory => $plugin) {
-            $this->line("  {$plugin['Name']} [{$plugin['Version']}] '{$directory}'");
+        foreach ($plugins as $basename => $plugin_data) {
+            $plugin = preg_replace('/(\/.*$)||(.php$)/', '', $basename);
+            $mark = in_array($plugin, $active_plugins, true) ? '*' : (isset($active_sitewide_plugins[$plugin]) ? '+' : ' ');
+            $this->line("{$mark} {$plugin_data['Name']} [{$plugin_data['Version']}] '{$plugin}'");
         }
         $this->line('');
     }
