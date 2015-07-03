@@ -60,9 +60,6 @@ trait WordPressService
 
     protected function runAdminBootstrapScript()
     {
-        // for 'wp-admin/includes/file.php'
-        global $wp_file_descriptions;
-
         if (env('WP_MULTISITE', false)) {
             // for 'wp-includes/ms-functions.php'
             global $current_site;
@@ -77,7 +74,20 @@ trait WordPressService
         }
 
         require_once wordpress_path('wp-load.php');
+
+        // for 'wp-admin/includes/file.php'
+        global $wp_file_descriptions;
+
         require_once wordpress_path('wp-admin/includes/admin.php');
+
+        // Add .blade.php description
+        $file_descriptions = $wp_file_descriptions;
+        foreach ($wp_file_descriptions as $filename => $description) {
+            if (preg_match('/\.php$/', $filename)) {
+                $file_descriptions[preg_replace('/\.php$/', '.blade.php', $filename)] = $description;
+            }
+        }
+        $wp_file_descriptions = $file_descriptions;
     }
 
     protected function runAdminScriptWithMenu($filename, array $globals = [])
