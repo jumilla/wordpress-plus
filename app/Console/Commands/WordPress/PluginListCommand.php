@@ -16,7 +16,7 @@ class PluginListCommand extends Command
      *
      * @var string
      */
-    protected $name = 'wordpress:plugin:list';
+    protected $name = 'wordpress:plugin';
 
     /**
      * The console command description.
@@ -47,28 +47,109 @@ class PluginListCommand extends Command
 
         // prepare
         $this->runAdminBootstrapScript();
-//        $this->prepare();
+add_filter('extra_plugin_headers', function (array $headers) {
+    return array_merge($headers, [
+        'PHP Namespace',
+    ]);
+});
 
-        // title
-        $this->info('-- WordPress Plugin List --');
+        $plugin = $this->argument('name');
+        if (!$plugin) {
+            // title
+            $this->info('-- WordPress Plugin List --');
 
-        // process
+            // process
+            $this->outputPluginList();
+        }
+        else {
+            // title
+            $this->info('-- WordPress Plugin Info --');
+
+            // process
+            $this->outputPluginInfo($plugin);
+        }
+
+        $this->line('');
+    }
+
+    protected function outputPluginList()
+    {
         $plugins = get_plugins();
         $active_plugins = get_option('active_plugins');
         $active_sitewide_plugins = is_multisite() ? get_site_option('active_sitewide_plugins') : [];
 
-        foreach ($plugins as $basename => $plugin_data) {
-            $plugin = preg_replace('/(\/.*$)||(.php$)/', '', $basename);
-            $mark = in_array($plugin, $active_plugins, true) ? '*' : (isset($active_sitewide_plugins[$plugin]) ? '+' : ' ');
+        foreach ($plugins as $plugin_path => $plugin_data) {
+            $plugin = preg_replace('/(\/.*$)|(.php$)/', '', $plugin_path);
+            $mark = in_array($plugin_path, $active_plugins, true) ? '*' : (isset($active_sitewide_plugins[$plugin_path]) ? '+' : ' ');
             $this->line("{$mark} {$plugin_data['Name']} [{$plugin_data['Version']}] '{$plugin}'");
         }
-        $this->line('');
+    }
+
+    protected function outputPluginInfo($plugin)
+    {
+        $plugin_path = WP_PLUGIN_DIR . '/' . $plugin . '/' . $plugin . '.php';
+        $plugin_type_dir = true;
+
+        if (!file_exists($plugin_path)) {
+            $plugin_path = WP_PLUGIN_DIR . '/' . $plugin . '.php';
+            $plugin_type_dir = false;
+
+            if (!file_exists($plugin_path)) {
+                throw new \InvalidArgumentException("Plugin '{$plugin}' is not found.");
+            }
+        }
+
+        $plugin_data = get_plugin_data($plugin_path, false, true);
+
+        $this->line("<info>[Plugin file]</info> '{$plugin_path}'");
+        $properties_wordpress = [
+            'name' => 'Name',
+            'title' => 'Title',
+            'version' => 'Version',
+            'plugin_uri' => 'PluginURI',
+            'description' => 'Description',
+            'author' => 'Author',
+            'author_name' => 'AuthorName',
+            'author_uri' => 'AuthorURI',
+//            'tags' => '',
+            'text_domain' => 'TextDomain',
+            'domain_path' => 'DomainPath',
+            'network' => 'Network',
+        ];
+        foreach ($properties_wordpress as $property => $key) {
+            $value = array_get($plugin_data, $key);
+            if (is_array($value)) {
+                $value = '['.implode(', ', $value).']';
+            }
+            $this->line("<info>[{$property}]</info> {$value}");
+        }
+
+        $properties_extra = [
+            'php_namespace' => 'PHP Namespace',
+        ];
+        foreach ($properties_extra as $property => $key) {
+            $value = array_get($plugin_data, $key);
+            if (is_array($value)) {
+                $value = '['.implode(', ', $value).']';
+            }
+            $this->line("<info>[{$property}]</info> {$value}");
+        }
     }
 
     /**
      * @return array
      */
     protected function getArguments()
+    {
+        return [
+            ['name', InputArgument::OPTIONAL, 'Plugin name', null],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOption()
     {
         return [
         ];

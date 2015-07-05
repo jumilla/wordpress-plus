@@ -82,4 +82,13 @@ class ThemeMakeCommand extends Command
             ['name', InputArgument::REQUIRED, 'Theme name'],
         ];
     }
+
+    /**
+     * @return array
+     */
+    protected function getOption()
+    {
+        return [
+        ];
+    }
 }
