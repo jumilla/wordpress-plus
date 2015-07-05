@@ -14,13 +14,13 @@ class TemplateController extends Controller
     const TEMPLATE_TYPES = [
         // 'type'        => ['file-title-pattern'],
         'index'          => ['index'],
-        'archive'        => ['archive-*', 'archive'],    // "archive-{$post->type}.php"
+        'archive'        => ['archive-*', 'archive'],      // "archive-{$post->type}.php"
         'author'         => ['author-*', 'author'],        // "author-{$author->user_nicename}.php", "author-{$author->ID}.php"
         'category'       => ['category-*', 'category'],    // "category-{$category->slug}.php", "category-{$category->term_id}.php"
-        'tag'            => ['tag-*', 'tag'],            // "tag-{$tag->slug}.php", "tag-{$tag->term_id}.php"
+        'tag'            => ['tag-*', 'tag'],              // "tag-{$tag->slug}.php", "tag-{$tag->term_id}.php"
         'taxonomy'       => ['taxonomy-*', 'taxonomy'],    // "taxonomy-{$taxonomy}-{$term->slug}.php", "taxonomy-{$taxonomy}.php"
         'date'           => ['date'],
-        'home'           => ['home', 'index'],
+        'home'           => ['home'],
         'front_page'     => ['front-page'],
         'page'           => ['page-*', 'page'],            // "{$slug}", "page-{$pagename}.php", "page-{$id}.php"
         'paged'          => ['paged'],
@@ -41,9 +41,15 @@ class TemplateController extends Controller
         return get_template_directory() . '/' . config('wordpress.themes.blade.directory');
     }
 
+    protected function langDirectory()
+    {
+        return get_template_directory() . '/' . config('wordpress.themes.lang.directory');
+    }
+
     public function provide()
     {
         app('view')->addNamespace('theme', $this->bladeDirectory());
+        app('translator')->addNamespace('theme', $this->langDirectory());
 
         /*
          * Tells WordPress to load the WordPress theme and output it.
