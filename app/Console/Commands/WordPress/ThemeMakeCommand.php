@@ -23,6 +23,20 @@ class ThemeMakeCommand extends Command
     protected $description = 'Make wordpress theme.';
 
     /**
+     * @var array
+     */
+    protected $skeletons = [
+        'minimum',
+        'simple',
+        'bootstrap',
+    ];
+
+    /**
+     * @var string
+     */
+    protected $default_skeleton = 'simple';
+
+    /**
      * @var \App\Console\Commands\WordPress\Storage
      */
     protected $storage;
@@ -48,29 +62,78 @@ class ThemeMakeCommand extends Command
     {
         $theme_name = $this->argument('name');
 
+        $skeleton = $this->argument('skeleton');
+
+        if ($skeleton) {
+            if (!in_array($skeleton, $this->skeletons)) {
+                throw new \InvalidArgumentException("Skeleton '$skeleton' is not found.");
+            }
+        }
+        else {
+            $skeleton = $this->choice('Skeleton type', $this->skeletons, array_search($this->default_skeleton, $this->skeletons));
+        }
+
         // TODO ディレクトリ存在チェック
 
         $metadata = [];
-        $metadata['theme_name'] = trim($this->ask('Theme Name', $theme_name));
+        $metadata['lang'] = env('APP_LOCALE', 'en');
+        $metadata['theme_name'] = trim($this->ask('Theme title', $theme_name));
         $metadata['theme_uri'] = trim($this->ask('Theme URI', ' '));
-        $metadata['author'] = trim($this->ask('Author Name', ' '));
+        $metadata['author'] = trim($this->ask('Author name', ' '));
         $metadata['author_uri'] = trim($this->ask('Author URI', ' '));
         $metadata['description'] = trim($this->ask('Description', ' '));
         $metadata['version'] = trim($this->ask('Version', '1.0'));
         $metadata['license'] = trim($this->ask('License', ' '));
         $metadata['license_uri'] = trim($this->ask('License URI', ' '));
         $metadata['tags'] = implode(', ', array_map(function ($value) { return trim($value); }, explode(',', $this->ask('Tags', ' '))));
+        $metadata['php_autoload_dir'] = trim($this->ask('PHP autoload directory', 'classes'));
+        $metadata['php_namespace'] = trim($this->ask('PHP namespace', ' '));
 
-        $this->storage->directory($theme_name, function ($storage) use ($metadata) {
-            $storage->file('index.php')->string('<?php');
-            $storage->file('style.css')->template('theme-stubs/style.css', $metadata);
-            $storage->file('screenshot.png')->string();
+        $this->{'generateSkeleton' . ucfirst($skeleton)}($theme_name, $metadata, 'theme-stubs/' . $skeleton);
 
-            $storage->file('functions.php')->template('theme-stubs/functions.php');
-            $storage->file('layout.blade.php')->template('theme-stubs/layout.blade.php');
-            $storage->file('index.blade.php')->template('theme-stubs/index.blade.php');
-        });
         $this->info('success');
+    }
+
+    protected function generateSkeletonMinimum($theme_name, array $metadata, $stub_path)
+    {
+        $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
+            $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
+            $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
+            $storage->file('screenshot.png')->touch(); // TODO use no-image
+            $storage->file('functions.php')->template($stub_path . '/functions.php', $metadata);
+        });
+    }
+
+    protected function generateSkeletonSimple($theme_name, array $metadata, $stub_path)
+    {
+        $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
+            $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
+            $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
+            $storage->file('screenshot.png')->touch(); // TODO use no-image
+
+            $storage->file('functions.php')->template($stub_path . '/functions.php', $metadata);
+
+            $storage->file('blade/layout.blade.php')->template($stub_path . '/blade/layout.blade.php', $metadata);
+            $storage->file('blade/index.blade.php')->template($stub_path . '/blade/index.blade.php', $metadata);
+
+            $storage->file('lang/en/messages.php')->template($stub_path . '/lang/en/messages.php', $metadata);
+        });
+    }
+
+    protected function generateSkeletonBootstrap($theme_name, array $metadata, $stub_path)
+    {
+        $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
+            $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
+            $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
+            $storage->file('screenshot.png')->touch(); // TODO use no-image
+
+            $storage->file('functions.php')->template($stub_path . '/functions.php', $metadata);
+
+            $storage->file('blade/layout.blade.php')->template($stub_path . '/blade/layout.blade.php', $metadata);
+            $storage->file('blade/index.blade.php')->template($stub_path . '/blade/index.blade.php', $metadata);
+
+            $storage->file('lang/en/messages.php')->template($stub_path . '/lang/en/messages.php', $metadata);
+        });
     }
 
     /**
@@ -79,7 +142,8 @@ class ThemeMakeCommand extends Command
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'Theme name'],
+            ['name', InputArgument::REQUIRED, 'Theme name.'],
+            ['skeleton', InputArgument::OPTIONAL, 'Theme skeleton. [' . implode(', ', $this->skeletons) . ']'],
         ];
     }
 

@@ -42,6 +42,11 @@ class Storage
         return $this;
     }
 
+    public function touch()
+    {
+        $this->storage->put($this->file_path, '');
+    }
+
     public function string($content = null)
     {
         $this->storage->put($this->file_path, $content);

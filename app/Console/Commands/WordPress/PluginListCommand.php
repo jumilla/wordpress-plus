@@ -49,6 +49,7 @@ class PluginListCommand extends Command
         $this->runAdminBootstrapScript();
 add_filter('extra_plugin_headers', function (array $headers) {
     return array_merge($headers, [
+        'PHP Autoload',
         'PHP Namespace',
     ]);
 });

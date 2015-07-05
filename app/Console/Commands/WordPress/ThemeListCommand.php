@@ -49,6 +49,7 @@ class ThemeListCommand extends Command
         $this->runTemplateBootstrapScript();
 add_filter('extra_theme_headers', function (array $headers) {
     return array_merge($headers, [
+        'PHP Autoload',
         'PHP Namespace',
     ]);
 });
@@ -87,11 +88,12 @@ add_filter('extra_theme_headers', function (array $headers) {
     {
         $theme_path = wordpress_path('wp-content/themes/') .$theme;
 
+        // check
         if (!file_exists($theme_path)) {
             throw new \InvalidArgumentException("Theme '{$theme}' is not found.");
         }
 
-        $theme_object = new \WP_Theme(get_stylesheet(), dirname($theme_path));
+        $theme_object = new \WP_Theme($theme, dirname($theme_path));
 
 //        // MEMO: template_dir と同じ  
 //        $this->line("<info>[path]</info> '{$theme_path}'");

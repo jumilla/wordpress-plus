@@ -21,6 +21,13 @@ class PluginMakeCommand extends Command
     protected $description = 'Make wordpress plugin.';
 
     /**
+     * @var array
+     */
+    protected $skeltons = [
+        'minimum',
+    ];
+
+    /**
      * @var \App\Console\Commands\WordPress\Storage
      */
     protected $storage;
