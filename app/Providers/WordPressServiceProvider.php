@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\ContentClassLoader;
 use App\Services\BladeExpander;
 
 class WordPressServiceProvider extends ServiceProvider
@@ -14,6 +15,7 @@ class WordPressServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        ContentClassLoader::register();
     }
 
     public function boot()

@@ -56,6 +56,8 @@ trait WordPressService
         }
 
         require_once wordpress_path('wp-load.php');
+
+        $this->registerContentNamespaces();
     }
 
     protected function runAdminBootstrapScript()
@@ -88,6 +90,31 @@ trait WordPressService
             }
         }
         $wp_file_descriptions = $file_descriptions;
+
+        $this->registerContentNamespaces();
+    }
+
+    protected function registerContentNamespaces()
+    {
+        // Plugins
+        foreach (WordPress::activePlugins() as $plugin) {
+//            $plugin_path = WordPress::pluginPath($plugin);
+            $plugin_path = wordpress_path('wp-content/plugins/') . $plugin;
+
+            $plugin_data = get_file_data($plugin_path, ['php_namespace' => 'PHP Namespace']);
+
+            ContentClassLoader::addNamespace($plugin_path.'/'.'classes', $plugin_data['php_namespace']);
+        }
+
+        // Theme
+        {
+            $theme = WordPress::activeTheme();
+            $theme_path = WordPress::themePath($theme);
+
+            $theme_data = get_file_data($theme_path.'/style.css', ['php_namespace' => 'PHP Namespace']);
+
+            ContentClassLoader::addNamespace($theme_path.'/'.'classes', $theme_data['php_namespace']);
+        }
     }
 
     protected function runAdminScriptWithMenu($filename, array $globals = [])

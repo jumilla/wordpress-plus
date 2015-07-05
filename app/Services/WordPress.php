@@ -36,6 +36,42 @@ class WordPress
         return array_get(static::scriptGlobals(), $script_path);
     }
 
+    public static function activePlugins()
+    {
+        return get_option('active_plugins');
+    }
+
+    public static function pluginPath($plugin)
+    {
+        $path = wordpress_path('wp-content/plugins/') . $plugin . '/' . $plugin . '.php';
+
+        if (!file_exists($path)) {
+            $path = wordpress_path('wp-content/plugins/') . $plugin . '.php';
+
+            if (!file_exists($path)) {
+                return false;
+            }
+        }
+
+        return $path;
+    }
+
+    public static function activeTheme()
+    {
+        return get_template();
+    }
+
+    public static function themePath($theme)
+    {
+        $path = wordpress_path('wp-content/themes/') . $theme;
+
+        if (!is_dir($path)) {
+            return false;
+        }
+
+        return $path;
+    }
+
     protected static function setup()
     {
         if (static::$definition === null) {

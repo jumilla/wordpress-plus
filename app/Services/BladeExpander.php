@@ -142,7 +142,6 @@ class BladeExpander extends BladeCompiler
     	if (isset($this->sections[$section])) {
     		switch ($action) {
     		case static::SECTION_EXTEND:
-    		debug_log('SECTION_EXTEND', $this->currentBuffer);
     			$this->sections[$section] = str_replace('@parent', $this->sections[$section], $this->currentBuffer);
 	    		break;
 

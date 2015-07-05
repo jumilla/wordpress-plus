@@ -9,5 +9,9 @@ return [
 
 			'precompile' => env('WP_BLADE_PRECOMPILE', true),
 		],
+
+		'lang' => [
+			'directory' => 'lang',
+		],
 	],
 ];
