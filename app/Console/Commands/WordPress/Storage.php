@@ -20,6 +20,11 @@ class Storage
         ]);
     }
 
+    public function exists($path)
+    {
+        return $this->storage->exists($path);
+    }
+
     public function directory($path, Closure $closure = null)
     {
         $this->storage->makeDirectory($path);

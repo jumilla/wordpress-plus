@@ -11,7 +11,7 @@ return [
 		],
 
 		'lang' => [
-			'directory' => 'lang',
+			'directory' => 'languages',
 		],
 	],
 ];

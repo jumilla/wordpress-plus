@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands\WordPress;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class ThemeMakeCommand extends Command
+class ThemeMakeCommand extends AbstractMakeCommand
 {
     /**
      * The name and signature of the console command.
@@ -62,38 +61,47 @@ class ThemeMakeCommand extends Command
     {
         $theme_name = $this->argument('name');
 
-        $skeleton = $this->argument('skeleton');
-
-        if ($skeleton) {
-            if (!in_array($skeleton, $this->skeletons)) {
-                throw new \InvalidArgumentException("Skeleton '$skeleton' is not found.");
-            }
-        }
-        else {
-            $skeleton = $this->choice('Skeleton type', $this->skeletons, array_search($this->default_skeleton, $this->skeletons));
+        if ($this->storage->exists($theme_name)) {
+            throw new \InvalidArgumentException("Theme directory '{$theme_name}' is already exists.");
         }
 
-        // TODO ディレクトリ存在チェック
+        $skeleton = $this->chooseSkeleton($this->argument('skeleton'));
 
+        $metadata = $this->gatherMetadata($theme_name);
+
+        $method = 'generateSkeleton' . ucfirst($skeleton);
+        $this->{$method}($theme_name, $metadata, 'theme-stubs/' . $skeleton);
+
+        $this->info('success');
+    }
+
+    protected function gatherMetadata($theme_name)
+    {
         $metadata = [];
+
         $metadata['lang'] = env('APP_LOCALE', 'en');
         $metadata['theme_name'] = trim($this->ask('Theme title', $theme_name));
         $metadata['theme_uri'] = trim($this->ask('Theme URI', ' '));
+        $metadata['version'] = trim($this->ask('Version', '1.0'));
+        $metadata['description'] = trim($this->ask('Description', ' '));
         $metadata['author'] = trim($this->ask('Author name', ' '));
         $metadata['author_uri'] = trim($this->ask('Author URI', ' '));
-        $metadata['description'] = trim($this->ask('Description', ' '));
-        $metadata['version'] = trim($this->ask('Version', '1.0'));
         $metadata['license'] = trim($this->ask('License', ' '));
         $metadata['license_uri'] = trim($this->ask('License URI', ' '));
         $metadata['tags'] = implode(', ', array_map(function ($value) { return trim($value); }, explode(',', $this->ask('Tags', ' '))));
         $metadata['php_autoload_dir'] = trim($this->ask('PHP autoload directory', 'classes'));
         $metadata['php_namespace'] = trim($this->ask('PHP namespace', ' '));
 
-        $this->{'generateSkeleton' . ucfirst($skeleton)}($theme_name, $metadata, 'theme-stubs/' . $skeleton);
-
-        $this->info('success');
+        return $metadata;
     }
-
+    
+    /**
+     * generate skeleton type 'minimum'
+     *
+     * @param string $theme_name
+     * @param array  $metadata
+     * @param string $stub_path
+     */
     protected function generateSkeletonMinimum($theme_name, array $metadata, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
@@ -104,6 +112,13 @@ class ThemeMakeCommand extends Command
         });
     }
 
+    /**
+     * generate skeleton type 'simple'
+     *
+     * @param string $theme_name
+     * @param array  $metadata
+     * @param string $stub_path
+     */
     protected function generateSkeletonSimple($theme_name, array $metadata, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
@@ -120,6 +135,13 @@ class ThemeMakeCommand extends Command
         });
     }
 
+    /**
+     * generate skeleton type 'bootstrap'
+     *
+     * @param string $theme_name
+     * @param array  $metadata
+     * @param string $stub_path
+     */
     protected function generateSkeletonBootstrap($theme_name, array $metadata, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {

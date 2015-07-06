@@ -94,8 +94,12 @@ Lumen 5 / Laravel 5 は、Webサーバーの設定でURLの末尾のスラッシ
 - `wordpress:uninstall` WordPressテーブルのアンインストール
 - `wordpress:multisite:install` マルチサイトテーブルのインストール
 - `wordpress:multisite:uninstall` マルチサイトテーブルのアンインストール
-- `make:theme` テーマ作成
-- `make:plugin` プラグイン作成（予定）
+- `wordpress:theme` テーマ一覧表示
+- `wordpress:theme <name>` テーマ詳細表示
+- `wordpress:plugin` プラグイン一覧表示
+- `wordpress:plugin <name>` プラグイン詳細表示
+- `make:theme <name>` テーマ作成
+- `make:plugin <name>` プラグイン作成
 
 ### テーマ内でのBladeの利用
 
