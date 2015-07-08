@@ -69,12 +69,20 @@ class ThemeMakeCommand extends AbstractMakeCommand
 
         $metadata = $this->gatherMetadata($theme_name);
 
+        $langs[] = $this->gatherLanguages();
+
         $method = 'generateSkeleton' . ucfirst($skeleton);
-        $this->{$method}($theme_name, $metadata, 'theme-stubs/' . $skeleton);
+        $this->{$method}($theme_name, $metadata, $langs, 'theme-stubs/' . $skeleton);
 
         $this->info('success');
     }
 
+    /**
+     * gather metadata
+     *
+     * @param string $theme_name
+     * @return array
+     */
     protected function gatherMetadata($theme_name)
     {
         $metadata = [];
@@ -94,15 +102,32 @@ class ThemeMakeCommand extends AbstractMakeCommand
 
         return $metadata;
     }
-    
+
+    /**
+     * gather languages
+     *
+     * @return array
+     */
+    protected function gatherLanguages()
+    {
+        $langs[] = 'en';
+
+        if ($locale = env('APP_LOCALE', 'en') !== 'en') {
+            $langs[] = $locale;
+        }
+
+        return $langs;
+    }
+
     /**
      * generate skeleton type 'minimum'
      *
      * @param string $theme_name
      * @param array  $metadata
+     * @param array  $langs
      * @param string $stub_path
      */
-    protected function generateSkeletonMinimum($theme_name, array $metadata, $stub_path)
+    protected function generateSkeletonMinimum($theme_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
             $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
@@ -117,11 +142,12 @@ class ThemeMakeCommand extends AbstractMakeCommand
      *
      * @param string $theme_name
      * @param array  $metadata
+     * @param array  $langs
      * @param string $stub_path
      */
-    protected function generateSkeletonSimple($theme_name, array $metadata, $stub_path)
+    protected function generateSkeletonSimple($theme_name, array $metadata, array $langs, $stub_path)
     {
-        $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
+        $this->storage->directory($theme_name, function ($storage) use ($metadata, $langs, $stub_path) {
             $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
             $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
             $storage->file('screenshot.png')->touch(); // TODO use no-image
@@ -131,7 +157,11 @@ class ThemeMakeCommand extends AbstractMakeCommand
             $storage->file('blade/layout.blade.php')->template($stub_path . '/blade/layout.blade.php', $metadata);
             $storage->file('blade/index.blade.php')->template($stub_path . '/blade/index.blade.php', $metadata);
 
-            $storage->file('lang/en/messages.php')->template($stub_path . '/lang/en/messages.php', $metadata);
+            $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
+
+            foreach ($langs as $lang) {
+                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path . '/languages/en/messages.php', $metadata);
+            }
         });
     }
 
@@ -142,9 +172,9 @@ class ThemeMakeCommand extends AbstractMakeCommand
      * @param array  $metadata
      * @param string $stub_path
      */
-    protected function generateSkeletonBootstrap($theme_name, array $metadata, $stub_path)
+    protected function generateSkeletonBootstrap($theme_name, array $metadata, array $langs, $stub_path)
     {
-        $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
+        $this->storage->directory($theme_name, function ($storage) use ($metadata, $langs, $stub_path) {
             $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
             $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
             $storage->file('screenshot.png')->touch(); // TODO use no-image
@@ -154,7 +184,11 @@ class ThemeMakeCommand extends AbstractMakeCommand
             $storage->file('blade/layout.blade.php')->template($stub_path . '/blade/layout.blade.php', $metadata);
             $storage->file('blade/index.blade.php')->template($stub_path . '/blade/index.blade.php', $metadata);
 
-            $storage->file('lang/en/messages.php')->template($stub_path . '/lang/en/messages.php', $metadata);
+            $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
+
+            foreach ($langs as $lang) {
+                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path . '/languages/en/messages.php', $metadata);
+            }
         });
     }
 

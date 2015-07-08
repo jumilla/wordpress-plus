@@ -44,11 +44,11 @@ class PluginMakeCommand extends AbstractMakeCommand
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Storage $storage = null)
     {
         parent::__construct();
 
-        $this->storage = new Storage('wordpress/wp-content/plugins');
+        $this->storage = $storage ?: new Storage('wordpress/wp-content/plugins');
     }
 
     /**
@@ -68,8 +68,10 @@ class PluginMakeCommand extends AbstractMakeCommand
 
         $metadata = $this->gatherMetadata($plugin_name);
 
+        $langs[] = $this->gatherLanguages();
+
         $method = 'generateSkeleton' . ucfirst($skeleton);
-        $this->{$method}($plugin_name, $metadata, 'plugin-stubs/' . $skeleton);
+        $this->{$method}($plugin_name, $metadata, $langs, 'plugin-stubs/' . $skeleton);
 
         $this->info('success');
     }
@@ -94,13 +96,30 @@ class PluginMakeCommand extends AbstractMakeCommand
     }
     
     /**
+     * gather languages
+     *
+     * @return array
+     */
+    protected function gatherLanguages()
+    {
+        $langs[] = 'en';
+
+        if ($locale = env('APP_LOCALE', 'en') !== 'en') {
+            $langs[] = $locale;
+        }
+
+        return $langs;
+    }
+
+    /**
      * generate skeleton type 'minimum'
      *
      * @param string $plugin_name
      * @param array  $metadata
+     * @param array  $langs
      * @param string $stub_path
      */
-    protected function generateSkeletonMinimum($plugin_name, array $metadata, $stub_path)
+    protected function generateSkeletonMinimum($plugin_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($plugin_name, function ($storage) use ($plugin_name, $metadata, $stub_path) {
             $storage->file($plugin_name . '.php')->template($stub_path . '/main.php', $metadata);
@@ -112,12 +131,19 @@ class PluginMakeCommand extends AbstractMakeCommand
      *
      * @param string $plugin_name
      * @param array  $metadata
+     * @param array  $langs
      * @param string $stub_path
      */
-    protected function generateSkeletonSimple($plugin_name, array $metadata, $stub_path)
+    protected function generateSkeletonSimple($plugin_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($plugin_name, function ($storage) use ($plugin_name, $metadata, $stub_path) {
             $storage->file($plugin_name . '.php')->template($stub_path . '/main.php', $metadata);
+
+            $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
+
+            foreach ($langs as $lang) {
+                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path . '/languages/en/messages.php', $metadata);
+            }
         });
     }
 
