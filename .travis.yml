@@ -11,21 +11,16 @@ env:
   global:
     - setup=basic
 
-matrix:
-  include:
-    - php: 5.5.9
-      env: setup=lowest
-    - php: 5.5.9
-      env: setup=stable
-
 sudo: false
 
 install:
-  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-stable; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-lowest --prefer-stable; fi
+  - composer install --no-interaction --prefer-dist
 
 before_script:
-    - cp .env.travis .env
+  - cp .env.travis .env
 
-script: vendor/bin/phpunit
+script:
+  - vendor/bin/phpunit
+
+notifications:
+  slack: geekpavilion:dlWpqIWmVxsQWJ6WLY6Z7Vb0
