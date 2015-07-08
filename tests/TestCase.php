@@ -1,15 +1,27 @@
 <?php
 
-use Mockery as m;
-
 class TestCase extends Laravel\Lumen\Testing\TestCase
 {
+    /**
+     * @return null
+     */
+    public function setUp()
+    {
+        static $initialized = false;
+        if (!$initialized) {
+            $initialized = true;
+            require_once wordpress_path('wp-load.php');
+        }
+        WP_Mock::setUp();
+    }
+
 	/**
 	 * @return null
 	 */
     public function tearDown()
     {
-        m::close();
+        WP_Mock::tearDown();
+        Mockery::close();
     }
 
     /**

@@ -13,8 +13,9 @@
     "require-dev": {
         "fabpot/php-cs-fixer": "^1.8",
         "fzaninotto/faker": "^1.0",
+        "phpunit/phpunit": "^4.0",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "^4.0"
+        "10up/wp_mock": "dev-master"
     },
     "autoload": {
         "psr-4": {

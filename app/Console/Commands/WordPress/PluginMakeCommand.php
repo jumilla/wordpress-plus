@@ -44,11 +44,11 @@ class PluginMakeCommand extends AbstractMakeCommand
      *
      * @return void
      */
-    public function __construct(Storage $storage = null)
+    public function __construct()
     {
         parent::__construct();
 
-        $this->storage = $storage ?: new Storage('wordpress/wp-content/plugins');
+        $this->storage = new Storage('wordpress/wp-content/plugins');
     }
 
     /**
@@ -68,7 +68,7 @@ class PluginMakeCommand extends AbstractMakeCommand
 
         $metadata = $this->gatherMetadata($plugin_name);
 
-        $langs[] = $this->gatherLanguages();
+        $langs = $this->gatherLanguages();
 
         $method = 'generateSkeleton' . ucfirst($skeleton);
         $this->{$method}($plugin_name, $metadata, $langs, 'plugin-stubs/' . $skeleton);
@@ -104,7 +104,7 @@ class PluginMakeCommand extends AbstractMakeCommand
     {
         $langs[] = 'en';
 
-        if ($locale = env('APP_LOCALE', 'en') !== 'en') {
+        if (($locale = env('APP_LOCALE', 'en')) !== 'en') {
             $langs[] = $locale;
         }
 
@@ -136,13 +136,14 @@ class PluginMakeCommand extends AbstractMakeCommand
      */
     protected function generateSkeletonSimple($plugin_name, array $metadata, array $langs, $stub_path)
     {
-        $this->storage->directory($plugin_name, function ($storage) use ($plugin_name, $metadata, $stub_path) {
+        $this->storage->directory($plugin_name, function ($storage) use ($plugin_name, $metadata, $langs, $stub_path) {
             $storage->file($plugin_name . '.php')->template($stub_path . '/main.php', $metadata);
 
             $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
 
             foreach ($langs as $lang) {
-                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path . '/languages/en/messages.php', $metadata);
+                $storage->file('languages/'.$lang.'/messages.php')
+                ->template($stub_path . '/languages/en/messages.php', $metadata);
             }
         });
     }

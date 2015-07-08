@@ -69,7 +69,7 @@ class ThemeMakeCommand extends AbstractMakeCommand
 
         $metadata = $this->gatherMetadata($theme_name);
 
-        $langs[] = $this->gatherLanguages();
+        $langs = $this->gatherLanguages();
 
         $method = 'generateSkeleton' . ucfirst($skeleton);
         $this->{$method}($theme_name, $metadata, $langs, 'theme-stubs/' . $skeleton);
@@ -112,7 +112,7 @@ class ThemeMakeCommand extends AbstractMakeCommand
     {
         $langs[] = 'en';
 
-        if ($locale = env('APP_LOCALE', 'en') !== 'en') {
+        if (($locale = env('APP_LOCALE', 'en')) !== 'en') {
             $langs[] = $locale;
         }
 
