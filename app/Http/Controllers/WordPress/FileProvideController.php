@@ -9,11 +9,29 @@ use Illuminate\Http\Request;
  */
 class FileProvideController extends Controller
 {
-    public function download(Request $request)
+    public function downloadOnBackend(Request $request)
     {
-        info('Download: '.$request->path());
+        return $this->download($request, config('wordpress.url.backend_prefix'));
+    }
 
-        $path = wordpress_path($request->path());
+    public function downloadOnSite(Request $request)
+    {
+        return $this->download($request, config('wordpress.url.site_prefix'));
+    }
+
+    protected function download(Request $request, $prefix)
+    {
+        $path = $request->path();
+
+        // trim prefix
+        if (starts_with($path, $prefix)) {
+            $path = substr($path, strlen($prefix));
+        }
+
+        info('Download: '.$path);
+
+        // make absolute file path
+        $path = wordpress_path($path);
 
         // ERROR: file not found
         if (!is_file($path)) {
@@ -27,10 +45,11 @@ class FileProvideController extends Controller
             abort(404);
         }
 
-        $headers = [];
-        $headers['Content-Type'] = $this->getMimeType($extension);
+        info('Content-Type: '.$this->getMimeType($extension));
 
-        return response()->download($path, null, $headers);
+        return response()->download($path, null, [
+            'Content-Type' => $this->getMimeType($extension),
+        ]);
     }
 
     private function getMimeType($extension)
@@ -44,6 +63,8 @@ class FileProvideController extends Controller
             return 'image/svg+xml';
 
         // TODO: and more...
+        default:
+            return 'text/html';
         }
     }
 

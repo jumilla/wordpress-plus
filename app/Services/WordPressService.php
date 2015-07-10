@@ -53,7 +53,10 @@ trait WordPressService
             global $wpdb;
             global $_wp_switched_stack;
         } else {
+            // no globals
         }
+
+        define('WP_CONTENT_URL', config('wordpress.url.site').'/wp-content');
 
         require_once wordpress_path('wp-load.php');
 
@@ -74,6 +77,8 @@ trait WordPressService
         } else {
             // no globals
         }
+
+        define('WP_CONTENT_URL', config('wordpress.url.site').'/wp-content');
 
         require_once wordpress_path('wp-load.php');
 

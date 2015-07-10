@@ -1,14 +1,30 @@
 <?php
 
-$wp_backend_prefix = parse_url(env('WP_BACKENDURL'), PHP_URL_PATH);
-$wp_site_prefix = parse_url(env('WP_SITEURL'), PHP_URL_PATH);
+$wp_backend_prefix = config('wordpress.url.backend_prefix');
+$wp_site_prefix = config('wordpress.url.site_prefix');
 
 $wp_namespace = 'App\Http\Controllers\WordPress';
 
-if (!function_exists('add_file_download_routes')) {
-    function add_file_download_routes($app)
+if (!function_exists('add_backend_file_download_routes')) {
+    function add_backend_file_download_routes($app)
     {
-        $action = 'FileProvideController@download';
+        $action = 'FileProvideController@downloadOnBackend';
+        $app->get('{f1}', $action);
+        $app->get('{f1}/{f2}', $action);
+        $app->get('{f1}/{f2}/{f3}', $action);
+        $app->get('{f1}/{f2}/{f3}/{f4}', $action);
+        $app->get('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
+        $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
+        $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
+        $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
+        $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
+    }
+}
+
+if (!function_exists('add_site_file_download_routes')) {
+    function add_site_file_download_routes($app)
+    {
+        $action = 'FileProvideController@downloadOnSite';
 
         $app->get('{f1}', $action);
         $app->get('{f1}/{f2}', $action);
@@ -164,7 +180,7 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-admin', 'namespace' => $wp_names
 
     $app->get('load-styles.php', 'FileProvideController@loadStyles');
     $app->get('load-scripts.php', 'FileProvideController@loadScripts');
-    add_file_download_routes($app);
+    add_backend_file_download_routes($app);
 });
 
 // /wp-includes
@@ -174,13 +190,13 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-includes', 'namespace' => $wp_na
     $app->get('js/tinymce/wp-tinymce.php', function () { require wordpress_path(app('request')->path()); });
 
     // provide files, about css, js, png, ...others.
-    add_file_download_routes($app);
+    add_backend_file_download_routes($app);
 });
 
 // /wp-content
-$app->group(['prefix' => $wp_backend_prefix.'wp-content', 'namespace' => $wp_namespace], function ($app) {
+$app->group(['prefix' => $wp_site_prefix.'wp-content', 'namespace' => $wp_namespace], function ($app) {
     // provide files, about css, js, png, ...others.
-    add_file_download_routes($app);
+    add_site_file_download_routes($app);
 });
 
 // Users
