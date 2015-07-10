@@ -14,4 +14,10 @@ return [
 			'directory' => 'languages',
 		],
 	],
+
+	'plugins' => [
+		'lang' => [
+			'directory' => 'languages',
+		],
+	],
 ];

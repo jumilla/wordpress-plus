@@ -36,20 +36,9 @@ class TemplateController extends Controller
         $this->middleware('wordpress.template_bootstrap');
     }
 
-    protected function bladeDirectory()
-    {
-        return get_template_directory() . '/' . config('wordpress.themes.blade.directory');
-    }
-
-    protected function langDirectory()
-    {
-        return get_template_directory() . '/' . config('wordpress.themes.lang.directory');
-    }
-
     public function provide()
     {
-        app('view')->addNamespace('theme', $this->bladeDirectory());
-        app('translator')->addNamespace('theme', $this->langDirectory());
+        $this->setupLaravelEnvironment();
 
         /*
          * Tells WordPress to load the WordPress theme and output it.
@@ -62,7 +51,7 @@ class TemplateController extends Controller
         wp();
 
         if (config('wordpress.themes.blade.precompile')) {
-            // Bladeファイルをコンパイルする
+            // Compile blade files
             $this->prepareTemplates(true);
 
             add_filter('template_include', [$this, 'renderPhpTemplate']);
@@ -75,6 +64,43 @@ class TemplateController extends Controller
 
         /* Loads the WordPress Template */
         require wordpress_path('wp-includes/template-loader.php');
+    }
+
+    protected function setupLaravelEnvironment()
+    {
+        app('view')->addNamespace('theme', $this->themeBladeDirectory());
+        app('translator')->addNamespace('theme', $this->themeLangDirectory());
+
+        foreach (get_option('active_plugins') as $plugin_path) {
+            list($plugin, $plugin_directory) = $this->parsePluginPath($plugin_path);
+
+            if ($plugin_directory) {
+                app('translator')->addNamespace($plugin, $plugin_directory . '/' . config('wordpress.plugins.lang.directory'));
+            }
+        }
+    }
+
+    protected function themeBladeDirectory()
+    {
+        return get_template_directory() . '/' . config('wordpress.themes.blade.directory');
+    }
+
+    protected function themeLangDirectory()
+    {
+        return get_template_directory() . '/' . config('wordpress.themes.lang.directory');
+    }
+
+    protected function parsePluginPath($plugin_path)
+    {
+        if (preg_match('/^(.+)\/.+.php/$', $plugin_path, $match)) {
+            return [$match[1], WP_PLUGIN_DIR . '/' . $match[1]];
+        }
+        else if (preg_match('/^([!/])+.php/$', $plugin_path, $match)) {
+            return [$match[1], null];
+        }
+        else {
+            return null;
+        }
     }
 
     public /* action_hook */ function prepareTemplates($compile)
@@ -134,7 +160,7 @@ class TemplateController extends Controller
     {
         debug_log('wordpress+', 'prepareTemplate:'.$type);
 
-        $blade_root = $this->bladeDirectory();
+        $blade_root = $this->themeBladeDirectory();
         $patterns = static::TEMPLATE_TYPES[$type];
 
         foreach ($patterns as $pattern) {
