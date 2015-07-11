@@ -8,9 +8,10 @@ trait EnvironmentTrait
     {
         require wordpress_path('wp-includes/version.php');
 
-        $this->info('WordPress meets Lumen');
-        $this->line('WordPress: ' . $wp_version);
-        $this->line('Laravel Framework: ' . app()->version());
+        $this->info('-*- WordPress+ -*-');
+        $this->line('  <comment>WordPress:</comment> ' . $wp_version);
+        $this->line('  <comment>Laravel Framework:</comment> ' . app()->version());
+        $this->info('-*-*-*-*-*-*-*--*-');
         $this->line('');
     }
 

@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\WordPress\MultisiteUninstallCommand::class,
         Commands\WordPress\ThemeListCommand::class,
         Commands\WordPress\PluginListCommand::class,
+        Commands\WordPress\KeysMakeCommand::class,
         Commands\WordPress\ThemeMakeCommand::class,
         Commands\WordPress\PluginMakeCommand::class,
     ];
