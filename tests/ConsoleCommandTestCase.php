@@ -2,11 +2,11 @@
 
 class ConsoleCommandTestCase extends TestCase
 {
-	/**
-	 * @param string $command
-	 * @param array $arguments
-	 * @return null
-	 */
+    /**
+     * @param string $command
+     * @param array $arguments
+     * @return null
+     */
     protected function runCommand($command, array $arguments = [])
     {
         $command->setLaravel(app());

@@ -71,14 +71,14 @@ class ThemeMakeCommand extends AbstractMakeCommand
 
         $langs = $this->gatherLanguages();
 
-        $method = 'generateSkeleton' . ucfirst($skeleton);
-        $this->{$method}($theme_name, $metadata, $langs, 'theme-stubs/' . $skeleton);
+        $method = 'generateSkeleton'.ucfirst($skeleton);
+        $this->{$method}($theme_name, $metadata, $langs, 'theme-stubs/'.$skeleton);
 
         $this->info('success');
     }
 
     /**
-     * gather metadata
+     * gather metadata.
      *
      * @param string $theme_name
      * @return array
@@ -104,7 +104,7 @@ class ThemeMakeCommand extends AbstractMakeCommand
     }
 
     /**
-     * gather languages
+     * gather languages.
      *
      * @return array
      */
@@ -120,7 +120,7 @@ class ThemeMakeCommand extends AbstractMakeCommand
     }
 
     /**
-     * generate skeleton type 'minimum'
+     * generate skeleton type 'minimum'.
      *
      * @param string $theme_name
      * @param array  $metadata
@@ -130,15 +130,15 @@ class ThemeMakeCommand extends AbstractMakeCommand
     protected function generateSkeletonMinimum($theme_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $stub_path) {
-            $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
-            $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
+            $storage->file('index.php')->template($stub_path.'/index.php', $metadata);
+            $storage->file('style.css')->template($stub_path.'/style.css', $metadata);
             $storage->file('screenshot.png')->touch(); // TODO use no-image
-            $storage->file('functions.php')->template($stub_path . '/functions.php', $metadata);
+            $storage->file('functions.php')->template($stub_path.'/functions.php', $metadata);
         });
     }
 
     /**
-     * generate skeleton type 'simple'
+     * generate skeleton type 'simple'.
      *
      * @param string $theme_name
      * @param array  $metadata
@@ -148,25 +148,25 @@ class ThemeMakeCommand extends AbstractMakeCommand
     protected function generateSkeletonSimple($theme_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $langs, $stub_path) {
-            $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
-            $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
+            $storage->file('index.php')->template($stub_path.'/index.php', $metadata);
+            $storage->file('style.css')->template($stub_path.'/style.css', $metadata);
             $storage->file('screenshot.png')->touch(); // TODO use no-image
 
-            $storage->file('functions.php')->template($stub_path . '/functions.php', $metadata);
+            $storage->file('functions.php')->template($stub_path.'/functions.php', $metadata);
 
-            $storage->file('blade/layout.blade.php')->template($stub_path . '/blade/layout.blade.php', $metadata);
-            $storage->file('blade/index.blade.php')->template($stub_path . '/blade/index.blade.php', $metadata);
+            $storage->file('blade/layout.blade.php')->template($stub_path.'/blade/layout.blade.php', $metadata);
+            $storage->file('blade/index.blade.php')->template($stub_path.'/blade/index.blade.php', $metadata);
 
-            $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
+            $storage->file('classes/.gitkeep')->template($stub_path.'/classes/.gitkeep', $metadata);
 
             foreach ($langs as $lang) {
-                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path . '/languages/en/messages.php', $metadata);
+                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path.'/languages/en/messages.php', $metadata);
             }
         });
     }
 
     /**
-     * generate skeleton type 'bootstrap'
+     * generate skeleton type 'bootstrap'.
      *
      * @param string $theme_name
      * @param array  $metadata
@@ -175,19 +175,19 @@ class ThemeMakeCommand extends AbstractMakeCommand
     protected function generateSkeletonBootstrap($theme_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($theme_name, function ($storage) use ($metadata, $langs, $stub_path) {
-            $storage->file('index.php')->template($stub_path . '/index.php', $metadata);
-            $storage->file('style.css')->template($stub_path . '/style.css', $metadata);
+            $storage->file('index.php')->template($stub_path.'/index.php', $metadata);
+            $storage->file('style.css')->template($stub_path.'/style.css', $metadata);
             $storage->file('screenshot.png')->touch(); // TODO use no-image
 
-            $storage->file('functions.php')->template($stub_path . '/functions.php', $metadata);
+            $storage->file('functions.php')->template($stub_path.'/functions.php', $metadata);
 
-            $storage->file('blade/layout.blade.php')->template($stub_path . '/blade/layout.blade.php', $metadata);
-            $storage->file('blade/index.blade.php')->template($stub_path . '/blade/index.blade.php', $metadata);
+            $storage->file('blade/layout.blade.php')->template($stub_path.'/blade/layout.blade.php', $metadata);
+            $storage->file('blade/index.blade.php')->template($stub_path.'/blade/index.blade.php', $metadata);
 
-            $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
+            $storage->file('classes/.gitkeep')->template($stub_path.'/classes/.gitkeep', $metadata);
 
             foreach ($langs as $lang) {
-                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path . '/languages/en/messages.php', $metadata);
+                $storage->file('languages/'.$lang.'/messages.php')->template($stub_path.'/languages/en/messages.php', $metadata);
             }
         });
     }
@@ -199,7 +199,7 @@ class ThemeMakeCommand extends AbstractMakeCommand
     {
         return [
             ['name', InputArgument::REQUIRED, 'Theme name.'],
-            ['skeleton', InputArgument::OPTIONAL, 'Theme skeleton. [' . implode(', ', $this->skeletons) . ']'],
+            ['skeleton', InputArgument::OPTIONAL, 'Theme skeleton. ['.implode(', ', $this->skeletons).']'],
         ];
     }
 

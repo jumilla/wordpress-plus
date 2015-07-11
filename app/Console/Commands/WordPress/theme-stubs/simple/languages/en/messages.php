@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'hello' => 'Hello WordPress+',
+    'hello' => 'Hello WordPress+',
 ];

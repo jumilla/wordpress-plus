@@ -6,15 +6,14 @@ class PluginMakeCommandTest extends ConsoleCommandTestCase
 {
     public function testRunWithOptionSkeleton_None()
     {
-//        $this->runMakeCommand('');
+        //        $this->runMakeCommand('');
     }
 
     public function testRunWithOptionSkeleton_Minimum()
     {
         $filesystem = m::mock('Illuminate\Contracts\Filesystem\Filesystem');
 
-        $filesystem->shouldReceive('createLocalDriver')->with(m::any())->andReturn($filesystem)
-            ;
+        $filesystem->shouldReceive('createLocalDriver')->with(m::any())->andReturn($filesystem);
         $filesystem->shouldReceive('exists')->with('foo')->andReturn(false)
             ->once();
         $filesystem->shouldReceive('makeDirectory')->with('foo')->andReturn(true)
@@ -29,8 +28,7 @@ class PluginMakeCommandTest extends ConsoleCommandTestCase
     {
         $filesystem = m::mock('Illuminate\Contracts\Filesystem\Filesystem');
 
-        $filesystem->shouldReceive('createLocalDriver')->with(m::any())->andReturn($filesystem)
-            ;
+        $filesystem->shouldReceive('createLocalDriver')->with(m::any())->andReturn($filesystem);
         $filesystem->shouldReceive('exists')->with('foo')->andReturn(false)
             ->once();
         $filesystem->shouldReceive('makeDirectory')->with('foo')->andReturn(true)

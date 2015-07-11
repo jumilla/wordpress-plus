@@ -43,10 +43,10 @@ class WordPress
 
     public static function pluginPath($plugin)
     {
-        $path = wordpress_path('wp-content/plugins/') . $plugin . '/' . $plugin . '.php';
+        $path = wordpress_path('wp-content/plugins/').$plugin.'/'.$plugin.'.php';
 
         if (!file_exists($path)) {
-            $path = wordpress_path('wp-content/plugins/') . $plugin . '.php';
+            $path = wordpress_path('wp-content/plugins/').$plugin.'.php';
 
             if (!file_exists($path)) {
                 return false;
@@ -63,7 +63,7 @@ class WordPress
 
     public static function themePath($theme)
     {
-        $path = wordpress_path('wp-content/themes/') . $theme;
+        $path = wordpress_path('wp-content/themes/').$theme;
 
         if (!is_dir($path)) {
             return false;

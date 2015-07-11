@@ -15,9 +15,9 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
         WP_Mock::setUp();
     }
 
-	/**
-	 * @return null
-	 */
+    /**
+     * @return null
+     */
     public function tearDown()
     {
         WP_Mock::tearDown();

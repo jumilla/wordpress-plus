@@ -6,6 +6,6 @@ class AdminRoutingTest extends ConsoleCommandTestCase
 {
     public function testDashboard()
     {
-    	$this->visit('/wp-admin');
+        $this->visit('/wp-admin');
     }
 }

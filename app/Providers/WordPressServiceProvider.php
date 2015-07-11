@@ -69,6 +69,7 @@ class WordPressServiceProvider extends ServiceProvider
             $script = "<?php {$postquery} = {$query}; ?>\n";
             $script .= "<?php if ({$postquery}->have_posts()) : ?>\n";
             $script .= "\t<?php while ({$postquery}->have_posts()) : {$postquery}->the_post(); ?>";
+
             return $script;
         });
 
@@ -77,7 +78,7 @@ class WordPressServiceProvider extends ServiceProvider
         });
 
         $compiler->directive('endpostloop', function ($expression) {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
     }
 }

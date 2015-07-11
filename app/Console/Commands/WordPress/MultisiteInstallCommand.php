@@ -92,6 +92,7 @@ class MultisiteInstallCommand extends Command
         $this->line('type: '.($subdomain_install ? 'subdomain' : 'subdirectory'));
         $this->line('sitename: '.$sitename);
         $this->line('email: '.$email);
+
         return $this->confirm('Are you sure?', true);
     }
 

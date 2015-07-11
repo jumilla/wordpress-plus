@@ -30,10 +30,10 @@ class KeysMakeCommand extends AbstractMakeCommand
      * @var array
      */
     protected $password_schemas = [
-		'AUTH',
-		'SECURE_AUTH',
-		'LOGGED_IN',
-		'NONCE',
+        'AUTH',
+        'SECURE_AUTH',
+        'LOGGED_IN',
+        'NONCE',
     ];
 
     /**
@@ -60,41 +60,39 @@ class KeysMakeCommand extends AbstractMakeCommand
         $this->runAdminBootstrapScript();
 
         // process
-    	$this->line(sprintf('APP_KEY=%s', $this->generateLaravelPassword()));
-    	$this->line('');
+        $this->line(sprintf('APP_KEY=%s', $this->generateLaravelPassword()));
+        $this->line('');
 
-    	foreach ($this->password_schemas as $schema) {
-	    	$this->line(sprintf('WP_%s_KEY=%s', $schema, $this->generateWordPressPassword()));
-	    	$this->line(sprintf('WP_%s_SALT=%s', $schema, $this->generateWordPressPassword()));
-    	}
-    	$this->line('');
+        foreach ($this->password_schemas as $schema) {
+            $this->line(sprintf('WP_%s_KEY=%s', $schema, $this->generateWordPressPassword()));
+            $this->line(sprintf('WP_%s_SALT=%s', $schema, $this->generateWordPressPassword()));
+        }
+        $this->line('');
     }
 
     /**
-     * Generate password for WordPress
+     * Generate password for WordPress.
      *
      * @return mixed
      */
     protected function generateLaravelPassword()
     {
-    	$cipher = config('app.cipher');
+        $cipher = config('app.cipher');
 
         if ($cipher === 'AES-128-CBC') {
             return str_random(16);
+        } else {
+            return str_random(32);
         }
-        else {
-	        return str_random(32);
-	    }
     }
 
     /**
-     * Generate password for WordPress
+     * Generate password for WordPress.
      *
      * @return mixed
      */
     protected function generateWordPressPassword()
     {
-		return wp_generate_password(64, true, true);
+        return wp_generate_password(64, true, true);
     }
 }
-

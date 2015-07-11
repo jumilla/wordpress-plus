@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Plugin Name: { $plugin_name }
  * Plugin URI: { $plugin_uri }
