@@ -32,6 +32,8 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
 
     public function testRunWithOptionSkeleton_Simple()
     {
+        putenv('APP_LOCALE=ja');
+
         $filesystem = m::mock('Illuminate\Contracts\Filesystem\Filesystem');
 
         $filesystem->shouldReceive('createLocalDriver')->with(m::any())->andReturn($filesystem);
@@ -63,6 +65,8 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
 
     public function testRunWithOptionSkeleton_Bootstrap()
     {
+        putenv('APP_LOCALE=ja');
+
         $filesystem = m::mock('Illuminate\Contracts\Filesystem\Filesystem');
 
         $filesystem->shouldReceive('createLocalDriver')->with(m::any())->andReturn($filesystem);
