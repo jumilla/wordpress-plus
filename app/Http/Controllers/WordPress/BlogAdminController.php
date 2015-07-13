@@ -272,4 +272,25 @@ class BlogAdminController extends Controller
     {
         $this->runAdminScriptWithMenu('my-sites.php');
     }
+
+    public function runScript()
+    {
+        $path = app('request')->path();
+
+        $prefix = $this->download($request, config('wordpress.url.backend_prefix'));
+
+        // trim prefix
+        if (starts_with($path, $prefix)) {
+            $path = substr($path, strlen($prefix));
+        }
+
+        $path = wordpress_path($path);
+
+        // ERROR: file not found
+        if (!is_file($path)) {
+            abort(404);
+        }
+
+        require $path;
+    }
 }
