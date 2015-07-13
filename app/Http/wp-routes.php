@@ -187,8 +187,8 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-admin', 'namespace' => $wp_names
 // /wp-includes
 $app->group(['prefix' => $wp_backend_prefix.'wp-includes', 'namespace' => $wp_namespace], function ($app) {
     // irregular
-    $app->get('js/tinymce/wp-mce-help.php', 'BlogAdminController@runScript');
-    $app->get('js/tinymce/wp-tinymce.php', 'BlogAdminController@runScript');
+    $app->get('js/tinymce/wp-mce-help.php', 'BlogAdminController@runPhpScript');
+    $app->get('js/tinymce/wp-tinymce.php', 'BlogAdminController@runPhpScript');
 
     // provide files, about css, js, png, ...others.
     add_backend_file_download_routes($app);

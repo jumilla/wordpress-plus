@@ -273,11 +273,11 @@ class BlogAdminController extends Controller
         $this->runAdminScriptWithMenu('my-sites.php');
     }
 
-    public function runScript()
+    public function runPhpScript()
     {
         $path = app('request')->path();
 
-        $prefix = $this->download($request, config('wordpress.url.backend_prefix'));
+        $prefix = config('wordpress.url.backend_prefix');
 
         // trim prefix
         if (starts_with($path, $prefix)) {
