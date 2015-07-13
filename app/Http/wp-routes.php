@@ -41,8 +41,13 @@ if (!function_exists('add_site_file_download_routes')) {
 // Login Gate
 $app->group(['prefix' => $wp_backend_prefix, 'namespace' => $wp_namespace], function ($app) {
     // ?action = ['postpass', 'logout', logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'register']
+    $app->get('login', 'GateController@login');
     $app->get('wp-login.php', 'GateController@login');
     $app->post('wp-login.php', 'GateController@login');
+
+    $admin_url = rtrim(config('wordpress.url.backend'), '/').'/wp-admin/';
+    $app->get('admin', function () use ($admin_url) { return redirect()->to($admin_url); });
+    $app->get('dashboard', function () use ($admin_url) { return redirect()->to($admin_url); });
 });
 
 // /wp-admin/network
@@ -194,7 +199,13 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-includes', 'namespace' => $wp_na
     add_backend_file_download_routes($app);
 });
 
-// /wp-content
+// /wp-content for backend
+$app->group(['prefix' => $wp_backend_prefix.'wp-content', 'namespace' => $wp_namespace], function ($app) {
+    // provide files, about css, js, png, ...others.
+    add_backend_file_download_routes($app);
+});
+
+// /wp-content for site
 $app->group(['prefix' => $wp_site_prefix.'wp-content', 'namespace' => $wp_namespace], function ($app) {
     // provide files, about css, js, png, ...others.
     add_site_file_download_routes($app);
