@@ -51,6 +51,7 @@ class InstallCommand extends Command
         // check
         if (wordpress_installed()) {
             $this->error('Already installed.');
+
             return;
         }
 
@@ -61,6 +62,7 @@ class InstallCommand extends Command
         if (!$this->deside()) {
             // cancel
             $this->line('Canceled.');
+
             return;
         }
 
@@ -90,15 +92,13 @@ class InstallCommand extends Command
         $config['language'] = $this->ask('Language', $config['language']);
         if ($config['backend_url'] === null) {
             $config['backend_url'] = $this->ask('Backend URL', 'http://localhost:8000');
-        }
-        else {
-            $this->info('Backend URL: ' . $config['backend_url'] . ' (.env: WP_BACKENDURL)');
+        } else {
+            $this->info('Backend URL: '.$config['backend_url'].' (.env: WP_BACKENDURL)');
         }
         if ($config['site_url'] === null) {
             $config['site_url'] = $this->ask('Site URL', 'http://localhost:8000');
-        }
-        else {
-            $this->info('Site URL: ' . $config['site_url'] . ' (.env: WP_SITEURL)');
+        } else {
+            $this->info('Site URL: '.$config['site_url'].' (.env: WP_SITEURL)');
         }
         $config['site_title'] = $this->ask('Site title', $config['site_title']);
         $config['site_description'] = $this->ask('Site description', $config['site_description']);

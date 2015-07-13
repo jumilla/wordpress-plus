@@ -47,7 +47,7 @@ class ThemeListCommand extends Command
 
         // prepare
         $this->runTemplateBootstrapScript();
-add_filter('extra_theme_headers', function (array $headers) {
+        add_filter('extra_theme_headers', function (array $headers) {
     return array_merge($headers, [
         'PHP Autoload',
         'PHP Namespace',
@@ -61,8 +61,7 @@ add_filter('extra_theme_headers', function (array $headers) {
 
             // process
             $this->outputThemeList();
-        }
-        else {
+        } else {
             // title
             $this->info('-- WordPress Theme Info --');
 
@@ -86,7 +85,7 @@ add_filter('extra_theme_headers', function (array $headers) {
 
     protected function outputThemeInfo($theme)
     {
-        $theme_path = wordpress_path('wp-content/themes/') .$theme;
+        $theme_path = wordpress_path('wp-content/themes/').$theme;
 
         // check
         if (!file_exists($theme_path)) {

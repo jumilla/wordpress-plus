@@ -8,23 +8,26 @@ trait EnvironmentTrait
     {
         require wordpress_path('wp-includes/version.php');
 
-        $this->info('WordPress meets Lumen');
-        $this->line('WordPress: ' . $wp_version);
-        $this->line('Laravel Framework: ' . app()->version());
+        $this->info('-*- WordPress+ -*-');
+        $this->line('  <comment>WordPress:</comment> '.$wp_version);
+        $this->line('  <comment>Laravel Framework:</comment> '.app()->version());
+        $this->info('-*-*-*-*-*-*-*--*-');
         $this->line('');
     }
 
-	protected function singlesiteTables($blog_id = 0)
-	{
+    protected function singlesiteTables($blog_id = 0)
+    {
         global $wpdb;
-		return $wpdb->tables('all', true, $blog_id);
-	}
 
-	protected function multisiteTables($blog_id = 0)
-	{
+        return $wpdb->tables('all', true, $blog_id);
+    }
+
+    protected function multisiteTables($blog_id = 0)
+    {
         global $wpdb;
-		return $wpdb->tables('ms_global', true, $blog_id);
-	}
+
+        return $wpdb->tables('ms_global', true, $blog_id);
+    }
 
     protected function bootstrapForSinglesiteSetup()
     {

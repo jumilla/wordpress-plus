@@ -47,7 +47,7 @@ class PluginListCommand extends Command
 
         // prepare
         $this->runAdminBootstrapScript();
-add_filter('extra_plugin_headers', function (array $headers) {
+        add_filter('extra_plugin_headers', function (array $headers) {
     return array_merge($headers, [
         'PHP Autoload',
         'PHP Namespace',
@@ -61,8 +61,7 @@ add_filter('extra_plugin_headers', function (array $headers) {
 
             // process
             $this->outputPluginList();
-        }
-        else {
+        } else {
             // title
             $this->info('-- WordPress Plugin Info --');
 
@@ -88,11 +87,11 @@ add_filter('extra_plugin_headers', function (array $headers) {
 
     protected function outputPluginInfo($plugin)
     {
-        $plugin_path = WP_PLUGIN_DIR . '/' . $plugin . '/' . $plugin . '.php';
+        $plugin_path = WP_PLUGIN_DIR.'/'.$plugin.'/'.$plugin.'.php';
         $plugin_type_dir = true;
 
         if (!file_exists($plugin_path)) {
-            $plugin_path = WP_PLUGIN_DIR . '/' . $plugin . '.php';
+            $plugin_path = WP_PLUGIN_DIR.'/'.$plugin.'.php';
             $plugin_type_dir = false;
 
             if (!file_exists($plugin_path)) {

@@ -103,8 +103,8 @@ trait WordPressService
     {
         // Plugins
         foreach (WordPress::activePlugins() as $plugin) {
-//            $plugin_path = WordPress::pluginPath($plugin);
-            $plugin_path = wordpress_path('wp-content/plugins/') . $plugin;
+            //            $plugin_path = WordPress::pluginPath($plugin);
+            $plugin_path = wordpress_path('wp-content/plugins/').$plugin;
 
             $plugin_data = get_file_data($plugin_path, [
                 'php_autoload_dir' => 'PHP Autoload',

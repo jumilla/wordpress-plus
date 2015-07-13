@@ -117,6 +117,7 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-admin', 'namespace' => $wp_names
     //--- Posts ---//
 
     $app->get('edit.php', 'BlogAdminController@postList');
+    $app->post('edit.php', 'BlogAdminController@postList');
     $app->get('revision.php', 'BlogAdminController@postRevision');
     $app->get('post-new.php', 'BlogAdminController@postNew');
     $app->post('post-new.php', 'BlogAdminController@postNew');

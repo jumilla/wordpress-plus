@@ -55,8 +55,7 @@ class TemplateController extends Controller
             $this->prepareTemplates(true);
 
             add_filter('template_include', [$this, 'renderPhpTemplate']);
-        }
-        else {
+        } else {
             $this->prepareTemplates(false);
 
             add_filter('template_include', [$this, 'evaluateTemplate']);
@@ -75,86 +74,84 @@ class TemplateController extends Controller
             list($plugin, $plugin_directory) = $this->parsePluginPath($plugin_path);
 
             if ($plugin_directory) {
-                app('translator')->addNamespace($plugin, $plugin_directory . '/' . config('wordpress.plugins.lang.directory'));
+                app('translator')->addNamespace($plugin, $plugin_directory.'/'.config('wordpress.plugins.lang.directory'));
             }
         }
     }
 
     protected function themeBladeDirectory()
     {
-        return get_template_directory() . '/' . config('wordpress.themes.blade.directory');
+        return get_template_directory().'/'.config('wordpress.themes.blade.directory');
     }
 
     protected function themeLangDirectory()
     {
-        return get_template_directory() . '/' . config('wordpress.themes.lang.directory');
+        return get_template_directory().'/'.config('wordpress.themes.lang.directory');
     }
 
     protected function parsePluginPath($plugin_path)
     {
         if (preg_match('/^(.+)\/.+.php/$', $plugin_path, $match)) {
-            return [$match[1], WP_PLUGIN_DIR . '/' . $match[1]];
-        }
-        else if (preg_match('/^([!/])+.php/$', $plugin_path, $match)) {
+            return [$match[1], WP_PLUGIN_DIR.'/'.$match[1]];
+        } elseif (preg_match('/^([!/])+.php/$', $plugin_path, $match)) {
             return [$match[1], null];
-        }
-        else {
-            return null;
+        } else {
+            return;
         }
     }
 
-    public /* action_hook */ function prepareTemplates($compile)
-    {
-        if (is_404()) {
-            $this->prepareTemplate('404', $compile);
-        }
-        if (is_search()) {
-            $this->prepareTemplate('search', $compile);
-        }
-        if (is_front_page()) {
-            $this->prepareTemplate('front_page', $compile);
-        }
-        if (is_home()) {
-            $this->prepareTemplate('home', $compile);
-        }
-        if (is_post_type_archive()) {
-            $this->prepareTemplate('archive', $compile);
-        }
-        if (is_tax()) {
-            $this->prepareTemplate('taxonomy', $compile);
-        }
-        if (is_attachment()) {
-            $this->prepareTemplate('attachment', $compile);
-        }
-        if (is_single()) {
-            $this->prepareTemplate('single', $compile);
-        }
-        if (is_page()) {
-            $this->prepareTemplate('page', $compile);
-        }
-        if (is_category()) {
-            $this->prepareTemplate('category', $compile);
-        }
-        if (is_tag()) {
-            $this->prepareTemplate('tag', $compile);
-        }
-        if (is_author()) {
-            $this->prepareTemplate('author', $compile);
-        }
-        if (is_date()) {
-            $this->prepareTemplate('date', $compile);
-        }
-        if (is_archive()) {
-            $this->prepareTemplate('archive', $compile);
-        }
-        if (is_comments_popup()) {
-            $this->prepareTemplate('comments_popup', $compile);
-        }
-        if (is_paged()) {
-            $this->prepareTemplate('paged', $compile);
-        }
-        $this->prepareTemplate('index', $compile);
-    }
+    /* action_hook */ public function prepareTemplates($compile)
+ {
+     if (is_404()) {
+         $this->prepareTemplate('404', $compile);
+     }
+     if (is_search()) {
+         $this->prepareTemplate('search', $compile);
+     }
+     if (is_front_page()) {
+         $this->prepareTemplate('front_page', $compile);
+     }
+     if (is_home()) {
+         $this->prepareTemplate('home', $compile);
+     }
+     if (is_post_type_archive()) {
+         $this->prepareTemplate('archive', $compile);
+     }
+     if (is_tax()) {
+         $this->prepareTemplate('taxonomy', $compile);
+     }
+     if (is_attachment()) {
+         $this->prepareTemplate('attachment', $compile);
+     }
+     if (is_single()) {
+         $this->prepareTemplate('single', $compile);
+     }
+     if (is_page()) {
+         $this->prepareTemplate('page', $compile);
+     }
+     if (is_category()) {
+         $this->prepareTemplate('category', $compile);
+     }
+     if (is_tag()) {
+         $this->prepareTemplate('tag', $compile);
+     }
+     if (is_author()) {
+         $this->prepareTemplate('author', $compile);
+     }
+     if (is_date()) {
+         $this->prepareTemplate('date', $compile);
+     }
+     if (is_archive()) {
+         $this->prepareTemplate('archive', $compile);
+     }
+     if (is_comments_popup()) {
+         $this->prepareTemplate('comments_popup', $compile);
+     }
+     if (is_paged()) {
+         $this->prepareTemplate('paged', $compile);
+     }
+     $this->prepareTemplate('index', $compile);
+ }
 
     protected function prepareTemplate($type, $compile)
     {
@@ -175,34 +172,33 @@ class TemplateController extends Controller
 
                     file_put_contents($php_path, "<?php /* {$header_comment} */ ?>\n");
                     file_put_contents($php_path, $php_script_image, FILE_APPEND);
-                }
-                else {
+                } else {
                     touch($php_path);
                 }
             }
         }
     }
 
-    public /* action_hook */ function evaluateTemplate($php_path)
-    {
-        debug_log('filter:template_include', basename($php_path));
+    /* action_hook */ public function evaluateTemplate($php_path)
+ {
+     debug_log('filter:template_include', basename($php_path));
 
-        $dirname = dirname($php_path);
-        $filename = basename($php_path, '.php');
+     $dirname = dirname($php_path);
+     $filename = basename($php_path, '.php');
 
         // blade extension
         $blade_path = preg_replace('/\.php$/', '.blade.php', $php_path);
-        if (file_exists($blade_path)) {
-            $this->renderBladeTemplate($blade_path);
-        } elseif (file_exists($php_path)) {
-            $this->renderPhpTemplate($php_path);
-        } else {
-            return $php_path;
-        }
+     if (file_exists($blade_path)) {
+         $this->renderBladeTemplate($blade_path);
+     } elseif (file_exists($php_path)) {
+         $this->renderPhpTemplate($php_path);
+     } else {
+         return $php_path;
+     }
 
         // consumed
         return;
-    }
+ }
 
     protected function loadMetaData()
     {
@@ -221,11 +217,11 @@ class TemplateController extends Controller
         echo $results;
     }
 
-    public /* action_hook */ function renderPhpTemplate($path)
-    {
-        $metadata = $this->loadMetaData();
+    /* action_hook */ public function renderPhpTemplate($path)
+ {
+     $metadata = $this->loadMetaData();
 
         // evaluate
         include $path;
-    }
+ }
 }

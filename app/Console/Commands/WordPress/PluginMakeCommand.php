@@ -70,8 +70,8 @@ class PluginMakeCommand extends AbstractMakeCommand
 
         $langs = $this->gatherLanguages();
 
-        $method = 'generateSkeleton' . ucfirst($skeleton);
-        $this->{$method}($plugin_name, $metadata, $langs, 'plugin-stubs/' . $skeleton);
+        $method = 'generateSkeleton'.ucfirst($skeleton);
+        $this->{$method}($plugin_name, $metadata, $langs, 'plugin-stubs/'.$skeleton);
 
         $this->info('success');
     }
@@ -94,9 +94,9 @@ class PluginMakeCommand extends AbstractMakeCommand
 
         return $metadata;
     }
-    
-    /**
-     * gather languages
+
+/**
+     * gather languages.
      *
      * @return array
      */
@@ -112,7 +112,7 @@ class PluginMakeCommand extends AbstractMakeCommand
     }
 
     /**
-     * generate skeleton type 'minimum'
+     * generate skeleton type 'minimum'.
      *
      * @param string $plugin_name
      * @param array  $metadata
@@ -122,12 +122,12 @@ class PluginMakeCommand extends AbstractMakeCommand
     protected function generateSkeletonMinimum($plugin_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($plugin_name, function ($storage) use ($plugin_name, $metadata, $stub_path) {
-            $storage->file($plugin_name . '.php')->template($stub_path . '/main.php', $metadata);
+            $storage->file($plugin_name.'.php')->template($stub_path.'/main.php', $metadata);
         });
     }
 
     /**
-     * generate skeleton type 'simple'
+     * generate skeleton type 'simple'.
      *
      * @param string $plugin_name
      * @param array  $metadata
@@ -137,13 +137,13 @@ class PluginMakeCommand extends AbstractMakeCommand
     protected function generateSkeletonSimple($plugin_name, array $metadata, array $langs, $stub_path)
     {
         $this->storage->directory($plugin_name, function ($storage) use ($plugin_name, $metadata, $langs, $stub_path) {
-            $storage->file($plugin_name . '.php')->template($stub_path . '/main.php', $metadata);
+            $storage->file($plugin_name.'.php')->template($stub_path.'/main.php', $metadata);
 
-            $storage->file('classes/.gitkeep')->template($stub_path . '/classes/.gitkeep', $metadata);
+            $storage->file('classes/.gitkeep')->template($stub_path.'/classes/.gitkeep', $metadata);
 
             foreach ($langs as $lang) {
                 $storage->file('languages/'.$lang.'/messages.php')
-                ->template($stub_path . '/languages/en/messages.php', $metadata);
+                ->template($stub_path.'/languages/en/messages.php', $metadata);
             }
         });
     }
@@ -155,7 +155,7 @@ class PluginMakeCommand extends AbstractMakeCommand
     {
         return [
             ['name', InputArgument::REQUIRED, 'Plugin name.'],
-            ['skeleton', InputArgument::OPTIONAL, 'Plugin skeleton. [' . implode(', ', $this->skeletons) . ']'],
+            ['skeleton', InputArgument::OPTIONAL, 'Plugin skeleton. ['.implode(', ', $this->skeletons).']'],
         ];
     }
 
