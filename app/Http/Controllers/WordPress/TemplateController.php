@@ -50,6 +50,8 @@ class TemplateController extends Controller
         // Process
         wp();
 
+        remove_action('template_redirect', 'wp_redirect_admin_locations', 1000);
+
         if (config('wordpress.themes.blade.precompile')) {
             // Compile blade files
             $this->prepareTemplates(true);
