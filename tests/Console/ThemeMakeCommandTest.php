@@ -6,7 +6,7 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
 {
     public function testRunWithOptionSkeleton_None()
     {
-        //        $this->runMakeCommand('');
+//        $this->runMakeCommand('');
     }
 
     public function testRunWithOptionSkeleton_Minimum()

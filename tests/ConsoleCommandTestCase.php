@@ -5,7 +5,7 @@ class ConsoleCommandTestCase extends TestCase
     /**
      * @param string $command
      * @param array $arguments
-     * @return null
+     * @return int
      */
     protected function runCommand($command, array $arguments = [])
     {

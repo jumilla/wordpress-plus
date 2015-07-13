@@ -7,11 +7,6 @@ class TestCase extends Laravel\Lumen\Testing\TestCase
      */
     public function setUp()
     {
-        static $initialized = false;
-        if (!$initialized) {
-            $initialized = true;
-            require_once wordpress_path('wp-load.php');
-        }
         WP_Mock::setUp();
     }
 
