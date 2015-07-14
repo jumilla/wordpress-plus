@@ -41,11 +41,21 @@ if (!function_exists('add_site_file_download_routes')) {
 // Login Gate
 $app->group(['prefix' => $wp_backend_prefix, 'namespace' => $wp_namespace], function ($app) {
     // ?action = ['postpass', 'logout', logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'register']
-    $app->get('login', 'GateController@login');
     $app->get('wp-login.php', 'GateController@login');
     $app->post('wp-login.php', 'GateController@login');
+});
 
-    $admin_url = rtrim(config('wordpress.url.backend'), '/').'/wp-admin/';
+// Shortcuts
+$app->group(['prefix' => $wp_backend_prefix, 'namespace' => $wp_namespace], function ($app) {
+    $admin_url = config('wordpress.url.backend').'/wp-admin/';
+
+    // WordPress+ original routing
+    if (config('wordpress.url.backend') != config('wordpress.url.site')) {
+        $app->get('', function () use ($admin_url) { return redirect()->to($admin_url); });
+    }
+
+    // MEMO from wp_redirect_admin_locations() on 'wp-includes/canonical.php'
+    $app->get('login', 'GateController@login');
     $app->get('admin', function () use ($admin_url) { return redirect()->to($admin_url); });
     $app->get('dashboard', function () use ($admin_url) { return redirect()->to($admin_url); });
 });
