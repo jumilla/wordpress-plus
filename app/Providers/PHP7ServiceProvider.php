@@ -27,7 +27,7 @@ class PHP7ServiceProvider extends ServiceProvider
 
         $this->frameworkUncaughtExceptionHandler = set_exception_handler(function ($e) {
             if ($e instanceof \Exception) {
-                $this->frameworkUncaughtExceptionHandler($e);
+                call_user_func($this->frameworkUncaughtExceptionHandler, $e);
             }
             // PHP7
             else {
