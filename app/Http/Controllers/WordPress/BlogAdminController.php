@@ -128,6 +128,11 @@ class BlogAdminController extends Controller
         $this->runAdminScriptWithMenu('edit.php');
     }
 
+    public function postRevision()
+    {
+        $this->runAdminScriptWithMenu('revision.php');
+    }
+
     public function postNew()
     {
         $this->runAdminScriptWithMenu('post-new.php');
@@ -136,11 +141,6 @@ class BlogAdminController extends Controller
     public function postEdit()
     {
         $this->runAdminScriptWithMenu('post.php');
-    }
-
-    public function postRevision()
-    {
-        $this->runAdminScriptWithMenu('revision.php');
     }
 
     public function tagList()

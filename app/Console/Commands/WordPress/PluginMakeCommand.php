@@ -95,7 +95,7 @@ class PluginMakeCommand extends AbstractMakeCommand
         return $metadata;
     }
 
-/**
+    /**
      * gather languages.
      *
      * @return array

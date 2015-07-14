@@ -28,7 +28,7 @@ class FileProvideController extends Controller
             $path = substr($path, strlen($prefix));
         }
 
-        info('Download: '.$path);
+        debug_log('File Download[File Path]', $path);
 
         // make absolute file path
         $path = wordpress_path($path);
@@ -45,7 +45,7 @@ class FileProvideController extends Controller
             abort(404);
         }
 
-        info('Content-Type: '.$this->getMimeType($extension));
+        debug_log('File Download[Content Type]', $this->getMimeType($extension));
 
         return response()->download($path, null, [
             'Content-Type' => $this->getMimeType($extension),

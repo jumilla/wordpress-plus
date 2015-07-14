@@ -56,9 +56,8 @@ class TemplateController extends Controller
         if (config('wordpress.themes.blade.precompile')) {
             // Compile blade files
             $this->prepareTemplates(true);
-
-            add_filter('template_include', [$this, 'renderPhpTemplate']);
         } else {
+            // Generate blank .php files
             $this->prepareTemplates(false);
 
             add_filter('template_include', [$this, 'evaluateTemplate']);
@@ -182,49 +181,27 @@ class TemplateController extends Controller
         }
     }
 
-    /* action_hook */ public function evaluateTemplate($php_path)
- {
-     debug_log('filter:template_include', basename($php_path));
+    /**
+     * @wp_action template_include
+     */
+    public function evaluateTemplate($php_path)
+    {
+        debug_log('filter:template_include', basename($php_path));
 
-     $dirname = dirname($php_path);
-     $filename = basename($php_path, '.php');
+        $dirname = dirname($php_path);
+        $filename = basename($php_path, '.php');
 
         // blade extension
         $blade_path = preg_replace('/\.php$/', '.blade.php', $php_path);
-     if (file_exists($blade_path)) {
-         $this->renderBladeTemplate($blade_path);
-     } elseif (file_exists($php_path)) {
-         $this->renderPhpTemplate($php_path);
-     } else {
-         return $php_path;
-     }
+        if (file_exists($blade_path)) {
+            $this->renderBladeTemplate($blade_path);
+        }
 
-        // consumed
-        return;
- }
-
-    protected function loadMetaData()
-    {
-        // TODO load from style.css ?
-        return new Fluent([
-            'lumen_version' => app()->version(),
-        ]);
+        return $php_path;
     }
 
     protected function renderBladeTemplate($path)
     {
-        $metadata = $this->loadMetaData();
-
-        $results = app('view')->make('theme::'.basename($path, '.blade.php'), compact('metadata'))->render();
-
-        echo $results;
+        app('view')->make('theme::'.basename($path, '.blade.php'), [])->render();
     }
-
-    /* action_hook */ public function renderPhpTemplate($path)
- {
-     $metadata = $this->loadMetaData();
-
-        // evaluate
-        include $path;
- }
 }
