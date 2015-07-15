@@ -48,11 +48,11 @@ class ThemeListCommand extends Command
         // prepare
         $this->runTemplateBootstrapScript();
         add_filter('extra_theme_headers', function (array $headers) {
-    return array_merge($headers, [
-        'PHP Autoload',
-        'PHP Namespace',
-    ]);
-});
+            return array_merge($headers, [
+                'PHP Autoload',
+                'PHP Namespace',
+            ]);
+        });
 
         $plugin = $this->argument('name');
         if (!$plugin) {

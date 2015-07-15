@@ -102,58 +102,61 @@ class TemplateController extends Controller
         }
     }
 
-    /* action_hook */ public function prepareTemplates($compile)
- {
-     if (is_404()) {
-         $this->prepareTemplate('404', $compile);
-     }
-     if (is_search()) {
-         $this->prepareTemplate('search', $compile);
-     }
-     if (is_front_page()) {
-         $this->prepareTemplate('front_page', $compile);
-     }
-     if (is_home()) {
-         $this->prepareTemplate('home', $compile);
-     }
-     if (is_post_type_archive()) {
-         $this->prepareTemplate('archive', $compile);
-     }
-     if (is_tax()) {
-         $this->prepareTemplate('taxonomy', $compile);
-     }
-     if (is_attachment()) {
-         $this->prepareTemplate('attachment', $compile);
-     }
-     if (is_single()) {
-         $this->prepareTemplate('single', $compile);
-     }
-     if (is_page()) {
-         $this->prepareTemplate('page', $compile);
-     }
-     if (is_category()) {
-         $this->prepareTemplate('category', $compile);
-     }
-     if (is_tag()) {
-         $this->prepareTemplate('tag', $compile);
-     }
-     if (is_author()) {
-         $this->prepareTemplate('author', $compile);
-     }
-     if (is_date()) {
-         $this->prepareTemplate('date', $compile);
-     }
-     if (is_archive()) {
-         $this->prepareTemplate('archive', $compile);
-     }
-     if (is_comments_popup()) {
-         $this->prepareTemplate('comments_popup', $compile);
-     }
-     if (is_paged()) {
-         $this->prepareTemplate('paged', $compile);
-     }
-     $this->prepareTemplate('index', $compile);
- }
+    /**
+     * @param bool $compile
+     */
+    protected function prepareTemplates($compile)
+    {
+        if (is_404()) {
+            $this->prepareTemplate('404', $compile);
+        }
+        if (is_search()) {
+            $this->prepareTemplate('search', $compile);
+        }
+        if (is_front_page()) {
+            $this->prepareTemplate('front_page', $compile);
+        }
+        if (is_home()) {
+            $this->prepareTemplate('home', $compile);
+        }
+        if (is_post_type_archive()) {
+            $this->prepareTemplate('archive', $compile);
+        }
+        if (is_tax()) {
+            $this->prepareTemplate('taxonomy', $compile);
+        }
+        if (is_attachment()) {
+            $this->prepareTemplate('attachment', $compile);
+        }
+        if (is_single()) {
+            $this->prepareTemplate('single', $compile);
+        }
+        if (is_page()) {
+            $this->prepareTemplate('page', $compile);
+        }
+        if (is_category()) {
+            $this->prepareTemplate('category', $compile);
+        }
+        if (is_tag()) {
+            $this->prepareTemplate('tag', $compile);
+        }
+        if (is_author()) {
+            $this->prepareTemplate('author', $compile);
+        }
+        if (is_date()) {
+            $this->prepareTemplate('date', $compile);
+        }
+        if (is_archive()) {
+            $this->prepareTemplate('archive', $compile);
+        }
+        if (is_comments_popup()) {
+            $this->prepareTemplate('comments_popup', $compile);
+        }
+        if (is_paged()) {
+            $this->prepareTemplate('paged', $compile);
+        }
+        $this->prepareTemplate('index', $compile);
+    }
 
     protected function prepareTemplate($type, $compile)
     {
@@ -192,9 +195,9 @@ class TemplateController extends Controller
         $filename = basename($php_path, '.php');
 
         // blade extension
-        $blade_path = preg_replace('/\.php$/', '.blade.php', $php_path);
+        $blade_path = $dirname.'/'.config('wordpress.themes.blade.directory').'/'.$filename.'.blade.php';
         if (file_exists($blade_path)) {
-            $this->renderBladeTemplate($blade_path);
+            file_put_contents($php_path, $this->renderBladeTemplate($blade_path));
         }
 
         return $php_path;
@@ -202,6 +205,6 @@ class TemplateController extends Controller
 
     protected function renderBladeTemplate($path)
     {
-        app('view')->make('theme::'.basename($path, '.blade.php'), [])->render();
+        return app('view')->make('theme::'.basename($path, '.blade.php'), [])->render();
     }
 }

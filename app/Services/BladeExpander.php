@@ -203,30 +203,35 @@ class BladeExpander extends BladeCompiler
         return $result;
     }
 
-/**
- * Compile the extends statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileExtends($expression)
- {
-     debug_log('compileExtends');
-     eval("\$this->doInclude{$expression};");
- }
+    /**
+     * Compile the extends statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileExtends($expression)
+    {
+        eval("\$this->doInclude{$expression};");
+    }
 
-/**
- * Compile the include statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileInclude($expression)
- {
-     debug_log('compileInclude');
-     eval("\$this->doInclude{$expression};");
- }
+    /**
+     * Compile the include statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileInclude($expression)
+    {
+        eval("\$this->doInclude{$expression};");
+    }
 
+    /**
+     * @param  string  $view
+     * @param  array  $data
+     * @return null
+     */
     protected function doInclude($view, array $data = [])
     {
         // normalize $view
@@ -237,16 +242,17 @@ class BladeExpander extends BladeCompiler
         $this->expandFile($path);
     }
 
-/**
- * Compile the each statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileEach($expression)
- {
-     eval("\$this->doEach{$expression};");
- }
+    /**
+     * Compile the each statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileEach($expression)
+    {
+        eval("\$this->doEach{$expression};");
+    }
 
     /**
      * Get the rendered contents of a partial from a loop.
@@ -282,53 +288,53 @@ class BladeExpander extends BladeCompiler
         }
     }
 
-/**
- * Compile the section statements into valid PHP.
- *
- * @param  string  $expression
- * @return string
- */
-    /* override */ protected function compileSection($expression)
- {
-     debug_log('compileSection');
-     eval("\$this->enterSection{$expression};");
- }
+    /**
+     * Compile the section statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return string
+     */
+    protected function compileSection($expression)
+    {
+        eval("\$this->enterSection{$expression};");
+    }
 
-/**
- * Compile the end-section statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileEndsection($expression)
- {
-     debug_log('compileEndsection');
-     $this->leaveSection(static::SECTION_EXTEND);
- }
+    /**
+     * Compile the end-section statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileEndsection($expression)
+    {
+        $this->leaveSection(static::SECTION_EXTEND);
+    }
 
-/**
- * Compile the stop statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileStop($expression)
- {
-     debug_log('compileStop');
-     $this->leaveSection(static::SECTION_EXTEND);
- }
+    /**
+     * Compile the stop statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileStop($expression)
+    {
+        $this->leaveSection(static::SECTION_EXTEND);
+    }
 
-/**
- * Compile the overwrite statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileOverwrite($expression)
- {
-     debug_log('compileOverwrite');
-     $this->leaveSection(static::SECTION_OVERWRITE);
- }
+    /**
+     * Compile the overwrite statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileOverwrite($expression)
+    {
+        $this->leaveSection(static::SECTION_OVERWRITE);
+    }
 
     /**
      * Compile the append statements into valid PHP.
@@ -338,116 +344,116 @@ class BladeExpander extends BladeCompiler
      */
     protected function compilePrepend($expression)
     {
-        debug_log('compilePrepend');
         $this->leaveSection(static::SECTION_PREPEND);
     }
 
-/**
- * Compile the append statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileAppend($expression)
- {
-     debug_log('compileAppend');
-     $this->leaveSection(static::SECTION_APPEND);
- }
+    /**
+     * Compile the append statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileAppend($expression)
+    {
+        $this->leaveSection(static::SECTION_APPEND);
+    }
 
-/**
- * Compile the show statements into valid PHP.
- *
- * @param  string  $expression
- * @return string
- */
-    /* override */ protected function compileShow($expression)
- {
-     debug_log('compileShow', $this->currentSection);
-     $section = $this->currentSection;
-     $this->leaveSection(static::SECTION_EXTEND);
-     $this->pushBlockSection($section);
- }
+    /**
+     * Compile the show statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return string
+     */
+    protected function compileShow($expression)
+    {
+        $section = $this->currentSection;
+        $this->leaveSection(static::SECTION_EXTEND);
+        $this->pushBlockSection($section);
+    }
 
-/**
- * Compile the yield statements into valid PHP.
- *
- * @param  string  $expression
- * @return string
- */
-    /* override */ protected function compileYield($expression)
- {
-     debug_log('compileYield');
+    /**
+     * Compile the yield statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return string
+     */
+    protected function compileYield($expression)
+    {
+        return eval("return \$this->pushBlockSection{$expression};");
+    }
 
-     return eval("return \$this->pushBlockSection{$expression};");
- }
+    /**
+     * Compile the push statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compilePush($expression)
+    {
+        eval("\$this->enterSection{$expression};");
+    }
 
-/**
- * Compile the push statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compilePush($expression)
- {
-     debug_log('compilePush');
-     eval("\$this->enterSection{$expression};");
- }
+    /**
+     * Compile the endpush statements into valid PHP.
+     *
+     * @override
+     * @param  string  $expression
+     * @return null
+     */
+    protected function compileEndpush($expression)
+    {
+        $this->leaveSection('append');
+    }
 
-/**
- * Compile the endpush statements into valid PHP.
- *
- * @param  string  $expression
- * @return null
- */
-    /* override */ protected function compileEndpush($expression)
- {
-     debug_log('compileEndpush');
-     $this->leaveSection('append');
- }
+    /**
+     * Compile the stack statements into the content.
+     *
+     * @override
+     * @param  string  $expression
+     * @return string
+     */
+    protected function compileStack($expression)
+    {
+        return eval("return \$this->pushBlockSection{$expression};");
+    }
 
-/**
- * Compile the stack statements into the content.
- *
- * @param  string  $expression
- * @return string
- */
-    /* override */ protected function compileStack($expression)
- {
-     debug_log('compileStack');
+    /**
+     * Get the path to the compiled version of a view.
+     *
+     * @override
+     * @param  string  $path
+     * @return string
+     */
+    public function getCompiledPath($path)
+    {
+        return $path;
+    }
 
-     return eval("return \$this->pushBlockSection{$expression};");
- }
+    /**
+     * Determine if the view at the given path is expired.
+     *
+     * @override
+     * @param  string  $path
+     * @return bool
+     */
+    public function isExpired($path)
+    {
+        return false;
+    }
 
-/**
- * Get the path to the compiled version of a view.
- *
- * @param  string  $path
- * @return string
- */
-    /* override */ public function getCompiledPath($path)
- {
-     return $path;
- }
-
-/**
- * Determine if the view at the given path is expired.
- *
- * @param  string  $path
- * @return bool
- */
-    /* override */ public function isExpired($path)
- {
-     return false;
- }
-
-/**
- * Compile the view at the given path.
- *
- * @param  string  $path
- * @return null
- */
-    /* override */ public function compile($path = null)
- {
-     // nothing todo
- }
+    /**
+     * Compile the view at the given path.
+     *
+     * @override
+     * @param  string  $path
+     * @return null
+     */
+    public function compile($path = null)
+    {
+        // nothing todo
+    }
 }

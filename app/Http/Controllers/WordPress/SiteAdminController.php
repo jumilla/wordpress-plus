@@ -14,7 +14,6 @@ class SiteAdminController extends Controller
 
     public function siteDashboard()
     {
-        //        info('multisiteDashboard');
         $this->runAdminScriptWithMenu('network/index.php', [
             'wpdb',
             'current_site', 'current_blog', 'current_user',
