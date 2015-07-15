@@ -15,7 +15,7 @@
         "fzaninotto/faker": "^1.0",
         "phpunit/phpunit": "^4.0",
         "mockery/mockery": "0.9.*",
-        "10up/wp_mock": "dev-master"
+        "antecedent/patchwork": "dev-master"
     },
     "autoload": {
         "psr-4": {
