@@ -6,7 +6,7 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
 {
     public function testRunWithOptionSkeleton_None()
     {
-//        $this->runMakeCommand('');
+        //        $this->runMakeCommand('');
     }
 
     public function testRunWithOptionSkeleton_Minimum()
@@ -32,7 +32,7 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
 
     public function testRunWithOptionSkeleton_Simple()
     {
-        putenv('APP_LOCALE=ja');
+        $this->putenv('APP_LOCALE', 'ja');
 
         $filesystem = m::mock('Illuminate\Contracts\Filesystem\Filesystem');
 
@@ -65,7 +65,7 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
 
     public function testRunWithOptionSkeleton_Bootstrap()
     {
-        putenv('APP_LOCALE=ja');
+        $this->putenv('APP_LOCALE', 'ja');
 
         $filesystem = m::mock('Illuminate\Contracts\Filesystem\Filesystem');
 

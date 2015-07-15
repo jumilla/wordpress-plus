@@ -142,7 +142,7 @@ trait WordPressService
         // for wp-admin/includes/plugin.php
         $globals = array_merge($globals, ['_wp_last_object_menu', '_wp_last_utility_menu']);
 
-        $this->runAdminScript($filename, $globals);
+        return $this->runAdminScript($filename, $globals);
     }
 
     protected function runAdminScript($filename, array $globals = [])
@@ -153,7 +153,7 @@ trait WordPressService
         // require current directory is '{$WORDPRESS}/wp-admin/' by 'wp-admin/menu-header.php'
         chdir(wordpress_path('wp-admin'));
 
-        $this->runScript('wp-admin/'.$filename, $globals);
+        return $this->runScript('wp-admin/'.$filename, $globals);
     }
 
     protected function runScript($path, array $globals = [])
@@ -165,6 +165,22 @@ trait WordPressService
             global ${$global};
         }
 
-        require wordpress_path($path);
+        if (env('APP_ENV') == 'testing1') {
+            ob_start();
+
+            // We'll evaluate the contents of the view inside a try/catch block so we can
+            // flush out any stray output that might get out before an error occurs or
+            // an exception is thrown. This prevents any partial views from leaking.
+            try {
+                require wordpress_path($path);
+            } catch (Exception $e) {
+                ob_end_clean();
+            }
+
+            return ltrim(ob_get_clean());
+        }
+        else {
+            require wordpress_path($path);
+        }
     }
 }
