@@ -53,18 +53,14 @@ class TemplateController extends Controller
         // remove admin redirect action
         remove_action('template_redirect', 'wp_redirect_admin_locations', 1000);
 
-        if (config('wordpress.themes.blade.precompile')) {
-            // Compile blade files
-            $this->prepareTemplates(true);
-        } else {
-            // Generate blank .php files
-            $this->prepareTemplates(false);
+        // Generate blank .php files
+        $this->prepareTemplates(false);
 
-            add_filter('template_include', [$this, 'evaluateTemplate']);
-        }
+        // Install high priority filter
+        add_filter('template_include', [$this, 'evaluateTemplate'], 1);
 
         /* Loads the WordPress Template */
-        require wordpress_path('wp-includes/template-loader.php');
+        return $this->runScript('wp-includes/template-loader.php');
     }
 
     protected function setupLaravelEnvironment()
@@ -108,57 +104,57 @@ class TemplateController extends Controller
     protected function prepareTemplates($compile)
     {
         if (is_404()) {
-            $this->prepareTemplate('404', $compile);
+            $this->prepareTemplate('404');
         }
         if (is_search()) {
-            $this->prepareTemplate('search', $compile);
+            $this->prepareTemplate('search');
         }
         if (is_front_page()) {
-            $this->prepareTemplate('front_page', $compile);
+            $this->prepareTemplate('front_page');
         }
         if (is_home()) {
-            $this->prepareTemplate('home', $compile);
+            $this->prepareTemplate('home');
         }
         if (is_post_type_archive()) {
-            $this->prepareTemplate('archive', $compile);
+            $this->prepareTemplate('archive');
         }
         if (is_tax()) {
-            $this->prepareTemplate('taxonomy', $compile);
+            $this->prepareTemplate('taxonomy');
         }
         if (is_attachment()) {
-            $this->prepareTemplate('attachment', $compile);
+            $this->prepareTemplate('attachment');
         }
         if (is_single()) {
-            $this->prepareTemplate('single', $compile);
+            $this->prepareTemplate('single');
         }
         if (is_page()) {
-            $this->prepareTemplate('page', $compile);
+            $this->prepareTemplate('page');
         }
         if (is_category()) {
-            $this->prepareTemplate('category', $compile);
+            $this->prepareTemplate('category');
         }
         if (is_tag()) {
-            $this->prepareTemplate('tag', $compile);
+            $this->prepareTemplate('tag');
         }
         if (is_author()) {
-            $this->prepareTemplate('author', $compile);
+            $this->prepareTemplate('author');
         }
         if (is_date()) {
-            $this->prepareTemplate('date', $compile);
+            $this->prepareTemplate('date');
         }
         if (is_archive()) {
-            $this->prepareTemplate('archive', $compile);
+            $this->prepareTemplate('archive');
         }
         if (is_comments_popup()) {
-            $this->prepareTemplate('comments_popup', $compile);
+            $this->prepareTemplate('comments_popup');
         }
         if (is_paged()) {
-            $this->prepareTemplate('paged', $compile);
+            $this->prepareTemplate('paged');
         }
-        $this->prepareTemplate('index', $compile);
+        $this->prepareTemplate('index');
     }
 
-    protected function prepareTemplate($type, $compile)
+    protected function prepareTemplate($type)
     {
         debug_log('wordpress+', 'prepareTemplate:'.$type);
 
@@ -170,16 +166,7 @@ class TemplateController extends Controller
                 // make wordpress specified path
                 $php_path = get_template_directory().'/'.basename($blade_path, '.blade.php').'.php';
 
-                // Need precompile
-                if ($compile) {
-                    $header_comment = config('wordpress.themes.blade.header_comment');
-                    $php_script_image = app('blade.expander')->expand($blade_path);
-
-                    file_put_contents($php_path, "<?php /* {$header_comment} */ ?>\n");
-                    file_put_contents($php_path, $php_script_image, FILE_APPEND);
-                } else {
-                    touch($php_path);
-                }
+                touch($php_path);
             }
         }
     }
@@ -197,7 +184,17 @@ class TemplateController extends Controller
         // blade extension
         $blade_path = $dirname.'/'.config('wordpress.themes.blade.directory').'/'.$filename.'.blade.php';
         if (file_exists($blade_path)) {
-            file_put_contents($php_path, $this->renderBladeTemplate($blade_path));
+            if (config('wordpress.themes.blade.precompile')) {
+                $header_comment = config('wordpress.themes.blade.header_comment');
+                $php_script_image = app('blade.expander')->expand($blade_path);
+
+                // Output php
+                file_put_contents($php_path, "<?php /* {$header_comment} */ ?>\n");
+                file_put_contents($php_path, $php_script_image, FILE_APPEND);
+            } else {
+                // Output html
+                file_put_contents($php_path, $this->renderBladeTemplate($blade_path));
+            }
         }
 
         return $php_path;
