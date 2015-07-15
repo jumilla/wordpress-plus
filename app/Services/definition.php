@@ -47,6 +47,8 @@ return [
         ],
         'plugin-install.php' => [
             'tabs', 'tab', 'paged', 'wp_list_table',
+            /* 4.2.2: wp-admin/plugin-install.php(55) */
+            'body_id',
         ],
         'plugin-editor.php' => [
             /* 4.2.2: wp-admin/plugin-editor.php(23) */
