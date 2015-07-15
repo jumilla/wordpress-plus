@@ -25,8 +25,8 @@ class PluginMakeCommand extends AbstractMakeCommand
      * @var array
      */
     protected $skeletons = [
-        'minimum',
-        'simple',
+        1 => 'minimum',
+        2 => 'simple',
     ];
 
     /**

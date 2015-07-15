@@ -25,9 +25,9 @@ class ThemeMakeCommand extends AbstractMakeCommand
      * @var array
      */
     protected $skeletons = [
-        'minimum',
-        'simple',
-        'bootstrap',
+        1 => 'minimum',
+        2 => 'simple',
+        3 => 'bootstrap',
     ];
 
     /**
