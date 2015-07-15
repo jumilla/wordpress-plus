@@ -102,16 +102,17 @@ trait WordPressService
     protected function registerContentNamespaces()
     {
         // Plugins
-        foreach (WordPress::activePlugins() as $plugin) {
-            //            $plugin_path = WordPress::pluginPath($plugin);
-            $plugin_path = wordpress_path('wp-content/plugins/').$plugin;
-
-            $plugin_data = get_file_data($plugin_path, [
+        foreach (WordPress::activePlugins() as $plugin_script) {
+            $plugin_data = get_file_data(wordpress_path('wp-content/plugins/').$plugin_script, [
                 'php_autoload_dir' => 'PHP Autoload',
                 'php_namespace' => 'PHP Namespace',
             ]);
 
-            ContentClassLoader::addNamespace($plugin_path.'/'.array_get($plugin_data, 'php_autoload_dir', 'classes'), $plugin_data['php_namespace']);
+            if (array_get($plugin_data, 'php_autoload_dir')) {
+                $plugin = preg_replace('/(\/.*$)|(.php$)/', '', $plugin_script);
+                $plugin_path = wordpress_path('wp-content/plugins/'.$plugin);
+                ContentClassLoader::addNamespace($plugin_path.'/'.$plugin_data['php_autoload_dir'], $plugin_data['php_namespace']);
+            }
         }
 
         // Theme
@@ -124,7 +125,9 @@ trait WordPressService
                 'php_namespace' => 'PHP Namespace',
             ]);
 
-            ContentClassLoader::addNamespace($theme_path.'/'.array_get($theme_data, 'php_autoload_dir', 'classes'), $theme_data['php_namespace']);
+            if (array_get($theme_data, 'php_autoload_dir')) {
+                ContentClassLoader::addNamespace($theme_path.'/'.array_get($theme_data, 'php_autoload_dir', 'classes'), $theme_data['php_namespace']);
+            }
         }
     }
 
