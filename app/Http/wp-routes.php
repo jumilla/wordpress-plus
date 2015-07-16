@@ -103,6 +103,7 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-admin', 'namespace' => $wp_names
     //--- Themes ---//
 
     $app->get('themes.php', 'BlogAdminController@themeList');
+    $app->post('themes.php', 'BlogAdminController@themeList');
     $app->get('theme-install.php', 'BlogAdminController@themeInstall');
     $app->get('customize.php', 'BlogAdminController@themeCustomize');
     $app->get('widgets.php', 'BlogAdminController@themeWidgetList');
@@ -252,22 +253,22 @@ $app->group(['prefix' => $wp_site_prefix, 'namespace' => $wp_namespace], functio
 
     $app->get('', $action);
     $app->post('', $action);
-    $app->get('{f1}', $action);
-    $app->post('{f1}', $action);
-    $app->get('{f1}/{f2}', $action);
-    $app->post('{f1}/{f2}', $action);
-    $app->get('{f1}/{f2}/{f3}', $action);
-    $app->post('{f1}/{f2}/{f3}', $action);
-    $app->get('{f1}/{f2}/{f3}/{f4}', $action);
-    $app->post('{f1}/{f2}/{f3}/{f4}', $action);
-    $app->get('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
-    $app->post('{f1}/{f2}/{f3}/{f4}/{f5}', $action);
-    $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
-    $app->post('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}', $action);
-    $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
-    $app->post('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}', $action);
-    $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
-    $app->post('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}', $action);
-    $app->get('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
-    $app->post('{f1}/{f2}/{f3}/{f4}/{f5}/{f6}/{f7}/{f8}/{f9}', $action);
+    $app->get('{p1}', $action);
+    $app->post('{p1}', $action);
+    $app->get('{p1}/{p2}', $action);
+    $app->post('{p1}/{p2}', $action);
+    $app->get('{p1}/{p2}/{p3}', $action);
+    $app->post('{p1}/{p2}/{p3}', $action);
+    $app->get('{p1}/{p2}/{p3}/{p4}', $action);
+    $app->post('{p1}/{p2}/{p3}/{p4}', $action);
+    $app->get('{p1}/{p2}/{p3}/{p4}/{p5}', $action);
+    $app->post('{p1}/{p2}/{p3}/{p4}/{p5}', $action);
+    $app->get('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}', $action);
+    $app->post('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}', $action);
+    $app->get('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}', $action);
+    $app->post('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}', $action);
+    $app->get('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}', $action);
+    $app->post('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}', $action);
+    $app->get('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}/{p9}', $action);
+    $app->post('{p1}/{p2}/{p3}/{p4}/{p5}/{p6}/{p7}/{p8}/{p9}', $action);
 });
