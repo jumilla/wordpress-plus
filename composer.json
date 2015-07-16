@@ -8,7 +8,8 @@
         "laravel/lumen-framework": "5.1.*",
         "vlucas/phpdotenv": "^1.0",
         "league/flysystem": "^1.0",
-        "guzzlehttp/guzzle": "^6.0"
+        "guzzlehttp/guzzle": "^6.0",
+        "barryvdh/laravel-debugbar": "^2.0"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "^1.8",
