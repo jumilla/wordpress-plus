@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Foundation\Application;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -24,6 +25,40 @@ class Kernel extends ConsoleKernel
         Commands\WordPress\ThemeMakeCommand::class,
         Commands\WordPress\PluginMakeCommand::class,
     ];
+
+    /**
+     * Include the default Artisan commands.
+     *
+     * @var bool
+     */
+    protected $includeDefaultCommands = false;
+
+    /**
+     * Create a new console kernel instance.
+     *
+     * @param  \Laravel\Lumen\Application  $app
+     * @return void
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+
+        if (!$this->includeDefaultCommands) {
+            // add artisan command 'serve' and 'schedule:run'
+            $this->commands = array_merge($this->commands, [
+                \Illuminate\Console\Scheduling\ScheduleRunCommand::class,
+                \Laravel\Lumen\Console\Commands\ServeCommand::class,
+            ]);
+
+            // add artisan command 'cache:*'
+            $this->app->make('cache');
+
+            // add artisan command 'queue:*'
+            //$this->app->make('queue');
+
+            $this->configure('database');
+        }
+    }
 
     /**
      * Define the application's command schedule.
