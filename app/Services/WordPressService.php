@@ -178,8 +178,7 @@ trait WordPressService
             }
 
             return ltrim(ob_get_clean());
-        }
-        else {
+        } else {
             require wordpress_path($path);
         }
     }
