@@ -104,7 +104,7 @@ class WordPress
                 throw new \Exception('Miss configuration.');
             }
 
-            $globals = array_get(static::$definition['blog_admin_scripts'][$path], []);
+            $globals = array_get(static::$definition['blog_admin_scripts'], $path, []);
 
             $script_globals['wp-admin/network/'.$path] = array_merge($globals, $additional_globals);
         }

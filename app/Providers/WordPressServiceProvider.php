@@ -18,6 +18,11 @@ class WordPressServiceProvider extends ServiceProvider
         ContentClassLoader::register();
     }
 
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         app()->configure('wordpress');
@@ -33,11 +38,17 @@ class WordPressServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @return void
+     */
     protected function blade()
     {
         return app('view')->getEngineResolver()->resolve('blade')->getCompiler();
     }
 
+    /**
+     * @return void
+     */
     protected function setupBladeEnvironment($compiler)
     {
         $compiler->directive('filter', function ($expression) {

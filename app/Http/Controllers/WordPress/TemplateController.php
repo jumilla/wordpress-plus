@@ -89,9 +89,9 @@ class TemplateController extends Controller
 
     protected function parsePluginPath($plugin_path)
     {
-        if (preg_match('/^(.+)\/.+.php/$', $plugin_path, $match)) {
+        if (preg_match('/^(.+)\/.+.php$/', $plugin_path, $match)) {
             return [$match[1], WP_PLUGIN_DIR.'/'.$match[1]];
-        } elseif (preg_match('/^([!/])+.php/$', $plugin_path, $match)) {
+        } elseif (preg_match('/^([!\/])+.php$/', $plugin_path, $match)) {
             return [$match[1], null];
         } else {
             return;

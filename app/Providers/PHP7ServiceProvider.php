@@ -43,8 +43,4 @@ class PHP7ServiceProvider extends ServiceProvider
             }
         });
     }
-
-    public function boot()
-    {
-    }
 }
