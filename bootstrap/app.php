@@ -80,11 +80,13 @@ $app->routeMiddleware([
 |
 */
 
+$app->register(Jumilla\Versionia\Laravel\ServiceProvider::class);
 if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
     $app->register(App\Providers\PHP7ServiceProvider::class);
 }
 $app->register(App\Providers\WordPressServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\DatabaseServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 if (env('APP_DEBUG')) {

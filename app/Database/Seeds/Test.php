@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Database\Seeds;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+
+class Test extends Seeder
+{
+    /**
+     * Require versions.
+     *
+     * @return array
+     */
+    public function versions()
+    {
+        return [
+            'app'  => '1.0',
+        ];
+    }
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Model::unguard();
+
+        Model::reguard();
+    }
+}

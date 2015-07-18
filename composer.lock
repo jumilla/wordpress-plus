@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5e5b3d43aa4cf43ef61a80cbba18c74a",
+    "hash": "e3585ba9c0984c371be98c94b09de854",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1454,6 +1454,56 @@
             "time": "2015-06-29 08:51:25"
         },
         {
+            "name": "jumilla/laravel-versionia",
+            "version": "v0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jumilla/laravel-versionia.git",
+                "reference": "b63205a9b1db03fe59d12ef14142adf7973ff544"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jumilla/laravel-versionia/zipball/b63205a9b1db03fe59d12ef14142adf7973ff544",
+                "reference": "b63205a9b1db03fe59d12ef14142adf7973ff544",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "5.1.*",
+                "illuminate/database": "5.1.*",
+                "illuminate/support": "5.1.*",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "framework-extension",
+            "autoload": {
+                "psr-4": {
+                    "Jumilla\\Versionia\\Laravel\\": "sources/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fumio Furukawa",
+                    "email": "fumio@jumilla.me"
+                }
+            ],
+            "description": "Version based database migration system for Laravel 5.",
+            "homepage": "http://jumilla.me",
+            "keywords": [
+                "databaes",
+                "laravel",
+                "laravel 5",
+                "migration"
+            ],
+            "time": "2015-07-18 01:01:56"
+        },
+        {
             "name": "laravel/lumen-framework",
             "version": "v5.1.2",
             "source": {
@@ -2664,7 +2714,7 @@
     "packages-dev": [
         {
             "name": "antecedent/patchwork",
-            "version": "dev-master",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/antecedent/patchwork.git",
@@ -2947,7 +2997,7 @@
             ],
             "authors": [
                 {
-                    "name": "Pádraic Brady",
+                    "name": "Padraic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },
@@ -3970,9 +4020,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "antecedent/patchwork": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

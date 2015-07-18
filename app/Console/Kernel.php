@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -56,7 +57,10 @@ class Kernel extends ConsoleKernel
             // add artisan command 'queue:*'
             //$this->app->make('queue');
 
-            $this->configure('database');
+            $this->app->configure('database');
+
+            // setup facade
+            \Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
         }
     }
 
