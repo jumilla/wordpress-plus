@@ -81,7 +81,8 @@ $app->routeMiddleware([
 */
 
 $app->register(Jumilla\Versionia\Laravel\ServiceProvider::class);
-if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+//if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+if (starts_with(PHP_VERSION, '7.')) {
     $app->register(App\Providers\PHP7ServiceProvider::class);
 }
 $app->register(App\Providers\WordPressServiceProvider::class);

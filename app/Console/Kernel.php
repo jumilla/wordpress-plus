@@ -45,6 +45,9 @@ class Kernel extends ConsoleKernel
         parent::__construct($app);
 
         if (!$this->includeDefaultCommands) {
+            // setup facade
+            $this->app->withFacades();
+
             // add artisan command 'serve' and 'schedule:run'
             $this->commands = array_merge($this->commands, [
                 \Illuminate\Console\Scheduling\ScheduleRunCommand::class,
@@ -58,9 +61,6 @@ class Kernel extends ConsoleKernel
             //$this->app->make('queue');
 
             $this->app->configure('database');
-
-            // setup facade
-            \Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
         }
     }
 

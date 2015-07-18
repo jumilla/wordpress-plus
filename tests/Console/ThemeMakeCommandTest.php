@@ -100,7 +100,7 @@ class ThemeMakeCommandTest extends ConsoleCommandTestCase
     {
         app()->instance('filesystem', $filesystem);
 
-        $command = new App\Console\Commands\WordPress\ThemeMakeCommand($storage);
+        $command = new App\Console\Commands\WordPress\ThemeMakeCommand();
 
         $this->runCommand($command, [
             'name' => 'foo', 'skeleton' => $skeleton,
