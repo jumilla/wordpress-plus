@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e3585ba9c0984c371be98c94b09de854",
+    "hash": "a34217073194fdbe2e821b9fabd4f708",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1455,20 +1455,22 @@
         },
         {
             "name": "jumilla/laravel-versionia",
-            "version": "v0.2",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jumilla/laravel-versionia.git",
-                "reference": "b63205a9b1db03fe59d12ef14142adf7973ff544"
+                "reference": "c6a6c87fc4dd52d958d7caddf159210b4f8321f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jumilla/laravel-versionia/zipball/b63205a9b1db03fe59d12ef14142adf7973ff544",
-                "reference": "b63205a9b1db03fe59d12ef14142adf7973ff544",
+                "url": "https://api.github.com/repos/jumilla/laravel-versionia/zipball/c6a6c87fc4dd52d958d7caddf159210b4f8321f5",
+                "reference": "c6a6c87fc4dd52d958d7caddf159210b4f8321f5",
                 "shasum": ""
             },
             "require": {
                 "illuminate/console": "5.1.*",
+                "illuminate/container": "5.1.*",
+                "illuminate/contracts": "5.1.*",
                 "illuminate/database": "5.1.*",
                 "illuminate/support": "5.1.*",
                 "php": ">=5.5.9"
@@ -1501,7 +1503,7 @@
                 "laravel 5",
                 "migration"
             ],
-            "time": "2015-07-18 01:01:56"
+            "time": "2015-07-19 12:17:50"
         },
         {
             "name": "laravel/lumen-framework",

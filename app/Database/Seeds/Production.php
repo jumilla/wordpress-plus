@@ -16,7 +16,6 @@ class Production extends Seeder
     {
         return [
             'app'  => '1.0',
-            'auth' => '1.0',
         ];
     }
 

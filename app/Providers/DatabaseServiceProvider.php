@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Jumilla\Versionia\Laravel\Support\DatabaseServiceProvider as ServiceProvider;
+use App\Database\Migrations;
+use App\Database\Seeds;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -14,17 +16,16 @@ class DatabaseServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->migrations('framework', [
-            '1.0' => \App\Database\Migrations\Framework_1_0::class,
+            '1.0' => Migrations\Framework_1_0::class,
         ]);
 
-/*
-        $this->registerMigrations('app', [
-            '1.0' => \App\Database\Migrations\App_1_0::class,
+        $this->migrations('app', [
+            '1.0' => Migrations\App_1_0::class,
         ]);
-*/
+
         $this->seeds([
-            'test' => \App\Database\Seeds\Test::class,
-            'production' => \App\Database\Seeds\Production::class,
+            'test' => Seeds\Test::class,
+            'production' => Seeds\Production::class,
         ], 'test');
     }
 }

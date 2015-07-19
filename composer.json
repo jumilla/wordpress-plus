@@ -9,7 +9,7 @@
         "vlucas/phpdotenv": "^1.0",
         "league/flysystem": "^1.0",
         "guzzlehttp/guzzle": "^6.0",
-        "jumilla/laravel-versionia": "^0.2",
+        "jumilla/laravel-versionia": "^0.3",
         "barryvdh/laravel-debugbar": "^2.0"
     },
     "require-dev": {
