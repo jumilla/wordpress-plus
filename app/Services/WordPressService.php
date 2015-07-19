@@ -127,6 +127,7 @@ trait WordPressService
 
             if (!file_exists($theme_path).'/style.css') {
                 info('Error: Theme "$theme" is not found.');
+
                 return;
             }
 

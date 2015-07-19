@@ -9,7 +9,7 @@
         "vlucas/phpdotenv": "^1.0",
         "league/flysystem": "^1.0",
         "guzzlehttp/guzzle": "^6.0",
-        "jumilla/laravel-versionia": "^0.3",
+        "jumilla/laravel-versionia": "^1.0",
         "barryvdh/laravel-debugbar": "^2.0"
     },
     "require-dev": {
@@ -24,7 +24,8 @@
             "App\\": "app/"
         },
         "files": [
-            "app/helpers.php"
+            "app/helpers.php",
+            "app/version.php"
         ]
     },
     "autoload-dev": {
@@ -33,6 +34,12 @@
         ]
     },
     "scripts": {
+        "post-install-cmd": [
+            "touch app/version.php"
+        ],
+        "post-update-cmd": [
+            "touch app/version.php"
+        ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ]

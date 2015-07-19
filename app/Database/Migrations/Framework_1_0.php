@@ -2,8 +2,9 @@
 
 namespace App\Database\Migrations;
 
+use Jumilla\Versionia\Laravel\Support\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class Framework_1_0 extends Migration
 {

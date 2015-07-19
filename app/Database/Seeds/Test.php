@@ -2,7 +2,7 @@
 
 namespace App\Database\Seeds;
 
-use Illuminate\Database\Seeder;
+use Jumilla\Versionia\Laravel\Support\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
 class Test extends Seeder
