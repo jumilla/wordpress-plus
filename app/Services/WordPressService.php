@@ -103,6 +103,11 @@ trait WordPressService
     {
         // Plugins
         foreach (WordPress::activePlugins() as $plugin_script) {
+            if (!file_exists(wordpress_path('wp-content/plugins/').$plugin_script)) {
+                info('Error: Plugin "$plugin_script" is not found.');
+                continue;
+            }
+
             $plugin_data = get_file_data(wordpress_path('wp-content/plugins/').$plugin_script, [
                 'php_autoload_dir' => 'PHP Autoload',
                 'php_namespace' => 'PHP Namespace',
@@ -119,6 +124,11 @@ trait WordPressService
         {
             $theme = WordPress::activeTheme();
             $theme_path = WordPress::themePath($theme);
+
+            if (!file_exists($theme_path).'/style.css') {
+                info('Error: Theme "$theme" is not found.');
+                return;
+            }
 
             $theme_data = get_file_data($theme_path.'/style.css', [
                 'php_autoload_dir' => 'PHP Autoload',
