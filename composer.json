@@ -5,11 +5,10 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "symfony/console": "2.7.1",
+        "symfony/console": "2.7.3",
         "laravel/lumen-framework": "5.1.*",
         "vlucas/phpdotenv": "^1.0",
         "league/flysystem": "^1.0",
-        "guzzlehttp/guzzle": "^6.0",
         "jumilla/laravel-versionia": "^1.0",
         "barryvdh/laravel-debugbar": "^2.0"
     },

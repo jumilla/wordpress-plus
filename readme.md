@@ -2,8 +2,6 @@
 
 WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://lumen.laravel.com) で[WordPress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
 
-***まだα版レベルの開発中です。フィードバック大好物な時期ですので、お気軽にメッセージください！***
-
 ## 機能的な特徴
 
 - 世界中で公開されているWordPressプラグインやテーマといった既存資産が利用可能
@@ -24,11 +22,12 @@ WordPress+は、2015年4月にリリースされたばかりの高速マイク�
 ## WordPress+（プラス）の動作要件
 
 - PHP 5.6 以上 (Lumen Framework は5.5.9以上)
-- PHP拡張: [必須] openssl, mbstring, pdo, pdo-mysql
-- [Composer](https://getcomposer.org/): [推奨] パスの通ったディレクトリ(例えば`/usr/bin`)にインストールしておくこと
+- 必須PHP拡張: openssl, mbstring, pdo, pdo-mysql
+- [Composer](https://getcomposer.org/)
 
 ## WordPress+（プラス）のサポートしている機能
 
+- コマンドラインからのテーマ・プラグイン作成
 - [Bladeテンプレートエンジン](http://laravel.com/docs/5.1/blade)を使ったテーマ作成
 - マルチサイト（オプション: 有効にするには、環境変数 `WP_MULTISITE=true` を指定してください。サブドメイン型のみ対応。）
 - リンクマネージャー（オプション: 有効にするには、環境変数 `WP_LINK_MANAGER=true` を指定してください。）
