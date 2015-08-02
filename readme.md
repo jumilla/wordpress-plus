@@ -1,128 +1,133 @@
-## WordPress+とは
 
-WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://lumen.laravel.com) で[WordPress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
+[日本語ドキュメント - Japanese](readme-ja.md)
 
-## 機能的な特徴
+## About WordPress+ (Plus)
 
-- 世界中で公開されているWordPressプラグインやテーマといった既存資産が利用可能
-- WordPress本体の更新が可能（もちろんプラグインも）
-- URLゲート（ブラウザからのHTTPアクセスをフィルタリングする層）搭載
-- Bladeテンプレートエンジンで、HTMLテンプレートのコーディングスピードがあがる
-- Laravelのスキーマビルダー・クエリービルダーを活用することで、一般的なMySQL利用ができる
-- 既存システムや外部Webサービスとの連携が作りやすい
-- WordPressの管理画面をベースにした独自の管理画面が作りやすい（管理画面製作のコストを下げられる）
-- モバイル連携（スマートフォンへの通知など）もチョイチョイ
+WordPress+ wrapped [WordPress](https://ja.wordpress.org) in high-speed micro framework [Lumen](http://lumen.laravel.com) powered by Laravel 5.
 
-## 開発サイドのうれしさ
+## The functional feature
 
-- PHPビルトインサーバーで実行可能（Apacheに依存しない運用も可能）
-- Composerを使ったPHPパッケージ管理が可能
-- Laravel 5のもつ各種Web職人用ツールが使える（O-Auth認証、コマンドスケジューラー、Redis、クラウドストレージ統合などなど）
+- Existing asset such as the WordPress plug-in exhibited all over the world and a theme is available.
+- It's possible to renew the WordPress body (of course, plug-in).
+- With Uniform Resource Locator gate (the bed where HTTP access from a browser is filtered).
+- The coding speed of a HyperText Markup Language template goes up by a Blade template engine.
+- The MySQL use which is to utilize a schema builder query builder of Laravel and is general can be done.
+- An existence system and cooperation with the outside web service are easy to make.
+- The original management screen done based on a management screen of WordPress is easy to make (The cost of the management screen making can be lowered.)
+- Mobile cooperation (ex. notice to smart phone) is also easy!
 
-## WordPress+（プラス）の動作要件
+## The happy of the development side
 
-- PHP 5.6 以上 (Lumen Framework は5.5.9以上)
-- 必須PHP拡張: openssl, mbstring, pdo, pdo-mysql
+- It's possible to carry out by a PHP built-in server (The practical use for which I don't depend on Apache is also possible.)
+- PHP package management using Composer is possible.
+- A tool for all kinds' web craftsmen of giblets of Laravel 5 can be used (O-Auth authentication, command scheduler, Redis and cloud storage integration and all that).
+
+## WordPress+ requires
+
+- PHP more than 5.6 (for a Lumen framework, more than 5.5.9).
+- PHP expansion: openssl, mbstring, pdo and pdo-mysql.
 - [Composer](https://getcomposer.org/)
 
-## WordPress+（プラス）のサポートしている機能
+## The function WordPress+ is supporting
 
-- コマンドラインからのテーマ・プラグイン作成
-- [Bladeテンプレートエンジン](http://laravel.com/docs/5.1/blade)を使ったテーマ作成
-- マルチサイト（オプション: 有効にするには、環境変数 `WP_MULTISITE=true` を指定してください。サブドメイン型のみ対応。）
-- リンクマネージャー（オプション: 有効にするには、環境変数 `WP_LINK_MANAGER=true` を指定してください。）
+- Theme plug-in making from a command line
+- Theme making using [Blade template engine](http://laravel.com/docs/5.1/blade)
+- Multisite (Option: Please designate environment variable `WP_MULTISITE=true` to make it effective. Only corresponding to the subdomain type.)
+- Link manager (Option: Please designate environment variable `WP_LINK_MANAGER=true` to make it effective.)
 
-## インストール方法
+## Installation method
 
-Composerまたはソースコードダウンロードからインストールできます。
+It can be installed from Composer or source cord download.
 
-### Composerを使ったインストール
+### Installation using Composer
 
-コマンドプロンプトを開き、次のコマンドを実行してください。
+Please open a command prompt and carry out the next command.
 
-```shell
-$ cd <インストールしたいディレクトリ>
-$ composer create-project laravel-plus/wordpress <ディレクトリ名>
+```
+$ cd <parent-of-an-install-directory>
+$ composer create-project laravel-plus/wordpress <an-install-directory>
 ```
 
-### ソースコードをダウンロードしてインストール
+### Source code is downloaded and installed.
 
-GitHubの当リポジトリの[「Download ZIP」](https://github.com/jumilla/wordpress-plus/archive/master.zip)ボタンを押し、ソースコードをダウンロードします。
+A [Download ZIP](https://github.com/jumilla/wordpress-plus/archive/master.zip) button of our repository of GitHub is pressed and source cord is downloaded.
 
-そして、ローカルマシンの任意のディレクトリにZIPを展開します。
+And ZIP is developed in an optional directory of a local machine.
 
-コマンドプロンプトを開き、次のコマンドを実行してください。
+Please open a command prompt and carry out the next command.
 
 ```shell
-$ cd <インストールしたディレクトリ>
+$ cd <installed-directory>
 $ php composer update
 $ cp .env.example .env
 ```
 
-### 環境変数
+### Environment variables
 
-データベース等の設定は、プロジェクト固有の環境変数設定ファイル `.env` に記述します。
-設定例は [.env.example](.env.example)を参照してください。
+The environment variable setting filing to which a project is peculiar writes the setting by which it's for a data base in `.env`.
+Please refer to [.env.example](.env.example) for a setting example.
 
-### サーバー起動方法
+### Server initiation method
 
-PHPビルトインサーバーで起動できます。
+It can start by a PHP built-in server.
 
-コマンドプロンプトを開き、次のコマンドを実行してください。
+Please open a command prompt and carry out the next command.
 
 ```shell
-$ cd <インストールしたディレクトリ>
+$ cd <installed-directory>
 $ php artisan serve
 ```
 
-Webブラウザで `http://localhost:8000` を開くとアクセスできます。
-初回起動時は、WordPressのセットアップが始まります。
+When `http://localhost:8000` is opened by a web browser, you can access.
+A setup of WordPress starts at the time of the first time start.
 
-管理画面は `http://localhost:8000/wp-admin/` です。
+A management screen is `http://localhost:8000/wp-admin/`.
 
-### Webサーバーの設定
+### Setting of a web server
 
-Lumen 5 / Laravel 5 は、Webサーバーの設定でURLの末尾のスラッシュ`/`を取り除くことを推奨しています。
-しかし、WordPressは末尾のスラッシュ`/`を必要としていますので、設定の際には注意してください。
-管理画面へのログイン後にリダイレクトループが発生する場合があります。
+Lumen 5 / Laravel 5 is recommending to take slash `/` of an end of Uniform Resource Locator by setting of a web server.
+But WordPress needs slash `/` of an end, so please be careful in case of setting.
+A redirection loop sometimes occurs after login to a management screen.
 
-### artisan（アルチザン）コマンド
+### artisan commands
 
-- `wordpress:status` WordPressの状態表示
-- `wordpress:install` WordPressテーブルのインストール
-- `wordpress:uninstall` WordPressテーブルのアンインストール
-- `wordpress:multisite:install` マルチサイトテーブルのインストール
-- `wordpress:multisite:uninstall` マルチサイトテーブルのアンインストール
-- `wordpress:theme` テーマ一覧表示
-- `wordpress:theme <name>` テーマ詳細表示
-- `wordpress:plugin` プラグイン一覧表示
-- `wordpress:plugin <name>` プラグイン詳細表示
-- `make:theme <name>` テーマ作成
-- `make:plugin <name>` プラグイン作成
+- `wordpress:status` Status display for WordPress.
+- `wordpress:install` Install WordPress tables.
+- `wordpress:uninstall` Uninstall WordPress tables.
+- `wordpress:multisite:install` Install tables for multisite.
+- `wordpress:multisite:uninstall` Uninstall tables for multisite.
+- `wordpress:theme` List of themes.
+- `wordpress:theme <name>` Detail of theme.
+- `wordpress:plugin` List of plugins.
+- `wordpress:plugin <name>` Detail of plugin.
+- `make:theme <name>` Make theme.
+- `make:plugin <name>` Make plugin.
 
-### テーマ内でのBladeの利用
+### Use of Blade in the theme
 
-テーマディレクトリ内に`blade`というディレクトリを作成し、そこにWordPressテンプレートファイル名規約に沿ったファイルを配置します。
-拡張子は`.blade.php`にします。
+A directory as `blade` is made in the theme directory and a file along a WordPress template file name agreement is arranged there.
+The extension is made `.blade.php`.
 
-環境変数`WP_BLADE_PRECOMPILE`を`true`（デフォルト）に設定した場合、WordPress+でページを表示したときにコンパイルされたPHPファイルがテーマディレクトリ直下に出力されます。この時に使われるBladeエンジンはWordPress+独自の実装です。
+When setting environment variable `WP_BLADE_PRECOMPILE` as `true` (default), when indicating a page by WordPress+, a compiled PHP file is output in theme directory falling plumb down. WordPress+ is original mounting for the Blade engine used at the same time.
 
-環境変数`WP_BLADE_PRECOMPILE`を`false`に設定した場合、bladeファイルに対応する空のPHPファイルをテーマディレクトリ直下に出力します。この時に使われるBladeエンジンはLaravel 5の実装です。
+When setting environment variable `WP_BLADE_PRECOMPILE` as `false`, a PHP file in the sky which corresponds to a blade file is output in theme directory falling plumb down. The Blade engine used at the same time is mounting of Laravel 5.
 
-### Bladeディレクティブ
+### Blade directives
 
-- `@filter('filter-name')` フィルタを呼び出す
-- `@action('action-name')` アクションを呼び出す
-- `@shortcode([shortcode-name param1="value1"])` ショートコードを展開する
-- `@postloop` `@postloop($posts)` Postクエリーのループブロックを開始する
-- `@postempty` Postクエリーが0件の場合のブロックを開始する
-- `@endpostloop` Postデータのループブロックを終了する
+- `@filter('filter-name')` Call filter.
+- `@action('action-name')` Invoke action.
+- `@shortcode([shortcode-name param1="value1"])` Expand shortcode.
+- `@postloop` `@postloop($posts)` A loop block of Post query is started.
+- `@postempty` A query begins to block one in case of 0 cases.
+- `@endpostloop` A loop block of Post query is ended.
 
-## ライセンス
+## Licenses
+
 [WordPress+](https://github.com/jumilla/wordpress-plus) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
 [Lumen framework](http://lumen.laravel.com) is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)  
 [WordPress](https://ja.wordpress.org) is open-sourced software licensed under the [– GNU General Public License –](https://ja.wordpress.org/gpl/)  
 
-## 著作権
+## Copyright
+
 2015 [Fumio Furukawa](http://jumilla.me), All rights reserved.
 
