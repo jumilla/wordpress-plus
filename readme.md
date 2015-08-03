@@ -43,7 +43,7 @@ It can be installed from Composer or source cord download.
 
 Please open a command prompt and carry out the next command.
 
-```
+```sh
 $ cd <parent-of-an-install-directory>
 $ composer create-project laravel-plus/wordpress <an-install-directory>
 ```
@@ -56,7 +56,7 @@ And ZIP is developed in an optional directory of a local machine.
 
 Please open a command prompt and carry out the next command.
 
-```shell
+```sh
 $ cd <installed-directory>
 $ php composer update
 $ cp .env.example .env
@@ -73,7 +73,7 @@ It can start by a PHP built-in server.
 
 Please open a command prompt and carry out the next command.
 
-```shell
+```sh
 $ cd <installed-directory>
 $ php artisan serve
 ```
