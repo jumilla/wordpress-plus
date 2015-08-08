@@ -153,6 +153,7 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-admin', 'namespace' => $wp_names
         $app->get('media.php', 'BlogAdminController@mediaManagerOld');
         $app->get('media.php', 'BlogAdminController@mediaManagerOld');
         $app->get('media-upload.php', 'BlogAdminController@mediaUploadOld');
+        $app->post('media-upload.php', 'BlogAdminController@mediaUploadOld');
 
     //--- Tools ---//
 
