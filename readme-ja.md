@@ -1,3 +1,10 @@
+# WordPress+
+
+[![Build Status](https://travis-ci.org/jumilla/wordpress-plus.svg)](https://travis-ci.org/jumilla/wordpress-plus)
+[![Latest Stable Version](https://poser.pugx.org/laravel-plus/wordpress/v/stable.svg)](https://packagist.org/packages/laravel-plus/wordpress)
+[![Total Downloads](https://poser.pugx.org/laravel-plus/wordpress/d/total.svg)](https://packagist.org/packages/)
+[![Software License](https://poser.pugx.org/laravel-plus/wordpress/license.svg)](https://packagist.org/packages/laravel-plus/wordpress)
+
 ## WordPress+（プラス）とは
 
 WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://lumen.laravel.com) で[WordPress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
