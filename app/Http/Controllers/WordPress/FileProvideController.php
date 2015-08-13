@@ -19,7 +19,7 @@ class FileProvideController extends Controller
         return $this->download($request, config('wordpress.url.site_prefix'));
     }
 
-    protected function download(Request $request, $prefix)
+    protected function download(Request $request, $prefix, $attachment = false)
     {
         $path = $request->path();
 
@@ -38,6 +38,10 @@ class FileProvideController extends Controller
             abort(404);
         }
 
+        if ($attachment === false) {
+            return response()->make(file_get_contents($path));
+        }
+
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         // ERROR: file extension is .php
@@ -45,14 +49,16 @@ class FileProvideController extends Controller
             abort(404);
         }
 
-        debug_log('File Download[Content Type]', $this->getMimeType($extension));
+        debug_log('File Download[Content Type]', $this->getMimeType($path, $extension));
 
-        return response()->download($path, null, [
-            'Content-Type' => $this->getMimeType($extension),
-        ]);
+        $headers = [
+            'Content-Type' => $this->getMimeType($path, $extension),
+        ];
+
+        return response()->download($path, null, $headers);
     }
 
-    private function getMimeType($extension)
+    private function getMimeType($path, $extension)
     {
         switch ($extension) {
         case 'css':
@@ -62,9 +68,8 @@ class FileProvideController extends Controller
         case 'svg':
             return 'image/svg+xml';
 
-        // TODO: and more...
         default:
-            return 'text/html';
+            return app('files')->mimeType($path);
         }
     }
 
