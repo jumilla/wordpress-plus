@@ -38,10 +38,6 @@ class FileProvideController extends Controller
             abort(404);
         }
 
-        if ($attachment === false) {
-            return response()->make(file_get_contents($path));
-        }
-
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         // ERROR: file extension is .php
@@ -55,7 +51,11 @@ class FileProvideController extends Controller
             'Content-Type' => $this->getMimeType($path, $extension),
         ];
 
-        return response()->download($path, null, $headers);
+        if ($attachment === false) {
+            return response()->make(file_get_contents($path), 200, $headers);
+        }
+
+        return response()->download($path, 200, $headers);
     }
 
     private function getMimeType($path, $extension)
