@@ -35,6 +35,9 @@ foreach ( $wpdb->tables( 'ms_global' ) as $table => $prefixed_table )
  * Check for an existing network.
  *
  * @since 3.0.0
+ *
+ * @global wpdb $wpdb
+ *
  * @return Whether a network exists.
  */
 function network_domain_check() {
@@ -55,7 +58,7 @@ function network_domain_check() {
  */
 function allow_subdomain_install() {
 	$domain = preg_replace( '|https?://([^/]+)|', '$1', get_option( 'home' ) );
-	if( parse_url( get_option( 'home' ), PHP_URL_PATH ) || 'localhost' == $domain || preg_match( '|^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$|', $domain ) )
+	if ( parse_url( get_option( 'home' ), PHP_URL_PATH ) || 'localhost' == $domain || preg_match( '|^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$|', $domain ) )
 		return false;
 
 	return true;
@@ -64,6 +67,9 @@ function allow_subdomain_install() {
  * Allow subdirectory install.
  *
  * @since 3.0.0
+ *
+ * @global wpdb $wpdb
+ *
  * @return bool Whether subdirectory install is allowed
  */
 function allow_subdirectory_install() {
@@ -139,7 +145,7 @@ get_current_screen()->set_help_sidebar(
 include( ABSPATH . 'wp-admin/admin-header.php' );
 ?>
 <div class="wrap">
-<h2><?php echo esc_html( $title ); ?></h2>
+<h1><?php echo esc_html( $title ); ?></h1>
 
 <?php
 /**
@@ -149,6 +155,10 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
  * 	should not be a sudden "Welcome to a new install process! Fill this out and click here." See also contextual help todo.
  *
  * @since 3.0.0
+ *
+ * @global bool $is_apache
+ *
+ * @param WP_Error $errors
  */
 function network_step1( $errors = false ) {
 	global $is_apache;
@@ -170,7 +180,7 @@ function network_step1( $errors = false ) {
 
 	$hostname = get_clean_basedomain();
 	$has_ports = strstr( $hostname, ':' );
-	if ( ( false !== $has_ports && ! in_array( $has_ports, array( ':80', ':443', ':8000' ) ) ) ) {
+	if ( ( false !== $has_ports && ! in_array( $has_ports, array( ':80', ':443' ) ) ) ) {
 		echo '<div class="error"><p><strong>' . __( 'ERROR:') . '</strong> ' . __( 'You cannot install a network of sites with your server address.' ) . '</p></div>';
 		echo '<p>' . sprintf( __( 'You cannot use port numbers such as <code>%s</code>.' ), $has_ports ) . '</p>';
 		echo '<a href="' . esc_url( admin_url() ) . '">' . __( 'Return to Dashboard' ) . '</a>';
@@ -326,6 +336,10 @@ function network_step1( $errors = false ) {
  * Prints step 2 for Network installation process.
  *
  * @since 3.0.0
+ *
+ * @global wpdb $wpdb
+ *
+ * @param WP_Error $errors
  */
 function network_step2( $errors = false ) {
 	global $wpdb;
