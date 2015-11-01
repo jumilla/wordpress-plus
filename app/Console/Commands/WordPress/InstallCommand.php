@@ -117,6 +117,8 @@ class InstallCommand extends Command
 
     protected function process(array $config)
     {
+        global $wpdb;
+
         // We need to create references to ms global tables to enable Network.
         foreach ($this->singlesiteTables() as $table => $prefixed_table) {
             $wpdb->{$table} = $prefixed_table;
