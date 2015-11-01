@@ -10,7 +10,8 @@
         "vlucas/phpdotenv": "^1.0",
         "league/flysystem": "^1.0",
         "jumilla/laravel-versionia": "^1.0",
-        "barryvdh/laravel-debugbar": "^2.0"
+        "barryvdh/laravel-debugbar": "^2.0",
+        "erusev/parsedown": "^1.6"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "^1.8",
