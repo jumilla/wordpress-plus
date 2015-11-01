@@ -104,7 +104,7 @@ trait WordPressService
         // Plugins
         foreach (WordPress::activePlugins() as $plugin_script) {
             if (!file_exists(wordpress_path('wp-content/plugins/').$plugin_script)) {
-                info('Error: Plugin "$plugin_script" is not found.');
+                info("Error: Plugin '$plugin_script' is not found.");
                 continue;
             }
 
@@ -126,7 +126,7 @@ trait WordPressService
             $theme_path = WordPress::themePath($theme);
 
             if (!file_exists($theme_path).'/style.css') {
-                info('Error: Theme "$theme" is not found.');
+                info("Error: Theme '$theme' is not found.");
 
                 return;
             }
