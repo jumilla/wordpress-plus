@@ -35,6 +35,7 @@ class FileProvideController extends Controller
 
         // ERROR: file not found
         if (!is_file($path)) {
+            debug_log('File Download: [Abort]: not found');
             abort(404);
         }
 
@@ -42,6 +43,7 @@ class FileProvideController extends Controller
 
         // ERROR: file extension is .php
         if ($extension == 'php') {
+            debug_log('File Download: [Abort]: .php');
             abort(404);
         }
 
