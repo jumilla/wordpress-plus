@@ -201,7 +201,7 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-admin', 'namespace' => $wp_names
     add_backend_file_download_routes($app);
 });
 
-// /wp-includes
+// /wp-includes for backend
 $app->group(['prefix' => $wp_backend_prefix.'wp-includes', 'namespace' => $wp_namespace], function ($app) {
     // irregular
     $app->get('js/tinymce/wp-mce-help.php', 'BlogAdminController@runPhpScript');
@@ -215,6 +215,12 @@ $app->group(['prefix' => $wp_backend_prefix.'wp-includes', 'namespace' => $wp_na
 $app->group(['prefix' => $wp_backend_prefix.'wp-content', 'namespace' => $wp_namespace], function ($app) {
     // provide files, about css, js, png, ...others.
     add_backend_file_download_routes($app);
+});
+
+// /wp-includes for site
+// MEMO: theme 'twentyfifteen' using...
+$app->group(['prefix' => $wp_site_prefix.'wp-includes', 'namespace' => $wp_namespace], function ($app) {
+    add_site_file_download_routes($app);
 });
 
 // /wp-content for site
