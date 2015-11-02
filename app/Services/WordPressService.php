@@ -125,7 +125,7 @@ trait WordPressService
             $theme = WordPress::activeTheme();
             $theme_path = WordPress::themePath($theme);
 
-            if (!file_exists($theme_path).'/style.css') {
+            if (!file_exists($theme_path.'/style.css')) {
                 info("Error: Theme '$theme' is not found.");
 
                 return;
