@@ -7,6 +7,10 @@
 
 
 
+[ブログ記事:「WordPress＋(プラス)」それはより高機能なWebサイトを手早く構築するための新しいプラットフォームです](http://jumilla.me/wordpress-plus-overview) も合わせてお読みください。
+
+
+
 ## WordPress+（プラス）とは
 
 WordPress+は、2015年4月にリリースされたばかりの高速マイクロフレームワーク[Lumen（るーめん）](http://lumen.laravel.com) で[WordPress](https://ja.wordpress.org)をラップしたもので、次のような特徴を持つ開発中のプロダクトです。
